@@ -1,0 +1,13 @@
+qgisworkshop_org
+  -> docs
+      This is where the workshop materials will live... RST
+      This will be a Sphinx source dir
+  -> data
+      Supporting workshop data (shapefiles and small rasters)
+  -> logs
+      Apache logs dir
+  -> conf
+      Apache conf
+  -> www
+      The web site... driven by Sphinx
+      This will be a Sphinx build directory
