@@ -1,0 +1,10 @@
+=======
+Plugins
+=======
+
+Plugin architecture
+-------------------
+
+Examples
+--------
+

@@ -11,6 +11,7 @@ Contents:
 .. toctree::
    :maxdepth: 1
 
+   workshop/index
    vm_install/index
 
 Indices and tables
