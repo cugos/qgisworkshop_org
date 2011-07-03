@@ -26,7 +26,7 @@ Why it is important/popular
     - Mapserver
     - gvSIG
 
-* Its names after Monty Python (the best movie ever)
+* It's named after “Monty Python’s Flying Circus”
 
 * It's easy to learn yet very very powerful
 
@@ -100,13 +100,13 @@ Parsing strings and looping through data::
     ['I', ' ', 'l', 'o', 'v', 'e', ' ', 'm', 'a', 'p', 's', ' ', 'a', 'n', 'd', ' ', 'I', ' ', 'c', 'a', 'n', 'n', 'o', 't', ' ', 'l', 'i', 'e']
  
 
-Running scripts straight from the command-line::
+Functions::
 
     def buildConnectionString(params):
-    """Build a connection string from a dictionary of parameters.
+        """Build a connection string from a dictionary of parameters.
 
-    Returns string."""
-    return ";".join(["%s=%s" % (k, v) for k, v in params.items()])
+        Returns string."""
+        return ";".join(["%s=%s" % (k, v) for k, v in params.items()])
 
     if __name__ == "__main__":
         myParams = {"server":"mpilgrim", \
