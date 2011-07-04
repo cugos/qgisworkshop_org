@@ -5,18 +5,18 @@ Python
 What is Python
 --------------
 
-Python is a fun and powerful programming language used in web applications and desktop software. It's used alot as a binding around well-known OSGeo-backed libraries such as GDAL/OGR andGEOS. Key features include:
+Python is a fun and powerful programming language used in web applications and desktop software. It can also be found wrapping OSGeo-backed libraries such as GDAL/OGR, JTS and GEOS. Key features include:
 
     * very clear, readable syntax
     * intuitive object orientation
     * exception-based error handling
     * very high level dynamic data types
-    * implemented in many languages (classic Python is C/C++ at it's core, but there are Java (Jython) and .NET (IronPython) implementations)
+    * implemented in many languages (classic Python is C/C++ at it's core. But there are Java (Jython) and .NET (IronPython) implementations also)
 
 Why it is important/popular
 ---------------------------
 
-* Well, for starters, it can access \  **tons** \ of OSGeo libraries and software to do workflows programmatically. Some of these include (but are not limited to):
+* For our purposes, Python can be used to access \  **tons** \ of OSGeo libraries and software. This way we can write programmatic workflows. Some of this OSGeo software includes but is not limited to:
     - PostGIS
     - GDAL/OGR
     - GEOS
@@ -32,8 +32,13 @@ Why it is important/popular
 
 Examples
 -----------
+All the examples below are executed in the Python interpreter. On your Virtual Box install you can access the Python interpreter in two ways -- 1. through QGIS and 2. through the bash shell.
 
-Getting help::
+    1. The QGIS Python Console can be started by going to the QGIS file menu and clicking\  ``Plugins --> Python Console`` \
+    
+    2. The bash shell can be started by holding down\  ``<Cntl>-<ALT>`` \keys and then pressing\  ``t`` \at the same time. Once a new bash shell pops open you just have to type\  ``python`` \into the command prompt and the bash shell magically becomes a Python interpreter. 
+
+Python makes it easy to get help on functions and objects. If a particular variable is giving you trouble then just wrap it in help to display it's meaning (assuming it has one)::
 
     >>> help(range)
     Help on built-in function range in module __builtin__:
@@ -48,7 +53,7 @@ Getting help::
         These are exactly the valid indices for a list of 4 elements.
 
 
-Strings, numbers, lists oh my. The mightiest of Python data types you should know is the List::
+Strings, numbers, lists...oh my. The List is the mightiest of Python data types you should know. We can used Lists to store just about anything. Many times records in a database are represented as Lists in Python::
     
     >>> # this is me making a list
     ... a = [10, 50, 123, 1234]
@@ -74,10 +79,9 @@ Strings, numbers, lists oh my. The mightiest of Python data types you should kno
     []
 
 
-Parsing strings and looping through data::
+An example of parsing strings and looping through data using Lists::
 
     >>> # basic for loop
-    >>> for i in range(20): print  i
     >>> for i in range(1,10): print i
     ... 
     1
@@ -100,18 +104,30 @@ Parsing strings and looping through data::
     ['I', ' ', 'l', 'o', 'v', 'e', ' ', 'm', 'a', 'p', 's', ' ', 'a', 'n', 'd', ' ', 'I', ' ', 'c', 'a', 'n', 'n', 'o', 't', ' ', 'l', 'i', 'e']
  
 
-Functions::
+Here's an example you might actually see at work. Let's build database parameters that we want to pass to a function. In this example the first code that executes is\  ``if __name__ == "__main__":`` \. On Linux systems (e.g. Ubuntu) we can execute this script without opening the Python interpreter (Yah!). Copy the code below into a text file and save it as\  ``test.py`` \in some directory. Then open up a bash shell and\  ``cd`` \to that directory and type in the command prompt:\  ``python test.py`` \. Your script will execute and return the following single string:\  ``pwd=secret;database=master;uid=sa;server=gcorradini`` \. Now you try::
 
     def buildConnectionString(params):
         """Build a connection string from a dictionary of parameters.
 
         Returns string."""
         return ";".join(["%s=%s" % (k, v) for k, v in params.items()])
-
-    if __name__ == "__main__":
-        myParams = {"server":"mpilgrim", \
+if __name__ == "__main__": myParams = {"server":"gcorradini", \
                         "database":"master", \
                         "uid":"sa", \
                         "pwd":"secret" \
                         }
+
         print buildConnectionString(myParams)
+
+
+Here's some good resources to get you started on the Pythonic ninja track:
+
+    `Dive into Python <http://diveintopython.org/toc/index.html>`_
+
+    `How to Think Like a Computer Scientist <http://greenteapress.com/thinkpython/html/index.html>`_
+
+    `The Python Tutorial <http://docs.python.org/tutorial/>`_ \# this is the official one
+
+
+    
+
