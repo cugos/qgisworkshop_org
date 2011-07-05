@@ -16,7 +16,8 @@ Python is a fun and powerful programming language used in web applications and d
 Why it is important/popular
 ---------------------------
 
-* For our purposes, Python can be used to access \  **tons** \ of OSGeo libraries and software. This way we can write programmatic workflows. Some of this OSGeo software includes but is not limited to:
+* For our purposes, Python can be used to access \  **tons** \ of OSGeo libraries and software. Then we use Python to write programmatic workflows. Some of this OSGeo software includes but is not limited to:
+    - QGIS (or we wouldn't be reading this now)
     - PostGIS
     - GDAL/OGR
     - GEOS
@@ -111,12 +112,13 @@ Here's an example you might actually see at work. Let's build database parameter
 
         Returns string."""
         return ";".join(["%s=%s" % (k, v) for k, v in params.items()])
-if __name__ == "__main__": myParams = {"server":"gcorradini", \
+
+    if __name__ == "__main__": 
+        myParams = {"server":"gcorradini", \
                         "database":"master", \
                         "uid":"sa", \
                         "pwd":"secret" \
                         }
-
         print buildConnectionString(myParams)
 
 
