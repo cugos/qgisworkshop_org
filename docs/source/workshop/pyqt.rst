@@ -5,7 +5,7 @@ PyQT
 What it is
 ------------
 
-The Python bindings that wrap the Qt libraries. That means we can now use Python to interact build Qt applications instead of learning C++.
+PyQt refers to the Python bindings that wrap the C/C++ Qt libraries. That means we can now use Python to build Qt applications instead of learning C++.
 
 How it provided the idea behind PyQGIS
 --------------------------------------
@@ -15,7 +15,7 @@ Using the PyQt wrappers to access QGIS libraries was a pracitical solution becau
 Examples
 ---------
 
-Below is an example of what a PyQt module might look like. This module is defining the layout of the graphical user interface (GUI). We produced this module using some helpful tools that we will be talking about later:
+Below is an example of a Qt XML design and a PyQt module. The XML schema is defining the layout of the graphical user interface (GUI). Remember that XML, like HTML, is a language that defines data structure but not function. The PyQt module example below the XML source was produced using some helpful tools that we will be talking about later:
 
     * QT Designer: helps build GUIs with drop-and-drag widgets. The widget layouts are saved in an XML schema.
 
