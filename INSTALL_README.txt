@@ -42,7 +42,7 @@ These instructions specify how to extract and import the Virtual Box VDI contain
 
  We want to create a shared folder between the host operating system and the guest operating system.
 
- Before starting the "PYQGIS_PLUGINS" machine create a folder called "vm_shared" in the /mnt/ directory
+ Before starting the "PYQGIS_PLUGINS" machine create a folder called "vm_shared" on the C:\\ drive -- "C:\\vm_shared"
 
  Make sure the "vm_shared" directory has read-write-execute permissions for the "user" and "group"
 
@@ -52,7 +52,7 @@ These instructions specify how to extract and import the Virtual Box VDI contain
 
  Add a new shared folder definition by clicking the folder-plus icon in the top right just right of the column "Access"
 
- In the "Folder Path" drop down click "Other' and navigate to /mnt/ directory. Select /mnt/ and click "Open"
+ In the "Folder Path" drop down click "Other" and navigate to "C:\\" directory. Select "C:\\" and click "Open"
 
  Then in the "Folder Name" text box write "vm_shared" 
 
@@ -68,13 +68,13 @@ These instructions specify how to extract and import the Virtual Box VDI contain
 
  The default homepage should jump to http://www.qgisworkshop.org/html/
 
- Then test to make sure the shared folder was setup correctly by navigating to /media/sf_vm_shared/
+ Then test to make sure the shared folder was setup correctly by navigating to /media/sf_vm_shared/ on the "PYQGIS_PLUGIN" virtual machine
 
  If everything was setup correclty you'll see another folder in "sf_vm_shared" called "vm_shared"
 
- Navigate into "vm_shared" and create a blank text file
+ On the "PYQGIS_PLUGIN" virtual machine navigate into "sf_vm_shared" and create a blank text file 
 
- Then on the host operating system (not in the virtual machine) navigate to "/mnt/vm_shared" to see if the text file you created appears there also
+ Then on the host operating system (not in the virtual machine) navigate to "C:\\vm_shared" to see if the text file you created appears there also
 
 
 ## SHUTDOWN
