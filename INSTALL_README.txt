@@ -2,7 +2,7 @@
 # REQUIREMENTS
 ###################
 
-We tested out this Virtual Box Ubuntu 10.04 image on Virtual Box version 4.0.10. So we would like Virtual Box 4.x installed on the workshop computer.
+We tested out this Virtual Box Ubuntu 10.04 image on Virtual Box version 4.0.10. We would like Virtual Box 4.x installed on the workshop computer.
 
 ###################
 # INSTALLATION
@@ -18,7 +18,7 @@ These instructions specify how to extract and import the Virtual Box VDI contain
 
  start Virtual Box 4.0.10
 
- create a new virtual machine by clicking "New" in the top-left-hand menu or typing <Ctrl+N>
+ Create a new virtual machine by clicking "New" in the top left-hand menu or typing <Ctrl+N>
 
  Click Next
 
@@ -28,7 +28,7 @@ These instructions specify how to extract and import the Virtual Box VDI contain
 
  Click Next
  
- In the "Memory" dialog keep the default settings as is
+ In the "Memory" dialog change the default setting to 1GB 
 
  Click Next
 
@@ -52,29 +52,31 @@ These instructions specify how to extract and import the Virtual Box VDI contain
 
  Add a new shared folder definition by clicking the folder-plus icon in the top right just right of the column "Access"
 
- In the "Folder Path" drop down click "Other" and navigate to "C:\\" directory. Select "C:\\" and click "Open"
+ In the "Folder Path" drop down click "Other" and navigate to "C:\\" directory. Select "C:\\vm_shared" and click "Open"
 
- Then in the "Folder Name" text box write "vm_shared" 
+ Then in the "Folder Name" text box make sure it says "vm_shared" ( after last step it should automatically appear )
 
- Check the checkbox next to "Auto-mount"
+ Check the checkbox next to "Auto-mount" and  **DO NOT** check the "Read-only" check box
 
  Click "OK"
+
+ Click "OK" again
 
  Then start the virtual "PYQGIS_PLUGINS" machine
 
 ## TESTING INSTALL
 
- Test that we have internect connectivity by clicking on the "FireFox" icon on the top menu bar
+ Test internet connectivity by clicking on the "FireFox" icon on the top menu bar
 
  The default homepage should jump to http://www.qgisworkshop.org/html/
 
- Then test to make sure the shared folder was setup correctly by navigating to /media/sf_vm_shared/ on the "PYQGIS_PLUGIN" virtual machine
+ Test shared-drive by navigating to /home/qgis on the "PYQGIS_PLUGIN" virtual machine
 
- If everything was setup correclty you'll see another folder in "sf_vm_shared" called "vm_shared"
+ If everything was setup correclty you should be able to navigate into the "shared_drive" directory inside /home/qgis
 
- On the "PYQGIS_PLUGIN" virtual machine navigate into "sf_vm_shared" and create a blank text file 
+ Then on the "PYQGIS_PLUGIN" virtual machine navigate into "shared_drive" directory and create a blank text file 
 
- Then on the host operating system (not in the virtual machine) navigate to "C:\\vm_shared" to see if the text file you created appears there also
+ On the host operating system (not in the virtual machine) navigate to "C:\\vm_shared" to make sure the text file you created appears there also
 
 
 ## SHUTDOWN
@@ -82,8 +84,7 @@ These instructions specify how to extract and import the Virtual Box VDI contain
  When turning off the machine please select "Shutdown" instead of "Power off" option in the menu
 
 
-#END
-
+## END
 Thanks bunches ;-)
  
 
