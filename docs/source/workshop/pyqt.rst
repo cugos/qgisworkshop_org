@@ -15,11 +15,9 @@ Using the PyQt wrappers to access QGIS libraries was a pracitical solution becau
 Examples
 ---------
 
-Below is an example of a Qt XML design and a PyQt module. The XML schema is defining the layout of the graphical user interface (GUI). Remember that XML, like HTML, is a language that defines data structure but not function. The PyQt module example below the XML source was produced using some helpful tools that we will be talking about later:
+Below are two examples: The first is an Qt XML design and the second is a PyQt module.
 
-    * QT Designer: helps build GUIs with drop-and-drag widgets. The widget layouts are saved in an XML schema.
-
-    * pyuic4: A Python script that compiles the QT Designer XML layouts into a Python module
+The XML schema is defining the layout of the graphical user interface (GUI). It was created using Qt Designer, a program that helps us build graphical user interfaces (GUIs) with drag-and-drop widgets. The widgets are then saved into an XML schema. Remember that XML, like HTML, is a language that defines data structure but not function. 
 
 Example of QT Designer XML structure::
 
@@ -125,9 +123,23 @@ Example of QT Designer XML structure::
      </connections>
     </ui>
 
-If I compile this XML file using\  **pyuic4** \it will magically turn in PyQt code (Yah!)::
+Once rendered, the XML structure above describes this type of GUI dialog, a very simple example:
 
-    $ pyuic4 test.ui
+.. image:: ../_static/qt_designer_form_example.png
+   :scale: 200 %
+   :align: center 
+
+
+When we have an XML structure defining our GUI we need to turn it into a python module so we can use it in PyQt applications. The PyQt module example below was produced using a helpful tool that we will be talking about later:
+
+    * pyuic4: A Python script that compiles the QT Designer XML layouts into a Python module
+
+If I compile this XML file using\  **pyuic4** \it will magically turn in PyQt code (Yah!). Here's the compile statement from a bash shell::
+
+    pyuic4 form.ui
+
+Here is the output -- a python module::
+
     # -*- coding: utf-8 -*-
 
     # Form implementation generated from reading ui file 'test.ui'
@@ -167,8 +179,13 @@ If I compile this XML file using\  **pyuic4** \it will magically turn in PyQt co
         def retranslateUi(self, Dialog):
             Dialog.setWindowTitle(QtGui.QApplication.translate("Dialog", "Dialog", None, QtGui.QApplication.UnicodeUTF8))
         
-First, notice the import statement:\  ``from PyQt4 import QtCore, QtGui`` \. The number in PyQt4 refers to the version we are working with and we are importing the core Qt library modules as well as those that interact with GUIs. Note that the above Python class is defining our dialog user interface. The\  ``setupUi(self, Dialog)`` \function is building out our user interface with the buttons and comboboxes that were specificied in the XML. 
+First, notice the import statement::
 
+    from PyQt4 import QtCore, QtGui
+
+The number in PyQt4 refers to the version we are working with and we are importing the core Qt library modules as well as those that interact with GUIs. 
+
+Note that the above Python class is defining our dialog user interface. The following class function is building out our user interface with the buttons and comboboxes that were specificied in the XML.
 
 Now let's jump ahead breifly to peek at some PyQGIS commands (we'll go more in depth later on this topic). What's interesting here is that we'll see PyQt objects at work in the background -- afterall, PyQGIS is build on PyQT bindings. This code is using the Python console to access the selected layer in my table of contents::
 

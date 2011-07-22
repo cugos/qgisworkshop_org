@@ -6,15 +6,25 @@ Workshop
 Contents:
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
 
    qgis
+
    python
+
    qt
+
    pyqt
+
+   python_in_qgis
+
    plugins
+
    designer
+
    qgis_api
+
    debug
+
    repositories
 
