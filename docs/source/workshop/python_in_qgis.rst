@@ -69,7 +69,7 @@ From the Python Console we access\  **iface** \by calling the following command:
     
     >>> qgis.utils.iface
 
-Type the above command in the Python Console::
+Type the above command into the Python Console::
 
     >>> qgis.utils.iface
     <qgis.gui.QgisInterface object at 0x925266c>
@@ -157,11 +157,35 @@ Other Excercises
 Loading Layers into QGIS
 -----------------------------
 
-Maybe when you were purusing the QgsInterface object you noticed a couple addLayer methods? Let's use these to load layers into QGIS. 
+Maybe when you were looking at the QgsInterface object you noticed a couple addLayer methods? Let's use these to load layers into QGIS. 
 
-Start by removing all layers from QGIS.
+Start by turning off all layers currenlty in QGIS by unchecking them.
 
-Then with a fresh map, re-add the SR_50M and populated places data:
+Then with a fresh map, re-add the SR_50M and populated places data as a different name:
+
+    >>> qgis.utils.iface.addVectorLayer("/home/qgis/natural_earth_50m/cultural/50m_cultural/50m_populated_places_simple.shp", "pop2", "ogr")
+    <qgis.core.QgsVectorLayer object at 0xca0feac>
+    >>> qgis.utils.iface.addRasterLayer("/home/qgis/natural_earth_50m/raster/shaded_relief/SR_50M/SR_50M.tif", "raster")
+    <qgis.core.QgsRasterLayer object at 0xca0fe6c>
+
+The method\  `addVectorLayer <http://doc.qgis.org/head/classQgisInterface.html#39be50fe9974de17177861ad89e7f36e>`_ \takes three arguments:
+
+    - the first argument is the path to the data source -- the shapefile in our case
+
+    - the second argument is the basename -- the name that the layer takes in the table of contents
+
+    - the third argument is the provider key. Basically, the function wants to know what driver will be used to read this data. For our purposes, the "ogr" will be used most of the time with vector data 
+
+Notice that the\  `addRasterLayer <http://doc.qgis.org/head/classQgisInterface.html#808a34b507a8c4204d607a5857d62748>`_ \only takes two arguments -- the path and basename for the layer. 
+
+If you go look at the\  **addRasterLayer** \function definition in the link above you'll notice that there are two overloaded function definitions for adding rasters. One definition takes two arguments (the one we used). The other definition takes many more arguments.
+
+Adding a PostGIS Layer
+***********************
+
+You might be wondering how you would handle adding data that exists in PostGIS. 
+
+add postgis layer
 
 
 Writing Layers to File
