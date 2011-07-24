@@ -34,10 +34,10 @@ We'll walk through the following building-block examples.
 Setup
 -------------
 
-\1. To begin open up a new QGIS session by clicking the QGIS icon on the top menu bar:
+\1. To begin open up a new QGIS session by clicking the QGIS icon on the top menu bar.
 
 .. image:: ../_static/qgis_icon.png
-    :scale: 100%
+    :scale: 60%
     :align: center
 
 All the data we will be using is located in the\  ``natural_earth_50m`` \directory of your qgis user home path::
@@ -203,10 +203,10 @@ QGIS supports the idea of uniform resource identifiers (URIs) as data-source des
     >>> qgis.utils.iface.addVectorLayer(uri.uri(), "all_these_countries", "postgres")
     <qgis.core.QgsVectorLayer object at 0xca0feac>
 
-You should now have another countries layer in QGIS
+You should now have the countries layer in QGIS
 
 .. image:: ../_static/postgres_countries_layer.png
-    :scale: 100%
+    :scale: 3%
     :align: center
 
 Accessing Vector Geometry 
@@ -225,8 +225,7 @@ For example, with the reference to the geometry of an object we can access these
 Walking the Geometry in a Vector Layer
 ********************************************
 
-There's number of ways to access a Layer's features and each feature geometry. We will NOT walk through all of them here. One way to access a layer is through the\ `QgsVectorDataProvider <http://doc.qgis.org/head/classQgsVectorDataProvider.html>`_ class. 
-
+There's number of ways to access a Layer's features and each feature geometry. We will NOT walk through all of them here. One way to access a layer is through the\ `QgsVectorDataProvider <http://doc.qgis.org/head/classQgsVectorDataProvider.html>`_ class.  
 You can get a reference to a data provider directly from your\ `QgsVectorLayer <http://doc.qgis.org/head/classQgsVectorLayer.html>`_ class.
 
 \1. First, remove all layers from QGIS
