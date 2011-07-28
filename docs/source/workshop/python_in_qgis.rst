@@ -3,44 +3,37 @@
 Python in QGIS -- PyQGIS
 =====================================
 
-When we use the term\  **PyQGIS** \we are refering to the QGIS Python bindings.
+When using the term\  **PyQGIS** \, we are refering to the QGIS Python bindings. Specifically, we are referring to a Python application programming interface (API) that wraps the QGIS C++ library. Here is the\   `C++ QGIS API documentation <http://doc.qgis.org>`_ \and here is the\  `PyQGIS API documentation <http://www.riverbankcomputing.co.uk/static/Docs/PyQt4/html/classes.html>`_ 
 
-Specifically, we are referring an application programming interface (API) that accesses QGIS's C/C++ library layout. Here is the QGIS library documentation: 
-
-    http://doc.qgis.org
-
-We will become very familiar with parts of the above documentation as we build plugins.
-
-For now it's good to note that there's a number of ways to interact with QGIS using Python.
-
-Here are the most common ways:
+We will become very familiar with parts of the above documentation as we build plugins. For now it's good to note that there's a number of ways to interact with QGIS using Python. Here are the most common ways:
 
     1. \  **Python Console** \: a command-line terminal inside QGIS to test ideas and do one-off quick jobs
 
     2. \  **Plugins** \: enhancing/creating editing tools that interact with data inside the QGIS environment 
 
-    3. \  **Python Scripts/Applications** \: scripts that process spatial data outside the QGIS application. Or a user could create their own stripped-down data viewer and explorer using QGIS libraries
+    3. \  **Python Scripts/Applications** \: scripts that process spatial data outside the QGIS application. Or a user could create their own stripped-down data viewer and analysis tools using QGIS libraries
 
+We will be focusing on using the Python console during this next hour. Everything we're learning will be directly applicable to our plugin development the following two hours.
+
+------------------------------------------------------
 
 Python Console
 ------------------
 
-This is perhaps the easiest way to start testing out your ideas for plugins.
+This is perhaps the easiest way to start testing out your plugin ideas.
 
-From the Python Console we can access vector and raster layers that are already loaded into QGIS. Once accessed, we can start interacting with their attributes and geometry. Since a lot of plugin work is dealing with layer attributes and geometry then let's begin.
+From the Python Console we can access vector and raster layers that are already loaded into QGIS. Once accessed, we can start interacting with their attributes and geometry. Since a lot of plugin work is dealing with layer attributes and geometry then let's begin here.
 
 We'll walk through the following building-block examples.
+
+------------------------------------------------------
 
 Setup
 -------------
 
 \1. To begin open up a new QGIS session by clicking the QGIS icon on the top menu bar.
 
-.. image:: ../_static/qgis_icon.png
-    :scale: 60%
-    :align: center
-
-All the data we will be using is located in the\  ``natural_earth_50m`` \directory of your qgis user home path::
+    All the data we will be using is located in the\  ``natural_earth_50m`` \directory of your qgis user home path::
 
     /home/qgis/natural_earth_50m
 
@@ -60,20 +53,20 @@ All the data we will be using is located in the\  ``natural_earth_50m`` \directo
     :scale: 100%
     :align: center
 
+------------------------------------------------------
+
 Accessing Layers
 --------------------------
 
 .. note:: The hyperlinks that follow all reference the QGIS API Documentation. Click on them to view the classes and methods we are referencing below
 
-There's a number of ways to access the layers in QGIS. 
-
-All the ways start by first referencing the\  `QgsInterface class <http://doc.qgis.org/head/classQgisInterface.html>`_ \which is called\  **iface** \in the Python bindings.
+There's a number of ways to access the layers in QGIS. Each way starts by first referencing the\  `QgsInterface class <http://doc.qgis.org/head/classQgisInterface.html>`_ \which is called\  **iface** \in the Python bindings.
 
 From the Python Console we access\  **iface** \by calling the following command::
     
     >>> qgis.utils.iface
 
-Type the above command into the Python Console::
+Type the above command into the Python Console and you should see this output::
 
     >>> qgis.utils.iface
     <qgis.gui.QgisInterface object at 0x925266c>
@@ -83,7 +76,7 @@ Running the above command prints out the actual name of the QGIS class we are de
 Method 1
 *********
 
-On the iface class is a useful function called\  `activeLayer() <http://doc.qgis.org/head/classQgisInterface.html#231f32fbf95004aebb067cb98f3a391c>`_ \that returns us a reference to the selected layer in the layer legend.
+On the iface class is a useful function called\  `activeLayer() <http://doc.qgis.org/head/classQgisInterface.html#231f32fbf95004aebb067cb98f3a391c>`_ \that returns us a reference to the selected layer in the table of contents.
 
 \1. Run the following command::
 
@@ -98,6 +91,26 @@ Depending on which layer is selected in the table of contents you will see eithe
     >>> aLayer.name()
     PyQt4.QtCore.QString(u'SR_50M')
 
+\3. How do you get an idea about what functions this Python class has available? There's really two ways:
+
+    \1) The more visually appealing way to browse class attributes is to access the\  `QGIS API documentation <http://doc.qgis.org>`_ \and search for the class you're working with.
+
+    \2) The Pythonic way (though less visually appealing) is to run the following command on a object you want to know more about::
+        
+            >>> help(aLayer) 
+
+             # output truncated for demonstration
+             ...
+             |  extent = <built-in function extent>
+             |  
+             |  getLayerID = <built-in function getLayerID>
+             |  
+             |  getTransparency = <built-in function getTransparency>
+             ...
+             # output truncated for demonstration
+
+        The pile of text printed out in the shell is hard to navigate. Above is an example of some of the attributes you might see. It's probably better to use the API above.
+
 Method 2
 **********
 
@@ -110,7 +123,6 @@ Method 2
 
 Method 3
 **********
-
 \1. With the map canvas class we can get more than just the active layer -- we can get everthing::
 
     >>> allLayers = canvas.layers()
@@ -118,7 +130,7 @@ Method 3
     ... 
     50m_populated_places_simple
 
-Wait a minute! We have two layers in the table of contents. Why did we only get one single name back? (this is assuming that you followed directions and kept the raster layer turned off)
+**Wait a minute!** \we have two layers in the table of contents. Why did we only get one single name back? (this outcome assumes that you followed directions and kept the raster layer turned off. If you did not turn off the raster layer then you will see both layer names printed out)
 
 It turns out that using\  ``QgsMapCanvas.layers()`` \will only return us\  **visible** \layers (those that are checked visible).
 
@@ -150,22 +162,22 @@ Layers are stacked top-down and accessed through a zero-based index. That means 
 Other Excercises
 ********************
 
-- set the active layer using qgis.utils.iface.setActiveLayer()
+- set the active layer using\  `qgis.utils.iface.setActiveLayer() <http://doc.qgis.org/head/classQgisInterface.html#c42281407013002b56ff7ed422c77336>`_
 
-- set the current layer using qgis.utils.iface.setCurrentLayer()
+- set the current layer using\  `qgis.utils.iface.mapCanvas().setCurrentLayer() <http://doc.qgis.org/head/classQgsMapCanvas.html#001c20fe97f844542895e718ee166926>`_ 
 
 - can you find the QgsMapLayer class in the documentation and find out how to get a layer's extent?
 
 .. note:: There's probably many more ways to access the layers in the QGIS table of contents...so keep your eyes open for other methods
+
+------------------------------------------------------
 
 Loading Layers into QGIS
 -----------------------------
 
 Maybe when you were looking at the QgsInterface class you noticed a couple addLayer methods? Let's use these to load layers into QGIS. 
 
-Start by turning off all layers currenlty in QGIS by unchecking them.
-
-\1. Then with a blank map, re-add the SR_50M and populated places data as a different name::
+\1. Start by turning off all layers currenlty in QGIS by unchecking them. Then with a blank map, re-add the SR_50M and populated places data as a different name::
 
     >>> qgis.utils.iface.addVectorLayer("/home/qgis/natural_earth_50m/cultural/50m_cultural/50m_populated_places_simple.shp", "pop2", "ogr")
     <qgis.core.QgsVectorLayer object at 0xca0feac>
@@ -206,8 +218,10 @@ QGIS supports the idea of uniform resource identifiers (URIs) as data-source des
 You should now have the countries layer in QGIS
 
 .. image:: ../_static/postgres_countries_layer.png
-    :scale: 3%
+    :scale: 30 %
     :align: center
+
+------------------------------------------------------
 
 Accessing Vector Geometry 
 -------------------------------------------------------------
@@ -225,8 +239,7 @@ For example, with the reference to the geometry of an object we can access these
 Walking the Geometry in a Vector Layer
 ********************************************
 
-There's number of ways to access a Layer's features and each feature geometry. We will NOT walk through all of them here. One way to access a layer is through the\ `QgsVectorDataProvider <http://doc.qgis.org/head/classQgsVectorDataProvider.html>`_ class.  
-You can get a reference to a data provider directly from your\ `QgsVectorLayer <http://doc.qgis.org/head/classQgsVectorLayer.html>`_ class.
+There's number of ways to access a Layer's features and each feature geometry. We will NOT walk through all of them here. One way to access a layer is through the\  `QgsVectorDataProvider <http://doc.qgis.org/head/classQgsVectorDataProvider.html>`_ \class. You can get a reference to a data provider directly from your\  `QgsVectorLayer <http://doc.qgis.org/head/classQgsVectorLayer.html>`_ \class.
 
 \1. First, remove all layers from QGIS
 
@@ -241,7 +254,7 @@ You can get a reference to a data provider directly from your\ `QgsVectorLayer <
     >>> cLayer.name()
     PyQt4.QtCore.QString(u'50m_admin_0_countries')
 
-\4. get a reference to the data provider::
+\4. Get a reference to the data provider::
 
     >>> provider = cLayer.dataProvider()
     >>> provider.name()
@@ -249,18 +262,17 @@ You can get a reference to a data provider directly from your\ `QgsVectorLayer <
 
 If this was a vector layer from postgresql then "postgres" would be the\  ``provider.name()`` \returned.
 
-\5. One way you'll access vector layer features with through the data provider's\  `select() <http://doc.qgis.org/head/classQgsVectorDataProvider.html#ed7343c5ccea4d4fe795159eb4268b96>`_ \function::
+\5. One way you'll access vector layer features is through the data provider's\  `select() <http://doc.qgis.org/head/classQgsVectorDataProvider.html#ed7343c5ccea4d4fe795159eb4268b96>`_ \function::
 
     >>> provider.select()
-    >>>
 
-The\  ``select()`` \function reads the vector layer's attributes and geometry into memory so we can access them. If you take a look at the\  `select() API <http://doc.qgis.org/head/classQgsVectorDataProvider.html#ed7343c5ccea4d4fe795159eb4268b96>`_ you'll notice that we can refine what we actually want to get back from the layer including only certain attributes.
+The\  ``select()`` \function reads the vector layer's attributes and geometry into memory so we can access them. If you take a look at the\  `select() API <http://doc.qgis.org/head/classQgsVectorDataProvider.html#ed7343c5ccea4d4fe795159eb4268b96>`_ \you'll notice that we can refine what we actually want to get back from the layer including only certain attributes.
 
 When we run\  ``select()`` \without any arguments passed we are only getting the default options. "Default" options in this case means::
 
     - Geometry -- retrieve every feature geometry
     - Attributes -- do not retrieve any attributes
-    - Rectangle Filter -- do not use a spatial filter of a rectangle (thing bounding box)
+    - Rectangle Filter -- do not use a spatial filter of a rectangle (think bounding box)
     - Intersection Test -- do not run the accurate intersection test  
 
 To summarize, when we ran\  ``select()`` \we retrieved all feature geometries but no attributes.
@@ -327,14 +339,14 @@ This geometry is valid, not empty and looks to be a simple Polygon (as opposed t
     
 Note a couple things. Geometry types return an integer (essentially a lookup) that details what geometry they are. There are two ways to cross-reference this geometry type:
 
-\A. Above we use\  `QGis.WkbType() function <http://doc.qgis.org/head/classQGis.html#8da456870e1caec209d8ba7502cceff7>`_ \to compare well-known binary types.
+    \A. Above we use\  `QGis.WkbType() function <http://doc.qgis.org/head/classQGis.html#8da456870e1caec209d8ba7502cceff7>`_ \to compare well-known binary types.
 
-\B. Or we can use\ `QGis.type() function <http://doc.qgis.org/head/classQGis.html#09947eb19394302eeeed44d3e81dd74b>`_ \to compare to some basic typing::
+    \B. Or we can use\  `QGis.type() function <http://doc.qgis.org/head/classQGis.html#09947eb19394302eeeed44d3e81dd74b>`_ \to compare to some basic typing::
 
-    >>> feat.geometry().type()
-    2
-    >>> QGis.Polygon
-    2
+        >>> feat.geometry().type()
+        2
+        >>> QGis.Polygon
+        2
 
 \10. Now let's do a very simple spatial operation like a buffer:: 
 
@@ -358,20 +370,137 @@ We buffered our polygon by 12 degrees. We can see this created more vetices in t
     >>> feat.geometry().intersects(QgsGeometry.fromPoint(QgsPoint(-69.953,12.512)))
     True
 
+------------------------------------------------------
+
 Accessing Data Attributes
 -----------------------------
+
+Here we will be covering data attribute retrieval for vector and raster layers. The following excercises will help us answer the questions:
+
+    \1) What's the name of the selected feature?
+
+    \2) What values does this raster cell have?
+
+    \3) How many features meet this filtering requirement?
+ 
+Vector
+**********
+
+Using our\  ``50m_admin_0_countries.shp`` \layer:
+
+\1. Get the data provider for this shapefile::
+
+    >>> provider = aLayer.dataProvider()
+    >>> aLayer = qgis.utils.iface.activeLayer()
+    >>> provider = aLayer.dataProvider()
+    >>> aLayer.name()
+    PyQt4.QtCore.QString(u'50m_admin_0_countries')
+    >>> provider.name()
+    PyQt4.QtCore.QString(u'ogr')
+
+\2. Let's get a Python dictionary of the fields::
+
+    >>> columns = provider.fields()
+    >>> type(columns)
+    <type 'dict'>
+
+\3. Remember that a Python dictionary data structure has a unique set of keys that point to corresponding values. The\  ``provider.fields()`` \function returns us the 0-based positional index of column objects from left-to-right. That means the left-most column (or field) starts at 0. Each integer index points to a\  `QgsField object <http://doc.qgis.org/head/classQgsField.html>`_ \for reference::
+
+    >>> columns[0]
+    <qgis.core.QgsField object at 0xd8df66c>
+
+The above isn't very useful output yet. To get useful column output we need to access the attributes and functions of the QgsField object itself (we'll do that in 2 steps).
+
+\4. Remember that\  **ALL** \the dictionary keys or values call be returned in a list through these functions::
+
+    >>> columns.keys()
+    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45]
+    >>>
+    >>> columns.values()
+    [<qgis.core.QgsField object at 0xd8df66c>, <qgis.core.QgsField object at 0xd8df6ac>, <qgis.core.QgsField object at 0xd8df62c>, <qgis.core.QgsField object at 0xd8df5ec>, <qgis.core.QgsField object at 0xd8df5ac>, <qgis.core.QgsField object at 0xd8df56c>, <qgis.core.QgsField object at 0xd8df52c>, <qgis.core.QgsField object at 0xd8df4ec>, <qgis.core.QgsField object at 0xd8df4ac>, <qgis.core.QgsField object at 0xd8df46c>, <qgis.core.QgsField object at 0xd8df42c>, <qgis.core.QgsField object at 0xd8df3ec>, <qgis.core.QgsField object at 0xd8df3ac>, <qgis.core.QgsField object at 0xd8df36c>, <qgis.core.QgsField object at 0xd8df32c>, # TRUNCATED OUTPUT ON PURPOSE ]
+
+
+\5. To loop through the keys and values at once we can do this::
+
+    >>> for key,value in columns.items(): print str(key) + " = " + str(value)
+    ... 
+    0 = <qgis.core.QgsField object at 0xd8df66c>
+    1 = <qgis.core.QgsField object at 0xd8df6ac>
+    2 = <qgis.core.QgsField object at 0xd8df62c>
+    3 = <qgis.core.QgsField object at 0xd8df5ec>
+    4 = <qgis.core.QgsField object at 0xd8df5ac>
+    5 = <qgis.core.QgsField object at 0xd8df56c>
+    6 = <qgis.core.QgsField object at 0xd8df52c>
+    7 = <qgis.core.QgsField object at 0xd8df4ec>
+    8 = <qgis.core.QgsField object at 0xd8df4ac>
+    
+    # TRUNCATED OUTPUT ON PURPOSE
+
+\6. Now let's get something useful from the QgsField object::
+ 
+    >>> for key,value in columns.items(): print str(key) + " = " + str(value.name()) + " | " + str(value.
+    ... 
+    0 = ScaleRank
+    1 = FeatureCla
+    2 = SOVEREIGNT
+    3 = SOVISO
+    4 = SOV_A3
+    5 = LEVEL
+    6 = TYPE
+    7 = NAME
+    8 = SORTNAME
+    9 = ADM0_A3
+    10 = NAME_SM
+    11 = NAME_LNG
+    12 = TERR_
+    13 = PARENTHETI
+    14 = NAME_ALT
+    15 = LOCAL_LNG
+
+    # TRUNCATED OUTPUT ON PURPOSE
+
+\7. We can add other QgsFeature attributes to the iteration above::
+
+    >>> for key,value in columns.items(): print str(key) + " = " + str(value.name()) + " | " + str(value.typeName()) + " | " + str(value.length())
+    ... 
+    0 = ScaleRank | Integer | 4
+    1 = FeatureCla | String | 30
+    2 = SOVEREIGNT | String | 32
+    3 = SOVISO | String | 3
+    4 = SOV_A3 | String | 3
+    5 = LEVEL | Real | 4
+    6 = TYPE | String | 13
+    7 = NAME | String | 36
+    8 = SORTNAME | String | 36
+
+The take home point is that the QgsField object gives us the names and data types of the attribute columns but\  **NOT** \the individual feature attribute values. These have to be accessed through the features themselves.
+
+\8. We've already seen how to get at the features. So the below example reviews that and also adds the necessary steps to find a certain attribute
+
+
+\9. Now we are close to creating some actual human-readable records for each feature that we could use in a nother part of our application
 
 Raster
 *********
 
-Vector
-**********
+# stuff
+
+------------------------------------------------------
+
 
 Symbology
 --------------
 
+# stuff
+
+------------------------------------------------------
+
 Coordinate Reference System Transformation
 ------------------------------------------------
+
+# stuff
+
+------------------------------------------------------
 
 Writing Layers to File
 ---------------------------------
