@@ -236,7 +236,7 @@ For example, with the reference to the geometry of an object we can access these
     - combine
     - difference 
 
-Walking the Geometry in a Vector Layer
+Geometry in a Vector Layer
 ********************************************
 
 There's number of ways to access a Layer's features and each feature geometry. We will NOT walk through all of them here. One way to access a layer is through the\  `QgsVectorDataProvider <http://doc.qgis.org/head/classQgsVectorDataProvider.html>`_ \class. You can get a reference to a data provider directly from your\  `QgsVectorLayer <http://doc.qgis.org/head/classQgsVectorLayer.html>`_ \class.
@@ -388,7 +388,7 @@ Vector
 
 Using our\  ``50m_admin_0_countries.shp`` \layer:
 
-\1. Get the data provider for this shapefile::
+\  **1.** \Get the data provider for this shapefile::
 
     >>> provider = aLayer.dataProvider()
     >>> aLayer = qgis.utils.iface.activeLayer()
@@ -398,20 +398,20 @@ Using our\  ``50m_admin_0_countries.shp`` \layer:
     >>> provider.name()
     PyQt4.QtCore.QString(u'ogr')
 
-\2. Let's get a Python dictionary of the fields::
+\  **2.** \Let's get a Python dictionary of the fields::
 
     >>> columns = provider.fields()
     >>> type(columns)
     <type 'dict'>
 
-\3. Remember that a Python dictionary data structure has a unique set of keys that point to corresponding values. The\  ``provider.fields()`` \function returns us the 0-based positional index of column objects from left-to-right. That means the left-most column (or field) starts at 0. Each integer index points to a\  `QgsField object <http://doc.qgis.org/head/classQgsField.html>`_ \for reference::
+\  **3.** \Remember that a Python dictionary data structure has a unique set of keys that point to corresponding values. The\  ``provider.fields()`` \function returns us the 0-based positional index of column objects from left-to-right. That means the left-most column (or field) starts at 0. Each integer index points to a\  `QgsField object <http://doc.qgis.org/head/classQgsField.html>`_ \for reference::
 
     >>> columns[0]
     <qgis.core.QgsField object at 0xd8df66c>
 
 The above isn't very useful output yet. To get useful column output we need to access the attributes and functions of the QgsField object itself (we'll do that in 2 steps).
 
-\4. Remember that\  **ALL** \the dictionary keys or values call be returned in a list through these functions::
+\  **4.** \Remember that\  **ALL** \the dictionary keys or values call be returned in a list through these functions::
 
     >>> columns.keys()
     [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45]
@@ -420,7 +420,7 @@ The above isn't very useful output yet. To get useful column output we need to a
     [<qgis.core.QgsField object at 0xd8df66c>, <qgis.core.QgsField object at 0xd8df6ac>, <qgis.core.QgsField object at 0xd8df62c>, <qgis.core.QgsField object at 0xd8df5ec>, <qgis.core.QgsField object at 0xd8df5ac>, <qgis.core.QgsField object at 0xd8df56c>, <qgis.core.QgsField object at 0xd8df52c>, <qgis.core.QgsField object at 0xd8df4ec>, <qgis.core.QgsField object at 0xd8df4ac>, <qgis.core.QgsField object at 0xd8df46c>, <qgis.core.QgsField object at 0xd8df42c>, <qgis.core.QgsField object at 0xd8df3ec>, <qgis.core.QgsField object at 0xd8df3ac>, <qgis.core.QgsField object at 0xd8df36c>, <qgis.core.QgsField object at 0xd8df32c>, # TRUNCATED OUTPUT ON PURPOSE ]
 
 
-\5. To loop through the keys and values at once we can do this::
+\  **5.** \To loop through the keys and values at once we can do this::
 
     >>> for key,value in columns.items(): print str(key) + " = " + str(value)
     ... 
@@ -436,7 +436,7 @@ The above isn't very useful output yet. To get useful column output we need to a
     
     # TRUNCATED OUTPUT ON PURPOSE
 
-\6. Now let's get something useful from the QgsField object::
+\  **6.** \Now let's get something useful from the QgsField object::
  
     >>> for key,value in columns.items(): print str(key) + " = " + str(value.name()) + " | " + str(value.
     ... 
@@ -459,7 +459,7 @@ The above isn't very useful output yet. To get useful column output we need to a
 
     # TRUNCATED OUTPUT ON PURPOSE
 
-\7. We can add other QgsFeature attributes to the iteration above::
+\  **7.** \We can add other QgsFeature attributes to the iteration above::
 
     >>> for key,value in columns.items(): print str(key) + " = " + str(value.name()) + " | " + str(value.typeName()) + " | " + str(value.length())
     ... 
@@ -475,15 +475,62 @@ The above isn't very useful output yet. To get useful column output we need to a
 
 The take home point is that the QgsField object gives us the names and data types of the attribute columns but\  **NOT** \the individual feature attribute values. These have to be accessed through the features themselves.
 
-\8. We've already seen how to get at the features. So the below example reviews that and also adds the necessary steps to find a certain attribute
+\  **8.** \We've already seen how to get at vector features. The example below reviews that workflow and also adds the necessary steps to select only certain attributes using the\  ``dataProvider.select() function`` \. This time however we will be passing in\  **ALL** \the\  ``select()`` \function arguments::
 
+    >>> # Create an empty list that will hold the column indexes for the columns we are interested in 
+    >>> selectList = []
+    >>> # For each column name get its index and add it to the above selectList
+    >>> for column in ['LEVEL', 'TYPE', 'NAME', 'SORTNAME']: selectList.append(provider.fieldNameIndex(column))
+    ... 
+    >>> # Our output
+    >>> selectList
+    [5, 6, 7, 8]
+    >>> # Create a bounding box rectangle that we will use as a filter to only get features that intersect with it
+    >>> rect = QgsRectangle(QgsPoint(0,0),QgsPoint(20, 34))
+    >>> # The infamous select statement that queries our vector layer for all geometry, attributes indexes we passed and only the features that intersect our QgsRectangle
+    >>> provider.select(selectList, rect, True, False)
+    >>> feat = QgsFeature()
+    >>> # walk through each feature of our select statement and get the attributes
+    >>> while provider.nextFeature(feat):
+    ...     # we get our dictionary of attribute index keys pointing to field values for this feature
+    ...     map = feat.attributeMap()
+    ...     # for each feature's attributes print out the value
+    ...     for key, value in map.items(): print value.toString()
+    ...
+    # OUTPUT TRUNCATED FOR DEMONSTRATION
 
-\9. Now we are close to creating some actual human-readable records for each feature that we could use in a nother part of our application
+\  **9.** \Since we're close already let's create a human-readable Python table structure. The table will be a Python dictionary where the keys are the featureIDs for each feature and the values will be nested dictionaries that have keys with column names and values with the column value. Reworking the above example gives us::
+
+    >>> provider.select(selectList, rect, True, False)
+    >>> table = {}
+    >>> 
+    >>> while provider.nextFeature(feat):
+    ...     attributeMap = feat.attributeMap()
+    ...     table[feat.id()] = { 'LEVEL' : attributeMap[provider.fieldNameIndex('LEVEL')].toString() \
+    ...                           , 'NAME' : attributeMap[provider.fieldNameIndex('NAME')].toString() \
+    ...                           , 'SORTNAME' : attributeMap[provider.fieldNameIndex('SORTNAME')].toString() \
+    ...                           , 'TYPE' : attributeMap[provider.fieldNameIndex('TYPE')].toString() \ 
+    ...                         }
+    >>>
+    >>> for id, record in table.items(): print str(id) + " --> " + str(record)
+    ...
+    158 --> {'SORTNAME': PyQt4.QtCore.QString(u'Nigeria'), 'TYPE': PyQt4.QtCore.QString(u'Sovereign'), 'NAME': PyQt4.QtCore.QString(u'Nigeria'), 'LEVEL': PyQt4.QtCore.QString(u'2')}
+    38 --> {'SORTNAME': PyQt4.QtCore.QString(u'Central African Republic'), 'TYPE': PyQt4.QtCore.QString(u'Sovereign'), 'NAME': PyQt4.QtCore.QString(u'Central African Republic'), 'LEVEL': PyQt4.QtCore.QString(u'2')}
+    142 --> {'SORTNAME': PyQt4.QtCore.QString(u'Mali'), 'TYPE': PyQt4.QtCore.QString(u'Sovereign'), 'NAME': PyQt4.QtCore.QString(u'Mali'), 'LEVEL': PyQt4.QtCore.QString(u'2')}
+    156 --> {'SORTNAME': PyQt4.QtCore.QString(u'Niger'), 'TYPE': PyQt4.QtCore.QString(u'Sovereign'), 'NAME': PyQt4.QtCore.QString(u'Niger'), 'LEVEL': PyQt4.QtCore.QString(u'2')}
+    75 --> {'SORTNAME': PyQt4.QtCore.QString(u'Gabon'), 'TYPE': PyQt4.QtCore.QString(u'Sovereign'), 'NAME': PyQt4.QtCore.QString(u'Gabon'), 'LEVEL': PyQt4.QtCore.QString(u'2')}
+    44 --> {'SORTNAME': PyQt4.QtCore.QString(u'Cameroon'), 'TYPE': PyQt4.QtCore.QString(u'Sovereign'), 'NAME': PyQt4.QtCore.QString(u'Cameroon'), 'LEVEL': PyQt4.QtCore.QString(u'2')}
+    45 --> {'SORTNAME': PyQt4.QtCore.QString(u'Congo (Kinshasa)'), 'TYPE': PyQt4.QtCore.QString(u'Sovereign'), 'NAME': PyQt4.QtCore.QString(u'Democratic Republic of the Congo'), 'LEVEL': PyQt4.QtCore.QString(u'2')}
+    # TRUNCATED FOR DEMO 
+
 
 Raster
 *********
 
-# stuff
+query a raster cell value
+
+
+do a spatial clipe but no export (save that for later)
 
 ------------------------------------------------------
 
