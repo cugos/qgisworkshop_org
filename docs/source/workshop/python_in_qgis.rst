@@ -31,13 +31,13 @@ We'll walk through the following building-block examples.
 Setup
 -------------
 
-\1. To begin open up a new QGIS session by clicking the QGIS icon on the top menu bar.
+\  **1.** \To begin open up a new QGIS session by clicking the QGIS icon on the top menu bar.
 
     All the data we will be using is located in the\  ``natural_earth_50m`` \directory of your qgis user home path::
 
     /home/qgis/natural_earth_50m
 
-\2. Add the following vector and raster files to QGIS::
+\  **2.** \Add the following vector and raster files to QGIS::
 
     /home/qgis/natural_earth_50m/raster/shaded_relief/SR_50M/SR_50M.tif
     
@@ -45,7 +45,7 @@ Setup
 
     /home/qgis/natural_earth_50m/cultural/50m_cultural/50m_populated_places_simple.shp
 
-\3. Now open the Python Console by selecting::
+\  **3.** \Now open the Python Console by selecting::
 
     Plugins > Python Console
 
@@ -78,7 +78,7 @@ Method 1
 
 On the iface class is a useful function called\  `activeLayer() <http://doc.qgis.org/head/classQgisInterface.html#231f32fbf95004aebb067cb98f3a391c>`_ \that returns us a reference to the selected layer in the table of contents.
 
-\1. Run the following command::
+\  **1.** \Run the following command::
 
     >>> aLayer = qgis.utils.iface.activeLayer()
     >>> aLayer
@@ -86,12 +86,12 @@ On the iface class is a useful function called\  `activeLayer() <http://doc.qgis
 
 Depending on which layer is selected in the table of contents you will see either a raster or vector layer output. I had the raster layer selected it seems.
 
-\2. What is the name of the active layer?::
+\  **2.** \What is the name of the active layer?::
 
     >>> aLayer.name()
     PyQt4.QtCore.QString(u'SR_50M')
 
-\3. How do you get an idea about what functions this Python class has available? There's really two ways:
+\  **3.** \How do you get an idea about what functions this Python class has available? There's really two ways:
 
     \1) The more visually appealing way to browse class attributes is to access the\  `QGIS API documentation <http://doc.qgis.org>`_ \and search for the class you're working with.
 
@@ -109,12 +109,12 @@ Depending on which layer is selected in the table of contents you will see eithe
              ...
              # output truncated for demonstration
 
-        The pile of text printed out in the shell is hard to navigate. Above is an example of some of the attributes you might see. It's probably better to use the API above.
+The pile of text printed out in the shell is hard to navigate. Above is an example of some of the attributes you might see. It's probably better to use the API above.
 
 Method 2
 **********
 
-\1. Another common way of accessing the selected layer in the table of contents is to get at it using the\  `QgsMapCanvas <http://doc.qgis.org/head/classQgsMapCanvas.html>`_ \. The mapCanvas class has tons of useful functions::
+\  **1.** \Another common way of accessing the selected layer in the table of contents is to get at it using the\  `QgsMapCanvas <http://doc.qgis.org/head/classQgsMapCanvas.html>`_ \. The mapCanvas class has tons of useful functions::
 
     >>> canvas = qgis.utils.iface.mapCanvas()
     >>> cLayer = canvas.currentLayer()
@@ -123,7 +123,7 @@ Method 2
 
 Method 3
 **********
-\1. With the map canvas class we can get more than just the active layer -- we can get everthing::
+\  **1.** \With the map canvas class we can get more than just the active layer -- we can get everthing::
 
     >>> allLayers = canvas.layers()
     >>> for i in allLayers: print i.name()
@@ -134,7 +134,7 @@ Method 3
 
 It turns out that using\  ``QgsMapCanvas.layers()`` \will only return us\  **visible** \layers (those that are checked visible).
 
-\2. Turn on the raster layer in the table of contents. Rerun the exact same two lines of code above::
+\  **2.** \Turn on the raster layer in the table of contents. Rerun the exact same two lines of code above::
 
     >>> allLayers = canvas.layers()
     >>> for i in allLayers: print i.name()
@@ -151,7 +151,7 @@ It's also useful sometimes to access layers in the order they are stacked in the
 
 Layers are stacked top-down and accessed through a zero-based index. That means the first layer (topmost layer) starts at index 0.
 
-\1. We access layers using the\  `QgsMapCanvas.layer() function <http://doc.qgis.org/head/classQgsMapCanvas.html#de2251f2227bc0f0efefd09810a193cd>`_ \and pass in a integer designating the index we want::
+\  **1.** \We access layers using the\  `QgsMapCanvas.layer() function <http://doc.qgis.org/head/classQgsMapCanvas.html#de2251f2227bc0f0efefd09810a193cd>`_ \and pass in a integer designating the index we want::
 
     >>> canvas.layer(0)
     <qgis.core.QgsVectorLayer object at 0x99eaeec>
@@ -177,7 +177,7 @@ Loading Layers into QGIS
 
 Maybe when you were looking at the QgsInterface class you noticed a couple addLayer methods? Let's use these to load layers into QGIS. 
 
-\1. Start by turning off all layers currenlty in QGIS by unchecking them. Then with a blank map, re-add the SR_50M and populated places data as a different name::
+\  **1.** \Start by turning off all layers currenlty in QGIS by unchecking them. Then with a blank map, re-add the SR_50M and populated places data as a different name::
 
     >>> qgis.utils.iface.addVectorLayer("/home/qgis/natural_earth_50m/cultural/50m_cultural/50m_populated_places_simple.shp", "pop2", "ogr")
     <qgis.core.QgsVectorLayer object at 0xca0feac>
@@ -205,7 +205,7 @@ If it's vector data we just use the same function as we did above\  `addVectorLa
 
 QGIS supports the idea of uniform resource identifiers (URIs) as data-source descriptions for handling input from databases, CSVs and GPX files. The URI we pass to the database includes such parameters as the database name, username, password and the port it runs on (among other parameters).
 
-\1. Let's load country polygons from PostgreSQL::
+\  **1.** \Let's load country polygons from PostgreSQL::
 
     >>> uri = QgsDataSourceURI()
     >>> uri.setConnection("localhost", "5432", "qgis_workshop", "qgis", "qgis")
@@ -241,20 +241,20 @@ Geometry in a Vector Layer
 
 There's number of ways to access a Layer's features and each feature geometry. We will NOT walk through all of them here. One way to access a layer is through the\  `QgsVectorDataProvider <http://doc.qgis.org/head/classQgsVectorDataProvider.html>`_ \class. You can get a reference to a data provider directly from your\  `QgsVectorLayer <http://doc.qgis.org/head/classQgsVectorLayer.html>`_ \class.
 
-\1. First, remove all layers from QGIS
+\  **1.** \First, remove all layers from QGIS
 
 
-\2. Then add the layer called\  ``50m_admin_0_countries.shp`` \located here::
+\  **2.** \Then add the layer called\  ``50m_admin_0_countries.shp`` \located here::
 
     /home/qgis/natural_earth_50m/cultural/50m_cultural/50m_admin_0_countries.shp
 
-\3. Make sure the Python Console is open. Now get a reference to a the current layer::
+\  **3.** \Make sure the Python Console is open. Now get a reference to a the current layer::
 
     >>> cLayer = qgis.utils.iface.mapCanvas().currentLayer()
     >>> cLayer.name()
     PyQt4.QtCore.QString(u'50m_admin_0_countries')
 
-\4. Get a reference to the data provider::
+\  **4.** \Get a reference to the data provider::
 
     >>> provider = cLayer.dataProvider()
     >>> provider.name()
@@ -262,7 +262,7 @@ There's number of ways to access a Layer's features and each feature geometry. W
 
 If this was a vector layer from postgresql then "postgres" would be the\  ``provider.name()`` \returned.
 
-\5. One way you'll access vector layer features is through the data provider's\  `select() <http://doc.qgis.org/head/classQgsVectorDataProvider.html#ed7343c5ccea4d4fe795159eb4268b96>`_ \function::
+\  **5.** \One way you'll access vector layer features is through the data provider's\  `select() <http://doc.qgis.org/head/classQgsVectorDataProvider.html#ed7343c5ccea4d4fe795159eb4268b96>`_ \function::
 
     >>> provider.select()
 
@@ -277,7 +277,7 @@ When we run\  ``select()`` \without any arguments passed we are only getting the
 
 To summarize, when we ran\  ``select()`` \we retrieved all feature geometries but no attributes.
 
-\6. Now let's get one feature id and geometry::
+\  **6.** \Now let's get one feature id and geometry::
 
     >>> feat = QgsFeature()
     >>> # the above is an empty QgsFeature until we pass it to the provider
@@ -295,7 +295,7 @@ We then used the\  `QgsFeature.geometry() <http://doc.qgis.org/head/classQgsFeat
 
 Lastly, we used the current layer reference to actually select that feature in QGIS.
 
-\7. Open the layer's attribute table and click on the 'zoom to selected features' icon on the bottom left.
+\  **7.** \Open the layer's attribute table and click on the 'zoom to selected features' icon on the bottom left.
 
 .. image:: ../_static/zoom_to_selected_feature.png
     :scale: 100%
@@ -313,7 +313,7 @@ As a quick side note, here's another way to get the Aruba feature (assuming that
     >>> provider.featureAtId(0, feat)
     True
 
-\8. With that geometry reference we can start quality checks on the geometry to make sure we want to use it in further processing::
+\  **8.** \With that geometry reference we can start quality checks on the geometry to make sure we want to use it in further processing::
 
     >>> feat.geometry().asPolygon()
     [[(-69.8991,12.452), (-69.8957,12.423), (-69.9422,12.4385), (-70.0041,12.5005), (-70.0661,12.547), (-70.0509,12.5971), (-70.0351,12.6141), (-69.9731,12.5676), (-69.9118,12.4805), (-69.8991,12.452)]]
@@ -330,7 +330,7 @@ As a quick side note, here's another way to get the Aruba feature (assuming that
 
 This geometry is valid, not empty and looks to be a simple Polygon (as opposed to a MultiPolygon).
 
-\9. To be sure that this geometry is of the 'type' we intend to use we can also use these methods to quality check::
+\  **9.** \To be sure that this geometry is of the 'type' we intend to use we can also use these methods to quality check::
 
     >>> feat.geometry().wkbType()
     3
@@ -436,7 +436,7 @@ The above isn't very useful output yet. To get useful column output we need to a
     
     # TRUNCATED OUTPUT ON PURPOSE
 
-\  **6.** \Now let's get something useful from the QgsField object::
+\  **6.** \Now let's get some meaningful output from the QgsField object::
  
     >>> for key,value in columns.items(): print str(key) + " = " + str(value.name()) + " | " + str(value.
     ... 
@@ -459,7 +459,7 @@ The above isn't very useful output yet. To get useful column output we need to a
 
     # TRUNCATED OUTPUT ON PURPOSE
 
-\  **7.** \We can add other QgsFeature attributes to the iteration above::
+\  **7.** \We can add other QgsField attributes to the iteration above::
 
     >>> for key,value in columns.items(): print str(key) + " = " + str(value.name()) + " | " + str(value.typeName()) + " | " + str(value.length())
     ... 
@@ -475,14 +475,15 @@ The above isn't very useful output yet. To get useful column output we need to a
 
 The take home point is that the QgsField object gives us the names and data types of the attribute columns but\  **NOT** \the individual feature attribute values. These have to be accessed through the features themselves.
 
-\  **8.** \We've already seen how to get at vector features. The example below reviews that workflow and also adds the necessary steps to select only certain attributes using the\  ``dataProvider.select() function`` \. This time however we will be passing in\  **ALL** \the\  ``select()`` \function arguments::
+\  **8.** \We've already seen how to get at vector features. The example below reviews that workflow and also adds the necessary steps to select only certain attributes using the\  ``dataProvider.select() function`` \. This time however we will be passing in\  **ALL** \the\  ``select()`` \function arguments. Notes on each step are included below::
 
     >>> # Create an empty list that will hold the column indexes for the columns we are interested in 
     >>> selectList = []
-    >>> # For each column name get its index and add it to the above selectList
-    >>> for column in ['LEVEL', 'TYPE', 'NAME', 'SORTNAME']: selectList.append(provider.fieldNameIndex(column))
+    >>> # For each column name we are interested in retreiving get its index and add it to the above selectList
+    >>> for column in ['LEVEL', 'TYPE', 'NAME', 'SORTNAME']:
+    ...     selectList.append(provider.fieldNameIndex(column))
     ... 
-    >>> # Our output
+    >>> # Our column index output 
     >>> selectList
     [5, 6, 7, 8]
     >>> # Create a bounding box rectangle that we will use as a filter to only get features that intersect with it
@@ -499,7 +500,7 @@ The take home point is that the QgsField object gives us the names and data type
     ...
     # OUTPUT TRUNCATED FOR DEMONSTRATION
 
-\  **9.** \Since we're close already let's create a human-readable Python table structure. The table will be a Python dictionary where the keys are the featureIDs for each feature and the values will be nested dictionaries that have keys with column names and values with the column value. Reworking the above example gives us::
+\  **9.** \We're very close already to creating a table structure -- actually, a Python data structure that represents a table in a database. The table will be a Python dictionary where the keys are the featureIDs for each feature and the values will be nested dictionaries that have keys with column names and values with the column value. Reworking the above example gives us::
 
     >>> provider.select(selectList, rect, True, False)
     >>> table = {}
@@ -527,81 +528,127 @@ The take home point is that the QgsField object gives us the names and data type
 Raster
 *********
 
-query a raster cell value
+In this next example we'll be querying raster cell values with QgsPoints using the\  `QgsRasterLayer.identify() function <http://doc.qgis.org/head/classQgsRasterLayer.html#4bcb29bba8fc0fca1e0bed41b6a0ee9b>`_ \. Although the C++ API shows the identify() function taking two arguments the Python bindings really only need a QgsPoint() to be passed as an argument.
 
 
-do a spatial clipe but no export (save that for later)
+\  **1.** \Load the shaded relief into QGIS located at::
+
+    /home/qgis/natural_earth_50m/raster/shaded_relief/SR_50M/SR_50M.tif
+
+\  **2.** \The first thing we need to do is create a couple points in WGS84 (EPSG:4326) that we can used to query this raster layer. I've chosen Dar-Es-Salaam, Tanzania and Assam, India as a couple locations::
+
+    >>> DarEsSalaam = QgsPoint(39.268, -6.80)
+    >>> DarEsSalaam
+    (39.268,-6.8)
+    >>> Assam = QgsPoint(91.76,26.144)
+    >>> Assam
+    (91.76,26.144)
+
+\  **3.** \Make sure you have a reference to the\  ``SR_50M.tif`` \raster layer::
+
+    >>> rLayer = qgis.utils.iface.mapCanvas().layer(1)
+    >>> rLayer.name()
+    PyQt4.QtCore.QString(u'SR_50M')
+
+\  **4.** \The\  `QgsRasterLayer.identify() function <http://doc.qgis.org/head/classQgsRasterLayer.html#4bcb29bba8fc0fca1e0bed41b6a0ee9b>`_ \returns a boolean True or False to indicate whether or not the identify worked. The data is returned in a dictionary with the band number as a key and the value for that band number as a value::
+
+    >>> rLayer.identify(Assam)
+    (True, {PyQt4.QtCore.QString(u'Band 1'): PyQt4.QtCore.QString(u'218')})
+    >>> rLayer.identify(DarEsSalaam)
+    (True, {PyQt4.QtCore.QString(u'Band 1'): PyQt4.QtCore.QString(u'202')})
+
+\  **5.** \To extract the data returned from identify and make it a little more presentable we can do the following::
+
+    >>> success, data = rLayer.identify(DarEsSalaam)
+    >>> for band, value in data.items(): print str(band) + " = " + str(value)
+    ... 
+    Band 1 = 202
+    >>> 
 
 ------------------------------------------------------
-
 
 Symbology
 --------------
 
-# stuff
+Let's go through some quick symbology moves using raster and vector data types.
 
-------------------------------------------------------
+Raster
+********
 
-Coordinate Reference System Transformation
-------------------------------------------------
+Remember that the class\  `QGis <http://doc.qgis.org/head/classQGis.html>`_ \references some global constants that represent basic vector data types. These data types can be used for comaprison like this::
 
-# stuff
+    >>> myPoint = QgsGeometry.fromPoint(QgsPoint(-122,47))
+    >>> myPoint
+    <qgis.core.QgsGeometry object at 0xcb6822c>
+    >>> myPoint.asPoint()
+    (-122,47)
+    >>> myPoint.type()
+    0
+    >>> QGis.Point
+    0
+    >>> myPoint.wkbType()
+    1
+    >>> QGis.WKBPoint
+    1
+    >>> myPoint.type() == QGis.Point
+    True
+    >>> myPoint.wkbType() == QGis.WKBPoint
+    True
 
-------------------------------------------------------
 
-Writing Layers to File
----------------------------------
+Raster data also has it's own global constants that represent raster data types (Color, Paletted, GrayOrUndefined, Multiband) as well as the differnt types of shading and drawing that can happen. These are defined in the\  `QgsRasterLayer class <http://doc.qgis.org/head/classQgsRasterLayer.html#37e287fd16e799bddcf0e5533de07c13>`_ \. To get an idea about what integer lookup each one represents we can do exactly what we did above::
 
-Finally, we need to be able to write the results of our operations to disk.
+    >>> # Here a couple raster types
+    >>> QgsRasterLayer.Palette
+    1
+    >>> QgsRasterLayer.Multiband
+    2
+    >>> # Here are a couple raster drawing styles
+    >>> QgsRasterLayer.SingleBand
+    Traceback (most recent call last):
+      File "<input>", line 1, in <module>
+    AttributeError: type object 'QgsRasterLayer' has no attribute 'SingleBand'
+    >>> QgsRasterLayer.SingleBandGray
+    1
+    >>> QgsRasterLayer.SingleBandPseudoColor
+    2
+    >>> # Here a couple raster shaded styles
+    >>> QgsRasterLayer.UndefinedShader
+    0
+    >>> QgsRasterLayer.PseudoColorShader
+    1
 
-In this example we will write a reusable function that takes a vector layer as an argument and writes all features and attributes to disk.
-First create a folder in your home direcotry called workspace.
+When a raster layer is loaded into QGIS it gets a default\  `DrawingStyle <http://doc.qgis.org/head/classQgsRasterLayer.html#36796f1a303dac9848ba3dce3e5527dc>`_ \based on it's\  `LayerType <http://doc.qgis.org/head/classQgsRasterLayer.html#37e287fd16e799bddcf0e5533de07c13>`_ \.
 
-You can either do this by using the bash shell or by using the normal folder browser.
+\  **1.** \Let's see what kind of raster type and drawing style our raster layer has. Make sure you have reference to the raster layer first::
 
-Instructions for both ways are listed below.
+    >>> rLayer = qgis.utils.iface.mapCanvas().layers()[1]
+    >>> rLayer.name()
+    PyQt4.QtCore.QString(u'SR_50M')
+    >>> rLayer.rasterType()
+    0
+    >>> rLayer.rasterType() == QgsRasterLayer.GrayOrUndefined
+    True
+    >>> rLayer.colorShadingAlgorithm()
+    2
+    >>> rLayer.colorShadingAlgorithm() == QgsRasterLayer.FreakOutShader
+    True
+    >>> rLayer.drawingStyle()
+    1
+    >>> rLayer.drawingStyle() == QgsRasterLayer.SingleBandGray
+    True
 
-Folder Browser
-*******************
 
-Click on\  ``Places > Home Folder`` \on the top menu bar
+\  **2.** \Changing between these global shading or drawing styles is arbitrary. When you are done, refresh the map::
 
-This should take you to the user's home directory. Since we are the qgis user, our home folder is called qgis::
+    >>> rLayer.setColorShadingAlgorithm(QgsRasterLayer.PseudoColorShader)
+    >>> rLayer.setDrawingStyle(QgsRasterLayer.SingleBandPseudoColor)
+    >>> # Now setup the refresh to see the change
+    >>> rLayer.setCacheImage(None)
+    >>> rLayer.triggerRepaint()
+    >>> qgis.utils.iface.legendInterface().refreshLayerSymbology(rLayer)
 
-    /home/qgis
+Vector
+*******
 
-Right click in this folder and select\  ``Create Folder`` \. Create a folder called workspace.
 
-Inside of the\  ``workspace`` \folder create another folder called\  ``layer_exports``\.
-
-Bash Shell
-******************
-
-Open a new bash shell by hitting\  ``<Control><Alt> + t``\.
-
-Optionally, just open a new bash shell by selecting the terminal icon on the top menu bar
-
-.. image:: ../_static/terminal_screenshot.png
-    :scale: 100%
-    :align: center 
-
-Change directories to your home folder::
-
-    cd /home/qgis
-
-Then make the two new directories we want::
-
-    mkdir workspace
-
-    mkdir /workspace/layer_exports
-
-Writing the Copy Function
-*****************************
-
-Our copy function will take one argument -- a QgsLayer. 
-
-Write the following function line by line into the Python Console.::
-
-    
-
-.. note:: Make sure after the function defintion** \  ``def copyLayer(layer):`` \ that you tab all function statements or else the interpreter will complain
