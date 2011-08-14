@@ -5,7 +5,7 @@ PyQT
 What it is
 ------------
 
-PyQt refers to the Python bindings that wrap the C/C++ Qt libraries. That means we can now use Python to build Qt applications instead of learning C++.
+PyQt refers to the Python bindings that wrap the C++ Qt libraries. That means we can now use Python to build Qt applications instead of learning C++.
 
 How it provided the idea behind PyQGIS
 --------------------------------------
