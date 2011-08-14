@@ -1,30 +1,44 @@
 .. QGIS Workshop - VM Install Notes
 
+.. qgis python qt pyqt python_in_qgis plugins designer qgis_api debug repositories 
+
 Workshop
 ==========================================
 
-Contents:
+Introduction
+-----------------
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 3
 
-   qgis
+   introduction
 
-   python
+1st Hour
+-----------------
 
-   qt
+.. toctree::
+   :maxdepth: 3
 
-   pyqt
+   session_1
 
-   python_in_qgis
 
-   plugins
+2nd Hour
+----------------
 
-   designer
+.. toctree::
+   :maxdepth: 3
 
-   qgis_api
+   session_2
 
-   debug
+3rd Hour
+------------------
 
-   repositories
+.. toctree::
+   :maxdepth: 3
+
+   session_3
+
+
+
+
 
