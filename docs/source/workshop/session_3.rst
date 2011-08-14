@@ -3,8 +3,6 @@
 Event-Driven Plugins / Debugging Plugins / Setting up Plugin Repositories (3rd Hour)
 ---------------------------------------------------------------------------------------
 
--------------------
-
 .. toctree::
     :maxdepth: 1
 
