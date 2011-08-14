@@ -1,6 +1,6 @@
 .. session_3 (2nd hour)
 
-Building Python Plugins (2nd hour)
+Building Python Plugins
 --------------------------------------
 
 
