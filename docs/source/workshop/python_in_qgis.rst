@@ -306,7 +306,7 @@ Lastly, we used the current layer reference to actually select that feature in Q
 It seems the island of Aruba has a featureID of 0. 
 
 .. image:: ../_static/get_geometry_select_aruba.png
-    :scale: 50%
+    :scale: 100%
     :align: center
 
 As a quick side note, here's another way to get the Aruba feature (assuming that we know the feature's ID) with the\  `featureAtId() function <http://doc.qgis.org/head/classQgsVectorDataProvider.html#583a432e2e1046392abf79bf1e58f404>`_ \of the QgsVectorDataProvider class ::
