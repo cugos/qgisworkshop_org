@@ -220,7 +220,7 @@ QGIS supports the idea of uniform resource identifiers (URIs) as data-source des
 You should now have the countries layer in QGIS
 
 .. image:: ../_static/postgres_countries_layer.png
-    :scale: 60 %
+    :scale: 90 %
     :align: center
 
 ------------------------------------------------------
