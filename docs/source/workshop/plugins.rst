@@ -5,17 +5,17 @@ Plugins
 Plugin Architecture
 ---------------------
 
-QGIS Python plugins are set of Python modules that describe everthing from our plugin resources to the code that runs the plugin logic. We'll save the details for the\  **Examples** \section below, but here's a high-level overview.
+QGIS Python plugins are just a set of Python modules that describe everything from our plugin resources to the code that runs the plugin logic. We'll save the details for the\  **Examples** \section below, but here's a high-level overview.
 
-To create QGIS Python plugins you'll need at least 4 types of files (though most plugins often contain more):
-    - a file with a\  ``.ui`` \extension that describes your graphical user interface (GUI). This has to be compiled into a python modules using the command-line tool\  ``pyuic4`` \.
-    - a file that gives high-level configuration information about your plugin such as the name\  ``__init__.py`` \.
-    - a file with a\  ``.qrc`` \extension describing the resources your plugin might use such as images. This has to be compiled into a python module using the command-line tool\  ``pyrcc4`` \.
-    - and finally, the meat-and-potatoes of the plugin is the file that does the actual work and most of the time handles communication between your resources and GUI. This file is just a normal python module with some specific import statements and method names. It can be named anything, though that name is usually associated to the name of your plugin.
+To create QGIS Python plugins you'll need at least 4 types of files in your project (though most plugins often contain more):
+    - a file with a\  ``.ui`` \extension that describes your graphical user interface (GUI). This has to be compiled into a python module using the command-line tool\  ``pyuic4`` \.
+    - a file that gives high-level configuration information about your plugin such as the name and author\  ``__init__.py`` \.
+    - a file with a\  ``.qrc`` \extension describing the resources your plugin will use such as images. This has to be compiled into a python module using the command-line tool\  ``pyrcc4`` \.
+    - and finally, the meat-and-potatoes of the plugin is the file that does the actual work. This module handles communication between your resources and GUI. This file is just a normal Python module with some specific import statements and method names. It can be named anything, though that name is usually associated with the name of your plugin.
 
 -----------------------------
 
-To get a better idea about how these types of files fit into a plugin project let's look at a Python plugin that is already installed on your system. Then we can look for the file patterns described above.
+To get a better idea about how these different file types fit comprise a plugin project let's look at a Python plugin that is already installed on your system. Then we can look for the file patterns described above.
 
 \  **1.** \Open a new bash shell. The bash shell can be started by holding down\  ``<Cntl>-<ALT>`` \keys and then pressing\  ``t`` \at the same time. You should see a purple window pop open with a blinking cursor.
 
@@ -33,7 +33,7 @@ To get a better idea about how these types of files fit into a plugin project le
     drwxr-xr-x  3 qgis qgis 4.0K 2011-07-07 13:41 pluginbuilder
     
 
-The\  **pluginbuilder** \plugin project located in\  ``/home/qgis/.qgis/python/plugins`` \is a plugin we'll get familiar with in a second. It eases the pain of creating plugins by automajically creating plugin template files (the ones we talked briefly about above) and piping in a lot of the code we'll use. 
+The\  **pluginbuilder** \project located in\  ``/home/qgis/.qgis/python/plugins`` \is a plugin we'll become familiar with soon. It makes creating plugins easier by automajically creating plugin template files (the file types we talked about above). The\  **pluginbuilder** \also pipes template code into the template files for us to modify.
 
 
 \  **3.** \Now change directories into the\  ``pluginbuilder`` \directory and list those contents::
@@ -70,12 +70,12 @@ The\  **pluginbuilder** \plugin project located in\  ``/home/qgis/.qgis/python/p
     -rw-r--r--  1 qgis qgis 2.2K 2011-07-07 13:41 ui_results.pyc
     -rw-r--r--  1 qgis qgis 1.9K 2011-07-07 13:41 ui_results.ui
 
-We are only interested in looking for patterns here. As you can see there seems to be two GUI(s) associated with this plugin. We got this number by counting the number of files with a\  ``.ui`` \extension::
+Remember, we are only interested in looking for file patterns here. As you can see there seems to be two GUI(s) associated with this plugin. We got this number by counting the number of files with a\  ``.ui`` \extension::
 
     -rw-r--r--  1 qgis qgis 6.9K 2011-07-07 13:41 ui_pluginbuilder.ui
     -rw-r--r--  1 qgis qgis 1.9K 2011-07-07 13:41 ui_results.ui
 
-We can also see that each of the\  ``.ui`` \files has been compiled into python modules with the same basename. So all of these files seem to be related to the GUI::
+We can also see that each of the\  ``.ui`` \files has been compiled into python modules with the same basename. So all of the following files seem to be related to the GUI::
 
     -rw-r--r--  1 qgis qgis 8.6K 2011-07-07 13:41 ui_pluginbuilder.py
     -rw-r--r--  1 qgis qgis 5.9K 2011-07-07 13:41 ui_pluginbuilder.pyc
@@ -84,7 +84,7 @@ We can also see that each of the\  ``.ui`` \files has been compiled into python 
     -rw-r--r--  1 qgis qgis 2.2K 2011-07-07 13:41 ui_results.pyc
     -rw-r--r--  1 qgis qgis 1.9K 2011-07-07 13:41 ui_results.ui
 
-Notice the\ ``__init__.py`` \file. If you opened this file, then you'd see its guts, which describe some high-level plugin information::
+Notice the\  ``__init__.py`` \file. If you opened this file and looked at its guts, then you'd see high-level plugin descriptions such as names and verions numbers::
 
     def name():
         return "Plugin Builder"
@@ -101,7 +101,7 @@ Notice the\ ``__init__.py`` \file. If you opened this file, then you'd see its g
         from pluginbuilder import PluginBuilder
         return PluginBuilder(iface)
 
-We can also see that these files are associated to the resources::
+Also notice the resource files associated with this project below. Remember that the\  ``.qrc`` \file has to be compiled into a python module. Here's all of those files::
 
     -rw-r--r--  1 qgis qgis  23K 2011-07-07 13:41 resources.py
     -rw-r--r--  1 qgis qgis 6.1K 2011-07-07 13:41 resources.pyc
@@ -109,55 +109,84 @@ We can also see that these files are associated to the resources::
 
 The\  ``resources.py`` \and\  ``resources.pyc`` \are the compiled version of\  ``resources.qrc`` \.
 
-With that said, it's probably a good guess that anything else with a\ ``.py`` \extension in this directory that we didn't talk about is related to the main plugin logic. There also seems to be some documents and images that we don't need to be concerned about at this point.
+With that said, it's probably a good guess that anything else with a\  ``.py`` \extension in this directory that we didn't talk about is related to the main plugin logic. There also seems to be some documents and images that we don't need to be concerned about at this point.
 
 ----------------------------
 
 Installing QGIS Plugins
 ------------------------------
 
-You might wonder how the\  ``pluginbuilder`` \plugin got into this directory? 
+So how did the\  ``pluginbuilder`` \plugin get installed? How did it get in this directory? 
 
-Let's review how we install pluings briefly to clarify this process.
+Let's review how we install Python plugins breifly.
 
-\  **1.** \On the menu bar of QGIS click the\  ``Plugins > Fetch Python Plugins`` \element:
+\  **1.** \On the menu bar of QGIS click the\  ``Plugins > Fetch Python Plugins`` \item:
 
 .. image:: ../_static/plugins_menu_click_1.png
     :scale: 100%
     :align: center
 
-\  **2.** \The dialog should immediately try to fetch plugins for you (becuase we have already setup the 3rd-party repositories to search). Let's show you how to do that and pretend like it wasn't already setup. Click the\  ``Abort Fetching`` \button:
+\  **2.** \A new dialog shows up with a list of available Python plugins for install. The tutorial authors have already setup QGIS to fetch 3rd-party plugins. If the tutorial authors had not done this there would be less plugins listed here. Click on the\  ``Repository`` \tab. This lists all the plugin repositories that are being searched for plugins. At the very bottom is a\  ``3rd Party Repositories`` \button. Click this button and QGSI will begin searching 3rd-party repositories for plugins: 
 
-.. image:: ../_static/fetch_plugins_abort_2.png
+.. image:: ../_static/add_3rd_partyplugins_new.png
     :scale: 100%
     :align: center
 
-\  **3.** \A new dialog shows up. Click on the\  ``Repository`` \tab. At the very bottom is a\  ``3rd Party Repositories`` \button. This is where you would request to view other people's repositories:
+\  **3.** \Now go to the\  ``Plugins`` \tab. The plugins for each repository show up here. Choose a plugin to download. I chose to install the osmpoly_export plugin:
 
-.. image:: ../_static/add_3rd_party_repos_3.png
+.. image:: ../_static/qigs_install_osm_plugin.png
     :scale: 100%
     :align: center
 
-\  **4.** \Now go to the\  ``Plugins`` \tab. The plugins for each repository show up here. Choose a plugin to download. I chose to install the OSMPOLY_export plugin:
+\  **4.** \In the bash shell or folder browser navigate to\  ``/home/qgis/.qgis/python/plugins`` \. The plugin you chose to install should now be located here::
 
-.. image:: ../_static/install_plugin_4.png
+    $ cd /home/qgis/.qgis/python/plugins/
+    $ ls -lah
+    total 16K
+    drwxr-xr-x 4 qgis qgis 4.0K 2011-08-20 12:26 .
+    drwxr-xr-x 4 qgis qgis 4.0K 2011-07-07 13:41 ..
+    drwxr-xr-x 2 qgis qgis 4.0K 2011-08-20 12:26 osmpoly_export
+    drwxr-xr-x 3 qgis qgis 4.0K 2011-07-07 13:41 pluginbuilder
+
+\  **5.** \To turn any plugin on or off you can manage it by clicking\  ``Plugins > Manage Plugins`` \. The QGIS Plugin Manager dialog will launch with checkboxes next to the plugin you want to turn on or off:
+
+.. image:: ../_static/plugin_manager_console.png
     :scale: 100%
     :align: center
 
-The plugin you chose to install should now be located at\  ``/home/qgis/.qgis/pythong/plugins/`` \. Go there to see it's contents.
-
-
-
-
-
-
-
+ 
 ----------------------------
 
-Building Our First Pluing with PluginBuilder
+Building Our First Plugin with 'Plugin Builder'
 ------------------------------------------------
 
-Now it's time to get our feet really wet
+Now it's time to get our feet wet by building our first plugin using\  **Plugin Builder** \to help us.
+
+\  **1.** \On the QGIS menu bar click on the\  ``Plugin Builder`` \icon to launch the plugin:
+
+.. image:: ../_static/plugin_builder_click1.png
+    :scale: 100%
+    :align: center
+
+\  **2.** \The main Plugin Builder dialog will appear. This is where we fill out our basic configuration information that Plugin Builder uses to create the template files. We will then modify the template files to build out our plugin. All the fields in the dialog below are required. Fill these fields out like the picture shows. Then click the\  ``Ok`` \button.:
+
+.. image:: ../_static/plugin_builder_main_dialog.png 
+    :scale: 100%
+    :align: center
+
+\  **3.** \A file dialog will open. Create a\ ``workspace`` \folder inside your\  ``/home/qgis/`` \directory. Save your plugin project by selecting the\  ``workspace`` \directory in the file dialog:
+
+.. image:: ../_static/plugin_builder_save_dir.png 
+    :scale: 100%
+    :align: center
+
+\  **4.** \If everything went well, Plugin Builder will display a final dialog that shows us the next steps to customize our plugin project. Don't worry about folowing these because we will be detailing the exact same steps.
+
+.. image:: ../_static/plugin_builder_feedback.png 
+    :scale: 100%
+    :align: center
+
+
 
 
 Examples
