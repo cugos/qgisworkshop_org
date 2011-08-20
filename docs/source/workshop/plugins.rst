@@ -70,9 +70,7 @@ The\  **pluginbuilder** \plugin project located in\  ``/home/qgis/.qgis/python/p
     -rw-r--r--  1 qgis qgis 2.2K 2011-07-07 13:41 ui_results.pyc
     -rw-r--r--  1 qgis qgis 1.9K 2011-07-07 13:41 ui_results.ui
 
-I know this is a lot of files but we are only interested in looking for patterns here. 
-
-As you can see there seems to be two GUI(s) associated with this plugin. We got this number by counting the number of files with a\  ``.ui`` \extension::
+We are only interested in looking for patterns here. As you can see there seems to be two GUI(s) associated with this plugin. We got this number by counting the number of files with a\  ``.ui`` \extension::
 
     -rw-r--r--  1 qgis qgis 6.9K 2011-07-07 13:41 ui_pluginbuilder.ui
     -rw-r--r--  1 qgis qgis 1.9K 2011-07-07 13:41 ui_results.ui
@@ -111,16 +109,47 @@ We can also see that these files are associated to the resources::
 
 The\  ``resources.py`` \and\  ``resources.pyc`` \are the compiled version of\  ``resources.qrc`` \.
 
-With that said, it's probably a good guess that anything else with a\ ``.py`` \extension in this directory that we didn't talk about is related to the main plugin logic. There also seems to be some documents and images that we don't need to be concerted about at this point.
+With that said, it's probably a good guess that anything else with a\ ``.py`` \extension in this directory that we didn't talk about is related to the main plugin logic. There also seems to be some documents and images that we don't need to be concerned about at this point.
 
 ----------------------------
 
 Installing QGIS Plugins
 ------------------------------
 
-So how did the\  ``pluginbuilder`` \plugin get in this directory? 
+You might wonder how the\  ``pluginbuilder`` \plugin got into this directory? 
 
-Let's review how we install pluings briefly.
+Let's review how we install pluings briefly to clarify this process.
+
+\  **1.** \On the menu bar of QGIS click the\  ``Plugins > Fetch Python Plugins`` \element:
+
+.. image:: ../_static/plugins_menu_click_1.png
+    :scale: 100%
+    :align: center
+
+\  **2.** \The dialog should immediately try to fetch plugins for you (becuase we have already setup the 3rd-party repositories to search). Let's show you how to do that and pretend like it wasn't already setup. Click the\  ``Abort Fetching`` \button:
+
+.. image:: ../_static/fetch_plugins_abort_2.png
+    :scale: 100%
+    :align: center
+
+\  **3.** \A new dialog shows up. Click on the\  ``Repository`` \tab. At the very bottom is a\  ``3rd Party Repositories`` \button. This is where you would request to view other people's repositories:
+
+.. image:: ../_static/add_3rd_party_repos_3.png
+    :scale: 100%
+    :align: center
+
+\  **4.** \Now go to the\  ``Plugins`` \tab. The plugins for each repository show up here. Choose a plugin to download. I chose to install the OSMPOLY_export plugin:
+
+.. image:: ../_static/install_plugin_4.png
+    :scale: 100%
+    :align: center
+
+The plugin you chose to install should now be located at\  ``/home/qgis/.qgis/pythong/plugins/`` \. Go there to see it's contents.
+
+
+
+
+
 
 
 ----------------------------
