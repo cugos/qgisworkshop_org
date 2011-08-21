@@ -368,9 +368,10 @@ Notice that the Makefile is smart. It knows that there were only changes to the\
 Looking at the Project Files
 *******************************
 
-
+# stub
 
 --------------------------------------
+
 
 How to Debug Your Plugin
 ---------------------------
