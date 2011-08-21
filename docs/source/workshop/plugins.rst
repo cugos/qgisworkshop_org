@@ -5,7 +5,7 @@ Plugins
 Plugin Architecture
 ---------------------
 
-QGIS Python plugins are just a set of Python modules that describe everything from our plugin resources to the code that runs the plugin logic. We'll save the details for the\  **Examples** \section below, but here's a high-level overview.
+QGIS Python plugins are just a set of Python modules that describe everything from our plugin resources to the code that runs the plugin logic. We'll save the details for the sections below, but here's a high-level overview.
 
 To create QGIS Python plugins you'll need at least 4 types of files in your project (though most plugins often contain more):
     - a file with a\  ``.ui`` \extension that describes your graphical user interface (GUI). This has to be compiled into a python module using the command-line tool\  ``pyuic4`` \.
@@ -258,15 +258,128 @@ Those two statements are the commands we need to compile the appropriate resourc
 Extending the Plugin Builder Templates
 -----------------------------------------  
 
-Before we build out the logic of our tool, let's talk about what the GUI will look like. Then we will use\  `QT Designer <href>`_ \to help us make our GUI changes by adding and customzing widgets.
+Building plugins is an iterative process, many consecutive steps are repeated. I like to think that building a plugin generally follows this workflow:
 
-The tool we will build is going to select features by clicking on a point in the exact same way that the current Select Single Feature works in QGIS. The purpose is to illustrate the steps. There are more practical examples at the end of this tutorial. 
+    1. Choose to implement one small part of overall plugin idea at a time
+    2. Customize the GUI desgin with Qt Designer to fit our interactive needs (remember to recompile the .ui file)
+    3. Write tool logic but proof with QMessageBoxes to make sure it is working
+    4. Once tool logic has been proofed, tie the tool logic to the GUI and test
 
-The GUI should be able to give us some kind of textual feedback about what is being selected.
+The Plugin Idea
+********************
+
+The tool we are going to build:
+
+     * The tool will select vector features on the map using a single map click. 
+     * The tool will display the 'NAME' attribute of any feature (if it exists) for a particular vector layer.
+     * The tool will have the option of being active or inactive using a checkbox setting.
+
+.. note:: This tool will work the exact same way that the current Select Single Feature tool works in QGIS. The purpose is to illustrate the steps in fleshing out a plugin. There are more practical examples at the end of this tutorial.
+
+Knowing the overall plugin idea will lead us to list the implementation tasks that we can tackle one at a time:
+
+    1. Implement map canvas point click and point coordinate feedback
+    2. Implement selection of feature on point click
+    3. Implement attribute feedback if the active layer has a 'NAME' attribute
+    4. Implement making the tool inactive and active using checkbox 
+
+
+Designing the GUI
+******************
+
+Let's talk about what the GUI will look like. The requirements for this tool are pretty straightforward:
+
+    1. Need a way to display feedback of 'NAME' attribute (if it exists) to user (we are going to use a TextBrowser widget for feedback)
+    2. Need a way to activate or deactivate the tool (we are going to use a checkbox widget)
+
+If we want to make changes to the GUI we will need to edit the\  ``.ui`` \file associated with this project. Qt Designer is the editor that we are going to use to do this type of editing. 
+
+
+\  **1.** \Open\  **Qt 4 Designer** \from the\  ``Applications > Programming`` \menu at the top-left of the virtual machine:
+
+.. image:: ../_static/qt_design1.png
+    :scale: 100%
+    :align: center
+
+\  **2.** \A file dialog with open. Navigate to your plugin workspace at\  ``/home/qgis/workspace/vector_selectbypoint/`` \. Only the\  ``.ui`` \file associate with this project should show up in the file dialog to open. It is called\  ``ui_vector_selectbypoint.ui`` \. Select it and click\  ``Open`` \:
+
+.. image:: ../_static/qt_design2.png
+    :scale: 100%
+    :align: center
+
+\  **3.** \The Qt form that opens should look familiar. It is basically a blank form with a couple buttons:
+
+.. image:: ../_static/qt_design3.png
+    :scale: 100%
+    :align: center
+
+\  **4.** \We want to add a TextBrowser and CheckBox widget to this form. First drag-and-drop a TextBrowser widget on the form. Find TextBrowser in the left-hand column under the subhead\  ``Display Widgets`` \:
+
+.. image:: ../_static/qt_design4.png
+    :scale: 100%
+    :align: center
+
+\  **5.** \Now we should have a TextBrowser object on our form like so:
+
+.. image:: ../_static/qt_design5.png
+    :scale: 100%
+    :align: center
+
+\  **6.** \With the TextBrowser on the form selected (showing the blue square vertices), move over to the bottom-right column called the\ ``Property Editor`` \and change the name of the TextBrowser object to\  ``txtFeedback`` \. The edit happens in the field called \  ``objectName`` \. The value we put in here will be used inside our code to represent the TextBrowser.
+
+.. image:: ../_static/qt_design6.png
+    :scale: 100%
+    :align: center
+
+\  **7.** \Now go back to the right-hand column and find a CheckBox widget under the subhead\  ``Buttons`` \. Drag-and-drop this on the form. The form will now look like this:
+
+.. image:: ../_static/qt_design7.png
+    :scale: 100%
+    :align: center
+
+\  **8.** \With the CheckBox on the form selected (showing the blue square vectices), go over to the\  ``Property Editor`` \and change the\  ``objectName`` \field to\  ``chkActivate`` \and the\  ``text`` \field to\  ``Activate\n(check)`` \.:
+
+.. image:: ../_static/qt_design8.png
+    :scale: 100%
+    :align: center
+
+.. image:: ../_static/qt_design9.png
+    :scale: 100%
+    :align: center
+
+\  **9.** \Move the widgets around and stetch them to make your form look similar to this: 
+
+.. image:: ../_static/qt_design10.png
+    :scale: 100%
+    :align: center
+
+\  **10.** \Now save your changes by selecting\  ``File > Save`` \in the menu bar. 
+
+
+\  **11.** \In a bash shell change directories to your workspace folder\  ``/home/qgis/workspace/vector_selectbypoint`` \and recompile everthing using the 'make' command::
+
+    $ cd /home/qgis/workspace/vector_selectbypoint
+    $ make
+    pyuic4 -o ui_vector_selectbypoint.py ui_vector_selectbypoint.ui
+
+Notice that the Makefile is smart. It knows that there were only changes to the\  ``.ui`` \file and not the\  ``.qrc`` \file. So it only compiles the GUI file into a Python module. 
+
+
+Looking at the Project Files
+*******************************
 
 
 
+--------------------------------------
 
-Examples
---------
+How to Debug Your Plugin
+---------------------------
 
+# stub
+
+--------------------------------------
+
+Excercises
+------------
+
+# stub
