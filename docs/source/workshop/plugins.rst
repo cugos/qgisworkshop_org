@@ -186,6 +186,78 @@ Now it's time to get our feet wet by building our first plugin using\  **Plugin 
     :scale: 100%
     :align: center
 
+\  **5.** \Now change into the workspace directory of your project\  ``/home/qgis/workspace/vector_selectbypoint`` \and list out the contents::
+
+    $ cd workspace/vector_selectbypoint/
+    $ ls -lah
+    total 36K
+    drwxr-xr-x 2 qgis qgis 4.0K 2011-08-20 13:21 .
+    drwxr-xr-x 3 qgis qgis 4.0K 2011-08-20 17:34 ..
+    -rw-r--r-- 1 qgis qgis 1.1K 2011-08-20 13:21 icon.png
+    -rw-r--r-- 1 qgis qgis 1.6K 2011-08-20 13:21 __init__.py
+    -rw-r--r-- 1 qgis qgis 1.9K 2011-08-20 13:21 Makefile
+    -rw-r--r-- 1 qgis qgis  116 2011-08-20 13:21 resources.qrc
+    -rw-r--r-- 1 qgis qgis 1.5K 2011-08-20 13:21 ui_vector_selectbypoint.ui
+    -rw-r--r-- 1 qgis qgis 1.5K 2011-08-20 13:21 vector_selectbypointdialog.py
+    -rw-r--r-- 1 qgis qgis 2.6K 2011-08-20 13:21 vector_selectbypoint.py
+
+
+Notice that we have a single\  ``.ui`` \file and\  ``.qrc`` \file but that they haven't been compiled yet into Python modules. Let's compile these an take a quick look at what our plugin looks like so far inside QGIS.
+
+\  **6.** \Luckily we have a\  ``Makefile`` \in this directory that we can use to compile both files easily. From inside the directory\  ``vector_selectbypoint`` \run the following command and it will print out two statements::
+
+    $ make
+    pyuic4 -o ui_vector_selectbypoint.py ui_vector_selectbypoint.ui
+    pyrcc4 -o resources.py  resources.qrc
+
+Those two statements are the commands we need to compile the appropriate resources and GUI files. We can either run these individually or just run the\  ``Makefile`` \to start them at the same time. Every time you make changes to the\  ``resources.qrc`` \or the\  ``ui_vector_selectbypoint.ui`` \file you will need to recompile.
+
+\  **7.** \Now relist the contents of your directory and you will see more Python modules that were created. The important ones are these Python modules::
+    
+    $ ls -lah
+    ... # MORE FILES WERE LISTED HERE
+    -rw-r--r-- 1 qgis qgis 5.4K 2011-08-20 17:42 resources.py
+    -rw-r--r-- 1 qgis qgis 1.4K 2011-08-20 17:42 ui_vector_selectbypoint.py
+    ... # MORE FILES WERE LISTED HERE
+
+\  **8.** \QGIS will now be able to read the files in our project and create an appropriate button on the menu bar. However, for QGIS to notice our new plugin we will need to put the our plugin folder inside of the\  ``/home/qgis/.qgis/python/plugins`` \directory. Instead of copying all our files there let's make a symbolic link (a shortcut) from our\  ``/home/qgis/workspace/vector_selectbypoing/`` \folder to the\  ``home/qgis/.qgis/python/plugings`` \folder. This way QGIS will notice our plugin project but the files are actually still located in our workspace folder for us to edit::
+
+     $ ln -s /home/qgis/workspace/vector_selectbypoint/ /home/qgis/.qgis/python/plugins/
+
+\  **9.** \If we change directories to\  ``/home/qgis/.qgis/python/plugins`` \and list it's contents we should see\  ``vector_selectbypoint`` \pointing to our workspace folder::
+
+    $ cd /home/qgis/.qgis/python/plugins
+    $ ls -lah
+    total 16K
+    drwxr-xr-x 4 qgis qgis 4.0K 2011-08-20 17:58 .
+    drwxr-xr-x 4 qgis qgis 4.0K 2011-07-07 13:41 ..
+    drwxr-xr-x 2 qgis qgis 4.0K 2011-08-20 12:26 osmpoly_export
+    drwxr-xr-x 3 qgis qgis 4.0K 2011-07-07 13:41 pluginbuilder
+    lrwxrwxrwx 1 qgis qgis   42 2011-08-20 17:58 vector_selectbypoint -> /home/qgis/workspace/vector_selectbypoint/
+
+\  **10.** \Go back to QGIS and add the plugin to QGIS using the plugin manager\  ``Plugins > Manage Plugins`` \. When the QGIS Plugin Manager pops up start typing\  ``Select_`` \into the filter bar at top and our plugin will come up. Check the box to the left of our plugin. Then click the\  ``OK`` \button:
+
+.. image:: ../_static/plugin_builder_adding2QGIS.png
+    :scale: 100%
+    :align: center
+
+\  **11.** \You might notice that an icon has been added to the menu right next to our Plugin Builder command icon. Click this item:
+
+.. image:: ../_static/click_vector_selectbypoint_tool.png
+    :scale: 100%
+    :align: center
+
+\  **12.** \If everything went well, you will see an empty dialog with an\  ``OK`` \and\  ``Cancel`` \button. As you can see the Plugin Builder doesn't give us anything off-the-shelf that is useful. We have to customize it. But at least it works (yah!):
+
+.. image:: ../_static/vector_selectbypoint_firstview.png
+    :scale: 100%
+    :align: center
+
+-------------------------------------
+
+Extending the Plugin Builder Templates
+-----------------------------------------  
+
 
 
 
