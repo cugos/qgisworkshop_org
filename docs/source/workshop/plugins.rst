@@ -258,6 +258,12 @@ Those two statements are the commands we need to compile the appropriate resourc
 Extending the Plugin Builder Templates
 -----------------------------------------  
 
+Before we build out the logic of our tool, let's talk about what the GUI will look like. Then we will use\  `QT Designer <href>`_ \to help us make our GUI changes by adding and customzing widgets.
+
+The tool we will build is going to select features by clicking on a point in the exact same way that the current Select Single Feature works in QGIS. The purpose is to illustrate the steps. There are more practical examples at the end of this tutorial. 
+
+The GUI should be able to give us some kind of textual feedback about what is being selected.
+
 
 
 
