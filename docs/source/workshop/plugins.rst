@@ -11,7 +11,7 @@ To create QGIS Python plugins you'll need at least 4 types of files in your proj
     - a file with a\  ``.ui`` \extension that describes your graphical user interface (GUI). This has to be compiled into a python module using the command-line tool\  ``pyuic4`` \.
     - a file that gives high-level configuration information about your plugin such as the name and author\  ``__init__.py`` \.
     - a file with a\  ``.qrc`` \extension describing the resources your plugin will use such as images. This has to be compiled into a python module using the command-line tool\  ``pyrcc4`` \.
-    - and finally, the meat-and-potatoes of the plugin is the file that does the actual work. This module handles communication between your resources and GUI. This file is just a normal Python module with some specific import statements and method names. It can be named anything, though that name is usually associated with the name of your plugin.
+    - and finally, the meat-and-potatoes of the plugin is the file that does the actual work. This file is just a normal Python module with some specific import statements and method names. It can be named anything, though that name is usually associated with the name of your plugin.
 
 -----------------------------
 
@@ -36,52 +36,35 @@ To get a better idea about how these different file types fit comprise a plugin 
 The\  **pluginbuilder** \project located in\  ``/home/qgis/.qgis/python/plugins`` \is a plugin we'll become familiar with soon. It makes creating plugins easier by automajically creating plugin template files (the file types we talked about above). The\  **pluginbuilder** \also pipes template code into the template files for us to modify.
 
 
-\  **3.** \Now change directories into the\  ``pluginbuilder`` \directory and list those contents::
+\  **3.** \Now change directories into the\  ``pluginbuilder`` \directory and list only certain filetypes\  ``(.ui, .py and .qrc)`` \like we do below. The reason we are only listing these file times is because we don't want to see all the compiled Python modules -- those files with a\  ``.pyc`` \extension::
 
     $ cd pluginbuilder
-    $ ls -lah
-    total 164K
-    drwxr-xr-x  3 qgis qgis 4.0K 2011-07-07 13:41 .
-    drwxr-xr-x 10 qgis qgis 4.0K 2011-07-17 20:40 ..
-    -rw-r--r--  1 qgis qgis   31 2011-07-07 13:41 .gitignore
-    -rw-r--r--  1 qgis qgis 1.1K 2011-07-07 13:41 help.html
-    -rw-r--r--  1 qgis qgis 1.1K 2011-07-07 13:41 icon.png
-    -rw-r--r--  1 qgis qgis 1.6K 2011-07-07 13:41 __init__.py
-    -rw-r--r--  1 qgis qgis 2.5K 2011-07-07 13:41 __init__.pyc
-    -rw-r--r--  1 qgis qgis 2.1K 2011-07-07 13:41 Makefile
-    -rw-r--r--  1 qgis qgis 1.4K 2011-07-07 13:41 pluginbuilder_dialog.py
-    -rw-r--r--  1 qgis qgis 1.9K 2011-07-07 13:41 pluginbuilder_dialog.pyc
-    -rw-r--r--  1 qgis qgis 4.1K 2011-07-07 13:41 plugin_builder.png
-    -rw-r--r--  1 qgis qgis 7.0K 2011-07-07 13:41 pluginbuilder.py
-    -rw-r--r--  1 qgis qgis 6.4K 2011-07-07 13:41 pluginbuilder.pyc
-    -rw-r--r--  1 qgis qgis 2.2K 2011-07-07 13:41 pluginspec.py
-    -rw-r--r--  1 qgis qgis 2.5K 2011-07-07 13:41 pluginspec.pyc
-    -rw-r--r--  1 qgis qgis  137 2011-07-07 13:41 README.rst
-    -rw-r--r--  1 qgis qgis  23K 2011-07-07 13:41 resources.py
-    -rw-r--r--  1 qgis qgis 6.1K 2011-07-07 13:41 resources.pyc
-    -rw-r--r--  1 qgis qgis  143 2011-07-07 13:41 resources.qrc
-    -rw-r--r--  1 qgis qgis 1.4K 2011-07-07 13:41 result_dialog.py
-    -rw-r--r--  1 qgis qgis 1.8K 2011-07-07 13:41 result_dialog.pyc
-    drwxr-xr-x  2 qgis qgis 4.0K 2011-07-07 13:41 templateclass
-    -rw-r--r--  1 qgis qgis 8.6K 2011-07-07 13:41 ui_pluginbuilder.py
-    -rw-r--r--  1 qgis qgis 5.9K 2011-07-07 13:41 ui_pluginbuilder.pyc
-    -rw-r--r--  1 qgis qgis 6.9K 2011-07-07 13:41 ui_pluginbuilder.ui
-    -rw-r--r--  1 qgis qgis 1.7K 2011-07-07 13:41 ui_results.py
-    -rw-r--r--  1 qgis qgis 2.2K 2011-07-07 13:41 ui_results.pyc
-    -rw-r--r--  1 qgis qgis 1.9K 2011-07-07 13:41 ui_results.ui
+    $ ls -l *.py *.ui *.qrc
+    -rw-r--r-- 1 qgis qgis  1586 2011-07-07 13:41 __init__.py
+    -rw-r--r-- 1 qgis qgis  1403 2011-07-07 13:41 pluginbuilder_dialog.py
+    -rw-r--r-- 1 qgis qgis  7077 2011-07-07 13:41 pluginbuilder.py
+    -rw-r--r-- 1 qgis qgis  2232 2011-07-07 13:41 pluginspec.py
+    -rw-r--r-- 1 qgis qgis 22936 2011-07-07 13:41 resources.py
+    -rw-r--r-- 1 qgis qgis   143 2011-07-07 13:41 resources.qrc
+    -rw-r--r-- 1 qgis qgis  1373 2011-07-07 13:41 result_dialog.py
+    -rw-r--r-- 1 qgis qgis  8718 2011-07-07 13:41 ui_pluginbuilder.py
+    -rw-r--r-- 1 qgis qgis  7046 2011-07-07 13:41 ui_pluginbuilder.ui
+    -rw-r--r-- 1 qgis qgis  1734 2011-07-07 13:41 ui_results.py
+    -rw-r--r-- 1 qgis qgis  1880 2011-07-07 13:41 ui_results.ui
 
-Remember, we are only interested in looking for file patterns here. As you can see there seems to be two GUI(s) associated with this plugin. We got this number by counting the number of files with a\  ``.ui`` \extension::
+
+Remember, we are only interested in looking for file patterns here. As you can see there seems to be two GUI(s) associated with this plugin. We got this number by counting the files with a\  ``.ui`` \extension::
 
     -rw-r--r--  1 qgis qgis 6.9K 2011-07-07 13:41 ui_pluginbuilder.ui
     -rw-r--r--  1 qgis qgis 1.9K 2011-07-07 13:41 ui_results.ui
 
-We can also see that each of the\  ``.ui`` \files has been compiled into python modules with the same basename. So all of the following files seem to be related to the GUI::
+We can also see that each of the\  ``.ui`` \files have been compiled into Python modules with the same basename. From experience, I also know that if the word\  ``dialog`` \appears in any Python modules it's a file that works in conjuction with our\  ``ui.py`` \file. So all of the following files seem to be related to the GUI::
 
+    -rw-r--r-- 1 qgis qgis  1373 2011-07-07 13:41 result_dialog.py
+    -rw-r--r-- 1 qgis qgis 1.4K 2011-07-07 13:41 pluginbuilder_dialog.py
     -rw-r--r--  1 qgis qgis 8.6K 2011-07-07 13:41 ui_pluginbuilder.py
-    -rw-r--r--  1 qgis qgis 5.9K 2011-07-07 13:41 ui_pluginbuilder.pyc
     -rw-r--r--  1 qgis qgis 6.9K 2011-07-07 13:41 ui_pluginbuilder.ui
     -rw-r--r--  1 qgis qgis 1.7K 2011-07-07 13:41 ui_results.py
-    -rw-r--r--  1 qgis qgis 2.2K 2011-07-07 13:41 ui_results.pyc
     -rw-r--r--  1 qgis qgis 1.9K 2011-07-07 13:41 ui_results.ui
 
 Notice the\  ``__init__.py`` \file. If you opened this file and looked at its guts, then you'd see high-level plugin descriptions such as names and verions numbers::
@@ -104,12 +87,9 @@ Notice the\  ``__init__.py`` \file. If you opened this file and looked at its gu
 Also notice the resource files associated with this project below. Remember that the\  ``.qrc`` \file has to be compiled into a python module. Here's all of those files::
 
     -rw-r--r--  1 qgis qgis  23K 2011-07-07 13:41 resources.py
-    -rw-r--r--  1 qgis qgis 6.1K 2011-07-07 13:41 resources.pyc
     -rw-r--r--  1 qgis qgis  143 2011-07-07 13:41 resources.qrc
 
-The\  ``resources.py`` \and\  ``resources.pyc`` \are the compiled version of\  ``resources.qrc`` \.
-
-With that said, it's probably a good guess that anything else with a\  ``.py`` \extension in this directory that we didn't talk about is related to the main plugin logic. There also seems to be some documents and images that we don't need to be concerned about at this point.
+With that said, it's probably a good guess that anything else with a\  ``.py`` \extension in this directory that we didn't talk about is related to the main plugin logic. There also seems to be some documents and images that we won't be concerned with at this point.
 
 ----------------------------
 
