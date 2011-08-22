@@ -5,17 +5,17 @@ Plugins
 Plugin Architecture
 ---------------------
 
-QGIS Python plugins are just a set of Python modules that describe everything from our plugin resources to the code that runs the plugin logic. We'll save the details for the sections below, but here's a high-level overview.
+QGIS Python plugins are just a set of Python modules that describe everything from our plugin resources to the code that runs the plugin logic. We'll save the details for the sections below, but here's a high-level overview of those file types.
 
 To create QGIS Python plugins you'll need at least 4 types of files in your project (though most plugins often contain more):
-    - a file with a\  ``.ui`` \extension that describes your graphical user interface (GUI). This has to be compiled into a python module using the command-line tool\  ``pyuic4`` \.
+    - a file with a\  ``.ui`` \extension that describes your graphical user interface (GUI). This has to be compiled into a Python module using the command-line tool\  ``pyuic4`` \.
     - a file that gives high-level configuration information about your plugin such as the name and author\  ``__init__.py`` \.
-    - a file with a\  ``.qrc`` \extension describing the resources your plugin will use such as images. This has to be compiled into a python module using the command-line tool\  ``pyrcc4`` \.
+    - a file with a\  ``.qrc`` \extension describing the resources your plugin will use such as images. This has to be compiled into a Python module using the command-line tool\  ``pyrcc4`` \.
     - and finally, the meat-and-potatoes of the plugin is the file that does the actual work. This file is just a normal Python module with some specific import statements and method names. It can be named anything, though that name is usually associated with the name of your plugin.
 
 -----------------------------
 
-To get a better idea about how these different file types fit comprise a plugin project let's look at a Python plugin that is already installed on your system. Then we can look for the file patterns described above.
+To get a better idea about how these different file types comprise a plugin project let's look at a Python plugin that is already installed on your system.
 
 \  **1.** \Open a new bash shell. The bash shell can be started by holding down\  ``<Cntl>-<ALT>`` \keys and then pressing\  ``t`` \at the same time. You should see a purple window pop open with a blinking cursor.
 
@@ -36,7 +36,7 @@ To get a better idea about how these different file types fit comprise a plugin 
 The\  **pluginbuilder** \project located in\  ``/home/qgis/.qgis/python/plugins`` \is a plugin we'll become familiar with soon. It makes creating plugins easier by automajically creating plugin template files (the file types we talked about above). The\  **pluginbuilder** \also pipes template code into the template files for us to modify.
 
 
-\  **3.** \Now change directories into the\  ``pluginbuilder`` \directory and list only certain filetypes\  ``(.ui, .py and .qrc)`` \like we do below. The reason we are only listing these file times is because we don't want to see all the compiled Python modules -- those files with a\  ``.pyc`` \extension::
+\  **3.** \Now change directories into the\  ``pluginbuilder`` \directory and list only certain filetypes\  ``(.ui, .py and .qrc)`` \like we do below. The reason we are only listing these file types is because we don't want to see all the compiled Python modules -- those files with a\  ``.pyc`` \extension::
 
     $ cd pluginbuilder
     $ ls -l *.py *.ui *.qrc
@@ -58,7 +58,7 @@ Remember, we are only interested in looking for file patterns here. As you can s
     -rw-r--r--  1 qgis qgis 6.9K 2011-07-07 13:41 ui_pluginbuilder.ui
     -rw-r--r--  1 qgis qgis 1.9K 2011-07-07 13:41 ui_results.ui
 
-We can also see that each of the\  ``.ui`` \files have been compiled into Python modules with the same basename. From experience, I also know that if the word\  ``dialog`` \appears in any Python modules it's a file that works in conjuction with our\  ``ui.py`` \file. So all of the following files seem to be related to the GUI::
+We can also see that each of the\  ``.ui`` \files have been compiled into Python modules with the same basename. From experience, I also know that if the word\  ``dialog`` \appears in any Python module it's a file that works in conjuction with our\  ``ui.py`` \file. So all of the following files seem to be related to the GUI::
 
     -rw-r--r-- 1 qgis qgis  1373 2011-07-07 13:41 result_dialog.py
     -rw-r--r-- 1 qgis qgis 1.4K 2011-07-07 13:41 pluginbuilder_dialog.py
@@ -84,7 +84,7 @@ Notice the\  ``__init__.py`` \file. If you opened this file and looked at its gu
         from pluginbuilder import PluginBuilder
         return PluginBuilder(iface)
 
-Also notice the resource files associated with this project below. Remember that the\  ``.qrc`` \file has to be compiled into a python module. Here's all of those files::
+Also notice the resource files associated with this project below. Remember that the\  ``.qrc`` \file has to be compiled into a Python module. Here's all of those files::
 
     -rw-r--r--  1 qgis qgis  23K 2011-07-07 13:41 resources.py
     -rw-r--r--  1 qgis qgis  143 2011-07-07 13:41 resources.qrc
@@ -242,15 +242,15 @@ Building plugins is an iterative process, many consecutive steps are repeated. I
 
     1. Choose to implement one small part of overall plugin idea at a time
     2. Customize the GUI desgin with Qt Designer to fit our interactive needs (remember to recompile the .ui file)
-    3. Write tool logic but proof with QMessageBoxes to make sure it is working
+    3. Begin programming tool logic but do it as a proof-of-concept with QMessageBoxes giving feedback to make sure it is working
     4. Once tool logic has been proofed, tie the tool logic to the GUI and test
 
 The Plugin Idea
 ********************
 
-The tool we are going to build:
+The tool we're going to build will be do a few basic things:
 
-     * The tool will select vector features on the map using a single map click. 
+     * The tool will select the activated layer's vector features using a single map click. 
      * The tool will display the 'NAME' attribute of any feature (if it exists) for a particular vector layer.
      * The tool will have the option of being active or inactive using a checkbox setting.
 
@@ -281,7 +281,7 @@ If we want to make changes to the GUI we will need to edit the\  ``.ui`` \file a
     :scale: 100%
     :align: center
 
-\  **2.** \A file dialog with open. Navigate to your plugin workspace at\  ``/home/qgis/workspace/vector_selectbypoint/`` \. Only the\  ``.ui`` \file associate with this project should show up in the file dialog to open. It is called\  ``ui_vector_selectbypoint.ui`` \. Select it and click\  ``Open`` \:
+\  **2.** \A file dialog with open. Navigate to your plugin workspace at\  ``/home/qgis/workspace/vector_selectbypoint/`` \. Only the\  ``.ui`` \file associated with this project should show up in the file dialog to open. It is called\  ``ui_vector_selectbypoint.ui`` \. Select it and click\  ``Open`` \:
 
 .. image:: ../_static/qt_design2.png
     :scale: 100%
@@ -305,13 +305,17 @@ If we want to make changes to the GUI we will need to edit the\  ``.ui`` \file a
     :scale: 100%
     :align: center
 
-\  **6.** \With the TextBrowser on the form selected (showing the blue square vertices), move over to the bottom-right column called the\ ``Property Editor`` \and change the name of the TextBrowser object to\  ``txtFeedback`` \. The edit happens in the field called \  ``objectName`` \. The value we put in here will be used inside our code to represent the TextBrowser.
+\  **6.** \With the TextBrowser on the form selected (showing the blue square vertices), move over to the bottom-right column called the\  ``Property Editor`` \and change the name of the TextBrowser object to\  ``txtFeedback`` \. The edit happens in the field called \  ``objectName`` \. The value we put in here will be used inside our code to represent the TextBrowser.
 
-.. image:: ../_static/qt_design6.png
+.. image:: ../_static/qt_design05.png
     :scale: 100%
     :align: center
 
 \  **7.** \Now go back to the right-hand column and find a CheckBox widget under the subhead\  ``Buttons`` \. Drag-and-drop this on the form. The form will now look like this:
+
+.. image:: ../_static/qt_design6.png
+    :scale: 100%
+    :align: center
 
 .. image:: ../_static/qt_design7.png
     :scale: 100%
@@ -345,7 +349,7 @@ If we want to make changes to the GUI we will need to edit the\  ``.ui`` \file a
 Notice that the Makefile is smart. It knows that there were only changes to the\  ``.ui`` \file and not the\  ``.qrc`` \file. So it only compiles the GUI file into a Python module. 
 
 
-Looking at the Project Files
+Analyzing Plugin Files
 *******************************
 
 # stub
