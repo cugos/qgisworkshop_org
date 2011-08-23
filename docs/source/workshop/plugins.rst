@@ -557,7 +557,7 @@ If you got an error try your best to locate the error, edit it and readd the plu
 \  **5.** \You should notice two things here. Our form pops open with it's new improved look (yah!). Also notice that when the mouse hovers over the map canvas it changes into a crosshairs. Click somewhere on the map canvas and you should get a second info message box with an X,Y coordinate:
 
 .. image:: ../_static/point_feedback.png
-    :scale: 100%
+    :scale: 70%
     :align: center
 
 If you got an error try your best to locate the error, edit it and readd the plugin to test. If you have questions about what went wrong ask one of your neighbors or one of the helpers.
