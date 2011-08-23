@@ -1,5 +1,5 @@
 =============================
-Excercises
+Exercises
 =============================
 
 Expanding the Tutorial Plugin
