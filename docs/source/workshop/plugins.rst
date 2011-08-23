@@ -566,7 +566,7 @@ If you got an error try your best to locate the error, edit it and readd the plu
 Tie QgsPoint Output to the GUI
 **********************************
 
-
+# stub
 
 
  
