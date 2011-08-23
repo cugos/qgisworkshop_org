@@ -115,18 +115,17 @@ The Plugin Idea
 
 The tool we're going to build will be do a few basic things:
 
-     * The tool will select the activated layer's vector features using a single map click. 
-     * The tool will display the 'NAME' attribute of any feature (if it exists) for a particular vector layer.
+     * The tool will report the X,Y coords of a QgsPoint for every map click. 
+     * The tool will select any vector features that intersect with that point 
      * The tool will have the option of being active or inactive using a checkbox setting.
 
-.. note:: This tool will work the exact same way that the current Select Single Feature tool works in QGIS. The purpose is to illustrate the steps in fleshing out a plugin. There are more practical examples at the end of this tutorial.
+.. note:: This tool will work the exact same way that the current Select Single Feature tool works in QGIS. The purpose is to illustrate the steps in fleshing out a plugin. There are more practical excercises at the end of this tutorial that will work your fu.
 
 Knowing the overall plugin idea will lead us to list the implementation tasks that we can tackle one at a time:
 
     1. Implement map canvas point click and point coordinate feedback
     2. Implement selection of feature on point click
-    3. Implement attribute feedback if the active layer has a 'NAME' attribute
-    4. Implement making the tool inactive and active using checkbox 
+    3. Implement making the tool inactive and active using checkbox 
 
 
 Designing the GUI
@@ -134,8 +133,8 @@ Designing the GUI
 
 Let's talk about what the GUI will look like. The requirements for this tool are pretty straightforward:
 
-    1. Need a way to display feedback of 'NAME' attribute (if it exists) to user (we are going to use a TextBrowser widget for feedback)
-    2. Need a way to activate or deactivate the tool (we are going to use a checkbox widget)
+    1. We need a way to display point coordinate feedback to user (we are going to use a TextBrowser widget for feedback)
+    2. We need a way to activate or deactivate the tool (we are going to use a checkbox widget)
 
 If we want to make changes to the GUI we will need to edit the\  ``.ui`` \file associated with this project. Qt Designer is the editor that we are going to use to do this type of editing. 
 
@@ -213,8 +212,8 @@ If we want to make changes to the GUI we will need to edit the\  ``.ui`` \file a
 
 Notice that the Makefile is smart. It knows that there were only changes to the\  ``.ui`` \file and not the\  ``.qrc`` \file. So it only compiles the GUI file into a Python module. 
 
-Programming Plugin Logic
-*******************************
+Implement Map Canvas Click Action 
+****************************************
 
 \  **1.** \Let's begin by opening up the main Python module that runs our tool's logic and having a look around. Most of you will be more comfortable browsing and editing code in a text editor like gedit. Open gedit by clicking the notepad icon on the top menue bar of Ubuntu:
 
@@ -395,7 +394,7 @@ We know that the signal\  ``canvasClicked()`` \emits a QgsPoint. So in our\  ``h
                 pass
 
 
-Testing Your Code
+Testing Your Edits 
 ********************
 
 \  **1.** \Go back to QGIS and make sure all layers are removed except the admin countries layer::
@@ -431,125 +430,149 @@ If you got an error try your best to locate the error, edit it and readd the plu
 Tie QgsPoint Output to the GUI
 **********************************
 
+\  **1.** \Open the file\  ``vector_selectbypointdialog.py`` \.::
 
-Now open up vector_selectbypointdialog.py
+    from PyQt4 import QtCore, QtGui
+    from ui_vector_selectbypoint import Ui_vector_selectbypoint
+    # create the dialog for zoom to point
+    class vector_selectbypointDialog(QtGui.QDialog):
 
-from PyQt4 import QtCore, QtGui
-from ui_vector_selectbypoint import Ui_vector_selectbypoint
-# create the dialog for zoom to point
-class vector_selectbypointDialog(QtGui.QDialog):
+        def __init__(self):
+            QtGui.QDialog.__init__(self)
+            # Set up the user interface from Designer.
+            self.ui = Ui_vector_selectbypoint()
+            self.ui.setupUi(self)
 
-    def __init__(self):
-        QtGui.QDialog.__init__(self)
-        # Set up the user interface from Designer.
-        self.ui = Ui_vector_selectbypoint()
-        self.ui.setupUi(self)
+Some things to notice about this file:
+
+    * This Python module subclasses a QtGui.QDialog class and wraps the compiled\  ``.ui`` \file\  ``ui_vector_selectbypoint.py`` \. Notice that we import that module at the beginning with these lines\  ``from ui_vector_selectbypoint import Ui_vector_selectbypoint`` \.
+
+    * The whole point of this class is to abstract the the setup of the UI so we don't have to deal with GUI setup in our main Python module. Now when we want to create our dialog we only need to create an instance of\  ``vector_selectbypointDialog`` \class and it handles all the GUI setup. 
+
+    * This class is a good place to build dialog-specific properties such as getters and setters for input/output and things that will interact with buttons. 
+
+\  **2.** \Add some helper properties to set TextBrowser input. This will replace our generic QMessageBox code for our QgsPoint output. Create the necessary functions so\  ``ui_vector_selectbypoint.py`` \looks like this. Remember that\  ``txtFeedback`` \was the\  ``objectName`` \we gave to the TextBrowser object in Qt Designer::
+
+    from PyQt4 import QtCore, QtGui
+    from ui_vector_selectbypoint import Ui_vector_selectbypoint
+    # create the dialog for zoom to point
+    class vector_selectbypointDialog(QtGui.QDialog):
+
+        def __init__(self):
+            QtGui.QDialog.__init__(self)
+            # Set up the user interface from Designer.
+            self.ui = Ui_vector_selectbypoint()
+            self.ui.setupUi(self)
+
+        def setTextBrowser(self, output):
+            self.ui.txtFeedback.setText(output)
+         
+        def clearTextBrowser(self):
+            self.ui.txtFeedback.clear()
 
 
-Add some helper propteries to get and set TextBrowser input
+\  **3.** \Now open\  ``vector_selectbypoint.py`` \and comment out our message box code::
 
+    #QMessageBox.information( self.iface.mainWindow(),"Info", "connect = %s"%str(result) )
 
-from PyQt4 import QtCore, QtGui
-from ui_vector_selectbypoint import Ui_vector_selectbypoint
-# create the dialog for zoom to point
-class vector_selectbypointDialog(QtGui.QDialog):
+    #QMessageBox.information( self.iface.mainWindow(),"Info", "X,Y = %s,%s" % (str(point.x()),str(point.y())) )
 
-    def __init__(self):
-        QtGui.QDialog.__init__(self)
-        # Set up the user interface from Designer.
-        self.ui = Ui_vector_selectbypoint()
-        self.ui.setupUi(self)
-
-    def setTextBrowser(self, output):
-        self.ui.txtFeedback.setText(output)
-     
-    def clearTextBrowser(self):
-        self.ui.txtFeedback.clear()
-
-
-Back in our vector_selectbypoint.py we can comment out our messageboxes code and add in the following code
-
-under __init__
+\  **4.** \Also in\  ``vector_selectbypoint.py`` \we'll want to move the creation of our dialog object from\  ``run()`` \and put it under the function\  ``__init__`` \so it can be accessible to all class functions::
 
     # create our GUI dialog
     self.dlg = vector_selectbypointDialog()
 
-now that dlg is a class instance variable  in Python we have to refer to it as self. So make sure all references to it are changed in the file under run function
+\  **5.** \Now that the variable\  ``dlg`` \is a class instance variable in Python we have to make sure all references to it include\  ``self.`` \. So make sure all references to\  ``dlg`` \under the run function are changed::
+
     # show the dialog
     self.dlg.show()
     result = self.dlg.exec_()
 
-under handleMouseDown redirect the output to the dialo :
-
-def handleMouseDown(self, point, button):
-        self.dlg.clearTextBrowser()
-        self.dlg.setTextBrowser( str(point.x()) + " , " +str(point.y()) )
-        #QMessageBox.information( self.iface.mainWindow(),"Info", "X,Y = %s,%s" % (str(point.x()),str(point.y())) )
-
-
-
-our code should now look like this:
-
-# Import the PyQt and QGIS libraries
-from PyQt4.QtCore import *
-from PyQt4.QtGui import *
-from qgis.core import *
-from qgis.gui import * 
-# Initialize Qt resources from file resources.py
-import resources
-# Import the code for the dialog
-from vector_selectbypointdialog import vector_selectbypointDialog
-
-class vector_selectbypoint:
-
-    def __init__(self, iface):
-        # Save reference to the QGIS interface
-        self.iface = iface
-        # refernce to map canvas
-        self.canvas = self.iface.mapCanvas() 
-        # out click tool will emit a QgsPoint on every click
-        self.clickTool = QgsMapToolEmitPoint(self.canvas)
-        # create our GUI dialog
-        self.dlg = vector_selectbypointDialog()
-
-    def initGui(self):
-        # Create action that will start plugin configuration
-        self.action = QAction(QIcon(":/plugins/vector_selectbypoint/icon.png"), \
-            "some text that appears in the menu", self.iface.mainWindow())
-        # connect the action to the run method
-        QObject.connect(self.action, SIGNAL("triggered()"), self.run)
-
-        # Add toolbar button and menu item
-        self.iface.addToolBarIcon(self.action)
-        self.iface.addPluginToMenu("&some text that appears in the menu", self.action)
-
-    # connect our custom function to a clickTool signal that the canvas was clicked
-    result = QObject.connect(self.clickTool, SIGNAL("canvasClicked(const QgsPoint &, Qt::MouseButton)"), self.handleMouseDown)
-        #QMessageBox.information( self.iface.mainWindow(),"Info", "connect = %s"%str(result) )
-
-    def unload(self):
-        # Remove the plugin menu item and icon
-        self.iface.removePluginMenu("&some text that appears in the menu",self.action)
-        self.iface.removeToolBarIcon(self.action)
+\  **6.** \Finally, let's redirect our QgsPoint output to the TextBrowser with our helper properties. Note, before we set the TextBrowser value we are clearing the previous value. Under the function\  ``handleMouseDown`` \rewrite your code like this::
 
     def handleMouseDown(self, point, button):
-    self.dlg.clearTextBrowser()
-    self.dlg.setTextBrowser( str(point.x()) + " , " +str(point.y()) )
-        #QMessageBox.information( self.iface.mainWindow(),"Info", "X,Y = %s,%s" % (str(point.x()),str(point.y())) )
+            self.dlg.clearTextBrowser()
+            self.dlg.setTextBrowser( str(point.x()) + " , " +str(point.y()) )
+            #QMessageBox.information( self.iface.mainWindow(),"Info", "X,Y = %s,%s" % (str(point.x()),str(point.y())) )
 
-    # run method that performs all the real work
-    def run(self):
-    # make our clickTool the tool that we'll use for now 
-    self.canvas.setMapTool(self.clickTool) 
 
-        # show the dialog
-        self.dlg.show()
-        result = self.dlg.exec_()
-        # See if OK was pressed
-        if result == 1:
-            # do something useful (delete the line containing pass and
-            # substitute with your code
-            pass
+
+\  **7.** \Our code should now look like this::
+
+    # Import the PyQt and QGIS libraries
+    from PyQt4.QtCore import *
+    from PyQt4.QtGui import *
+    from qgis.core import *
+    from qgis.gui import * 
+    # Initialize Qt resources from file resources.py
+    import resources
+    # Import the code for the dialog
+    from vector_selectbypointdialog import vector_selectbypointDialog
+
+    class vector_selectbypoint:
+
+        def __init__(self, iface):
+            # Save reference to the QGIS interface
+            self.iface = iface
+            # refernce to map canvas
+            self.canvas = self.iface.mapCanvas() 
+            # out click tool will emit a QgsPoint on every click
+            self.clickTool = QgsMapToolEmitPoint(self.canvas)
+            # create our GUI dialog
+            self.dlg = vector_selectbypointDialog()
+
+        def initGui(self):
+            # Create action that will start plugin configuration
+            self.action = QAction(QIcon(":/plugins/vector_selectbypoint/icon.png"), \
+                "some text that appears in the menu", self.iface.mainWindow())
+            # connect the action to the run method
+            QObject.connect(self.action, SIGNAL("triggered()"), self.run)
+
+            # Add toolbar button and menu item
+            self.iface.addToolBarIcon(self.action)
+            self.iface.addPluginToMenu("&some text that appears in the menu", self.action)
+
+            # connect our custom function to a clickTool signal that the canvas was clicked
+            result = QObject.connect(self.clickTool, SIGNAL("canvasClicked(const QgsPoint &, Qt::MouseButton)"), self.handleMouseDown)
+            #QMessageBox.information( self.iface.mainWindow(),"Info", "connect = %s"%str(result) )
+
+        def unload(self):
+            # Remove the plugin menu item and icon
+            self.iface.removePluginMenu("&some text that appears in the menu",self.action)
+            self.iface.removeToolBarIcon(self.action)
+
+        def handleMouseDown(self, point, button):
+            self.dlg.clearTextBrowser()
+            self.dlg.setTextBrowser( str(point.x()) + " , " +str(point.y()) )
+            #QMessageBox.information( self.iface.mainWindow(),"Info", "X,Y = %s,%s" % (str(point.x()),str(point.y())) )
+
+        # run method that performs all the real work
+        def run(self):
+            # make our clickTool the tool that we'll use for now 
+            self.canvas.setMapTool(self.clickTool) 
+
+            # show the dialog
+            self.dlg.show()
+            result = self.dlg.exec_()
+            # See if OK was pressed
+            if result == 1:
+                # do something useful (delete the line containing pass and
+                # substitute with your code
+                pass
+
+\  **8.** \Save your changes. Close your files. Reload the plugin using the QGIS Plugin Manager (remember, if your plugin is already loaded -- checked -- in the plugin manager then you'll have to uncheck it, close the plugin manager, open it back up and recheck your plugin).  Now you should see your QgsPoint output in the TextBrowser on each click:
+
+.. image:: ../_static/qgspoint_to_gui.png
+    :scale: 100%
+    :align: center
+
+
+Implement Feature Selection on Map Click
+-----------------------------------------------------
+
+
+
+
 
 
 

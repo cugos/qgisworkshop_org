@@ -579,10 +579,6 @@ Raster data also has it's own global constants that represent raster data types 
     >>> QgsRasterLayer.Multiband
     2
     >>> # Here are a couple raster drawing styles
-    >>> QgsRasterLayer.SingleBand
-    Traceback (most recent call last):
-      File "<input>", line 1, in <module>
-    AttributeError: type object 'QgsRasterLayer' has no attribute 'SingleBand'
     >>> QgsRasterLayer.SingleBandGray
     1
     >>> QgsRasterLayer.SingleBandPseudoColor
