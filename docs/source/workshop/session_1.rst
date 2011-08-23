@@ -1,6 +1,6 @@
 .. session_1 (1st hour)
 
-Exploring QGIS with the Python Console
+Exploring the QGIS API with the Python Console
 --------------------------------------------------------
 
 .. toctree::
