@@ -11,4 +11,4 @@ Building Python Plugins
 
     plugins_tutorial
 
-    plugins_exercises
+    plugins_exercises    
