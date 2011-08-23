@@ -193,7 +193,7 @@ QGIS supports the idea of uniform resource identifiers (URIs) as data-source des
 You should now have the countries layer in QGIS
 
 .. image:: ../_static/postgres_countries_layer.png
-    :scale: 90 %
+    :scale: 43%
     :align: center
 
 ------------------------------------------------------
@@ -279,7 +279,7 @@ Lastly, we used the current layer reference to actually select that feature in Q
 It seems the island of Aruba has a featureID of 0. 
 
 .. image:: ../_static/get_geometry_select_aruba.png
-    :scale: 100%
+    :scale: 43%
     :align: center
 
 As a quick side note, here's another way to get the Aruba feature (assuming that we know the feature's ID) with the\  `featureAtId() function <http://doc.qgis.org/head/classQgsVectorDataProvider.html#583a432e2e1046392abf79bf1e58f404>`_ \of the QgsVectorDataProvider class ::
