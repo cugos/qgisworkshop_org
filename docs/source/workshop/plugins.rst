@@ -348,13 +348,243 @@ If we want to make changes to the GUI we will need to edit the\  ``.ui`` \file a
 
 Notice that the Makefile is smart. It knows that there were only changes to the\  ``.ui`` \file and not the\  ``.qrc`` \file. So it only compiles the GUI file into a Python module. 
 
-
-Analyzing Plugin Files
+Programming Plugin Logic
 *******************************
 
-# stub
+\  **1.** \Let's begin by opening up the main Python module that runs our tool's logic and having a look around. Most of you will be more comfortable browsing and editing code in a text editor like gedit. Open gedit by clicking the notepad icon on the top menue bar of Ubuntu:
 
---------------------------------------
+.. image:: ../_static/open_gedit.png
+    :scale: 100%
+    :align: center
+
+\  **2.** \Now navigate to your workspace plugin folder\  ``/home/qgis/workspace/vector_selectbypoint`` \and open the file\  ``vector_selectbypoing.py`` \. Your code should look exactly like this::
+
+    # Import the PyQt and QGIS libraries
+    from PyQt4.QtCore import *
+    from PyQt4.QtGui import *
+    from qgis.core import *
+    # Initialize Qt resources from file resources.py
+    import resources
+    # Import the code for the dialog
+    from vector_selectbypointdialog import vector_selectbypointDialog
+
+    class vector_selectbypoint:
+
+        def __init__(self, iface):
+            # Save reference to the QGIS interface
+            self.iface = iface
+
+        def initGui(self):
+            # Create action that will start plugin configuration
+            self.action = QAction(QIcon(":/plugins/vector_selectbypoint/icon.png"), \
+                "some text that appears in the menu", self.iface.mainWindow())
+            # connect the action to the run method
+            QObject.connect(self.action, SIGNAL("triggered()"), self.run)
+
+            # Add toolbar button and menu item
+            self.iface.addToolBarIcon(self.action)
+            self.iface.addPluginToMenu("&some text that appears in the menu", self.action)
+
+        def unload(self):
+            # Remove the plugin menu item and icon
+            self.iface.removePluginMenu("&some text that appears in the menu",self.action)
+            self.iface.removeToolBarIcon(self.action)
+
+        # run method that performs all the real work
+        def run(self):
+            # create and show the dialog
+            dlg = vector_selectbypointDialog()
+            # show the dialog
+            dlg.show()
+            result = dlg.exec_()
+            # See if OK was pressed
+            if result == 1:
+                # do something useful (delete the line containing pass and
+                # substitute with your code
+                pass
+
+
+\  **3.** \Let's walk through some important things about this file.
+
+QGIS needs special class methods to exist in your main Python class for it to work. These are\  ``initGui()`` \,\  ``__init__()`` \and\  ``unload`` \. If we read through the code comments in those functions we can intuit that\  ``initGui()`` \and\  ``__init__()`` \get called at plugin startup and that some of the code in the\  ``initGui()`` \function is responsible for adding our plugin to the menu. The function\  ``unload()`` \does the opposite -- it tears down things we setup at intialization. 
+
+Also notice that our reference to the QgsInterface class is under\  ``__init__()`` \. From this class attribute we can create a reference to other parts of the QGIS system such as the map canvas.
+
+Another important thing to note is that our dialog is being created under the\  ``run()`` \method with these lines::
+
+    dlg = vector_selectbypointDialog()
+    # show the dialog
+    dlg.show()
+
+The\ ``vector_selectbypointDialog()`` \class that is being instatiated in that last code snippet was imported from our Python module dialog. If you were to open that Python module you'd notice it references the Python module that was compiled from our\  ``.ui`` \file --\  ``ui_vector_selectbypoint.py`` \. At the top of the file::
+
+    from vector_selectbypointdialog import vector_selectbypointDialog
+
+Execution of the\  ``run()`` \method is then halted. It waits for some user input to move forward. That user input (in this case) is in the form of a button click. The rest of the code in the\  ``run()`` \method then decides what button was clicked\  ``Cancel == 0 and OK == 1`` \. When we first start writing plugins your code tends to fall under the\  ``run()`` \method, though you'll see it doesn't need to be put there in the future::
+
+    result = dlg.exec_()
+    # See if OK was pressed
+    if result == 1:
+        # do something useful (delete the line containing pass and
+        # substitute with your code
+        pass 
+
+
+\  **4.** \Now we're going to start programming. Our tool will need a reference to the map canvas. It will also need a reference to a click tool. Make your\  ``__init__()`` \function look like this::
+
+    def __init__(self, iface):
+        # Save reference to the QGIS interface
+        self.iface = iface
+        # a reference to our map canvas 
+        self.canvas = self.iface.mapCanvas() #CHANGE
+        # this QGIS tool emits as QgsPoint after each click on the map canvas
+        self.clickTool = QgsMapToolEmitPoint(self.canvas)
+
+\  **5.** \Usually when working with QGIS GUI elements we'll need to import the\  ``qgis.gui`` \module classes and functions. The class\  ``QgsMapToolEmitPoint`` \that we used to create our point tool exits here. At the top of your\  ``vector_selectbypoint.py`` \module add this import statement under the other qgis import statements::
+
+    from qgis.gui import *
+
+\  **6.** \We have the references we'll need to implement a click and get some feedback in the form of a\  ``QgsPoint`` \but now we have to think about how that all works. In QGIS (and most other applications) there is the concept of an event/action.  In Qt we call these things in terms of signals and slots. When a user mouse-clicks the map canvas it broadcasts a signal about what just happened. Other functions in your program can subscribe to that broadcast and therefore react in real-time to a mouse-click. This is a concept that is not immediately intuitive or easy to program at first. So the best advice is to just follow the example below and try to understand as much as possible.  We'll return to this topic later and flesh it out more. For those that are interested here is very good resource that explains\  `PyQt signals and slots <http://www.commandprompt.com/community/pyqt/c1267>`_ \.
+
+
+\  **7.** \To achieve the things we talked about in the last step we are going to need two things -- 1) some sort of way to register a custom function to the map canvas click event and 2) a custom function that gets called when a mouse-down happens on the map canvas. Maybe the best place to put any code that subscribes to a mouse click signal would be in\  ``initGui()`` \function. Add this line of code to the very end of the\  ``initGui()`` \function::
+
+    result = QObject.connect(self.clickTool, SIGNAL("canvasClicked(const QgsPoint &, Qt::MouseButton)"), self.handleMouseDown)
+    QMessageBox.information( self.iface.mainWindow(),"Info", "connect = %s"%str(result) )
+
+A quick note. The function\  ``QObject.connect()`` \does the dirty work of registering our custom function\  ``handleMouseDown`` \(which hasn't been written yet) to the clickTool signal\  ``canvasClicked()`` \. It returns a boolean value declaring if the connection worked or not. We are catching that response and then outputing it to a message box so we can make sure the code we are writing is working as expected.
+
+
+\  **8.** \Now let's write our custom function that will get called whenever a mouse-down happens on the map canvas. Create this function anywhere below\  ``initGui()`` \.::
+
+    def handleMouseDown(self, point, button):
+            QMessageBox.information( self.iface.mainWindow(),"Info", "X,Y = %s,%s" % (str(point.x()),str(point.y())) )
+
+We know that the signal\  ``canvasClicked()`` \emits a QgsPoint. So in our\  ``handleMouseDown()`` \function we are using a message box to view the X,Y output of that point.
+
+
+\  **9.** \Finally, we have to make sure the click tool we setup under\  ``__init__()`` \is enabled when our tool runs. Add this code to the very beginning under the\  ``run()`` \function::
+
+    # make our clickTool the tool that we'll use for now 
+    self.canvas.setMapTool(self.clickTool)
+
+\  **10.** \Your entire\  ``vector_selectbypoint.py`` \module should now look like this::
+
+    # Import the PyQt and QGIS libraries
+    from PyQt4.QtCore import *
+    from PyQt4.QtGui import *
+    from qgis.core import *
+    from qgis.gui import * 
+    # Initialize Qt resources from file resources.py
+    import resources
+    # Import the code for the dialog
+    from vector_selectbypointdialog import vector_selectbypointDialog
+
+    class vector_selectbypoint:
+
+        def __init__(self, iface):
+            # Save reference to the QGIS interface
+            self.iface = iface
+            # reference to map canvas
+            self.canvas = self.iface.mapCanvas() 
+            # out click tool will emit a QgsPoint on every click
+            self.clickTool = QgsMapToolEmitPoint(self.canvas)
+
+        def initGui(self):
+            # Create action that will start plugin configuration
+            self.action = QAction(QIcon(":/plugins/vector_selectbypoint/icon.png"), \
+                "some text that appears in the menu", self.iface.mainWindow())
+            # connect the action to the run method
+            QObject.connect(self.action, SIGNAL("triggered()"), self.run)
+
+            # Add toolbar button and menu item
+            self.iface.addToolBarIcon(self.action)
+            self.iface.addPluginToMenu("&some text that appears in the menu", self.action)
+
+            # connect our custom function to a clickTool signal that the canvas was clicked
+            result = QObject.connect(self.clickTool, SIGNAL("canvasClicked(const QgsPoint &, Qt::MouseButton)"), self.handleMouseDown)
+            QMessageBox.information( self.iface.mainWindow(),"Info", "connect = %s"%str(result) )
+
+        def unload(self):
+            # Remove the plugin menu item and icon
+            self.iface.removePluginMenu("&some text that appears in the menu",self.action)
+            self.iface.removeToolBarIcon(self.action)
+
+        def handleMouseDown(self, point, button):
+            QMessageBox.information( self.iface.mainWindow(),"Info", "X,Y = %s,%s" % (str(point.x()),str(point.y())) )
+
+        # run method that performs all the real work
+        def run(self):
+            # make our clickTool the tool that we'll use for now 
+            self.canvas.setMapTool(self.clickTool) 
+
+            # create and show the dialog
+            dlg = vector_selectbypointDialog()
+            # show the dialog
+            dlg.show()
+            result = dlg.exec_()
+            # See if OK was pressed
+            if result == 1:
+                # do something useful (delete the line containing pass and
+                # substitute with your code
+                pass
+
+
+Testing Your Code
+********************
+
+\  **1.** \Go back to QGIS and make sure all layers are removed except the admin countries layer::
+
+    /home/qgis/natural_earth_50m/cultural/50m_cultural/50m_admin_0_countries.shp
+
+\  **2.** \Open the QGIS Plugin Manger. If our tool\  ``Select_VectorFeatures_By_PointClick`` \is already selected then uncheck it and close the QGIS Plugin Manager. Now reopen the QGIS Plugin manager and check our plugin again to add it to QGIS. This process ensures that we are getting the newest edits to our plugin loaded. 
+
+\  **3.** \You should notice that as soon as you selected 'OK' on the QGIS Plugin Manager but before our plugin showed up on the menu bar that one of two things happened -- you either got an error or you saw a\  ``connect = True`` \info message box:
+
+.. image:: ../_static/connect_equals_true.png
+    :scale: 100%
+    :align: center
+
+If you got an error try your best to locate the error, edit it and readd the plugin to test. If you have questions about what went wrong ask one of your neighbors or one of the helpers.
+
+\  **4.** \Now click on our plugin button on the menu bar:
+
+.. image:: ../_static/click_vector_selectbypoint_tool.png
+    :scale: 100%
+    :align: center
+
+
+\  **5.** \You should notice two things here. Our form pops open with it's new improved look (yah!). Also notice that when the mouse hovers over the map canvas it changes into a crosshairs. Click somewhere on the map canvas and you should get a second info message box with an X,Y coordinate:
+
+.. image:: ../_static/point_feedback.png
+    :scale: 100%
+    :align: center
+
+If you got an error try your best to locate the error, edit it and readd the plugin to test. If you have questions about what went wrong ask one of your neighbors or one of the helpers.
+
+
+Tie QgsPoint Output to the GUI
+**********************************
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-------------------------------------
 
 
 How to Debug Your Plugin
@@ -368,3 +598,4 @@ Excercises
 ------------
 
 # stub
+
