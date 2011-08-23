@@ -1,7 +1,9 @@
+=======================================
+Tutorial -- Building A Plugin
+=======================================
 
-================================================
 Building Our First Plugin with 'Plugin Builder'
-================================================
+-----------------------------------------------------
 
 Now it's time to get our feet wet by building our first plugin using\  **Plugin Builder** \to help us.
 
