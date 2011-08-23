@@ -7,8 +7,8 @@ Building Python Plugins
 .. toctree::
     :maxdepth: 1
 
-    plugins
+    plugins_intro
 
-    designer
+    plugins_tutorial
 
-    qgis_api
+    plugins_exercises
