@@ -212,8 +212,10 @@ If we want to make changes to the GUI we will need to edit the\  ``.ui`` \file a
 
 Notice that the Makefile is smart. It knows that there were only changes to the\  ``.ui`` \file and not the\  ``.qrc`` \file. So it only compiles the GUI file into a Python module. 
 
+---------------------------------------
+
 Implement Map Canvas Click Action 
-****************************************
+----------------------------------------
 
 \  **1.** \Let's begin by opening up the main Python module that runs our tool's logic and having a look around. Most of you will be more comfortable browsing and editing code in a text editor like gedit. Open gedit by clicking the notepad icon on the top menue bar of Ubuntu:
 
