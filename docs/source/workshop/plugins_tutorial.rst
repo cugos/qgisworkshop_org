@@ -16,7 +16,7 @@ Now it's time to get our feet wet by building our first plugin using\  **Plugin 
 \  **2.** \The main Plugin Builder dialog will appear. This is where we fill out our basic configuration information that Plugin Builder uses to create the template files. We will then modify the template files to build out our plugin. All the fields in the dialog below are required. Fill these fields out like the picture shows. Then click the\  ``Ok`` \button.:
 
 .. image:: ../_static/plugin_builder_main_dialog.png 
-    :scale: 100%
+    :scale: 70%
     :align: center
 
 \  **3.** \A file dialog will open. Create a\ ``workspace`` \folder inside your\  ``/home/qgis/`` \directory. Save your plugin project by selecting the\  ``workspace`` \directory in the file dialog:
