@@ -17,7 +17,7 @@ Let's expand on the last tutorial and add one more feature. We want to output a 
 
 First, let's ensure that everytime a selection is made that we have a class variable that holds that information for all class functions to use. In fact, we need to move many variables to the class level that appear in\  ``selectFeature()`` \function. That means we'll have to move the\  ``selectList`` \variable out from the\  ``selectFeature()`` \function and put it under\  ``__init__()`` \.
 
-your file should now look like\  `this module <../_static/vector_selectbypoint(2nd_hour_ex_1).py>`_ \
+your file should now look like\  `this module <../_static/vector_selectbypoint(2nd_hour_ex_1).rst>`_ \
 
 ---------------------------
 
