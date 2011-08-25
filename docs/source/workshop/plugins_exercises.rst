@@ -17,7 +17,7 @@ This doesn't seem like the most intuitive place to get the current layer and it'
 
 Let's output something more useful then. We want to output a 'NAME' attribute to the TextBrowser if it exists for a given layer. 
 
--u------------------------------
+------------------------------
 
 Most of what we have to do to implement these changes is code reorganization. 
 
@@ -75,9 +75,9 @@ Comment out the following code under the\  ``initGui()`` \function::
 
     result = QObject.connect(self.clickTool, SIGNAL("canvasClicked(const QgsPoint &, Qt::MouseButton)"), self.selectFeature) 
 
-Now move this code into the\  ``changeActive()`` \function to replace the previous connection. Now the function\  ``changeActive()`` \will activate/deactivate our ability to select features. Make yuur function look like this::
+Now move this code into the\  ``changeActive()`` \function to replace the previous connection. Now the function\  ``changeActive()`` \will activate/deactivate our ability to select features. Make your function look like this::
 
- changeActive(self,state):
+ def changeActive(self,state):
         if (state==Qt.Checked):
             # connect to click signal
             # QObject.connect(self.clickTool, SIGNAL("canvasClicked(const QgsPoint &, Qt::MouseButton)"), self.handleMouseDown)
