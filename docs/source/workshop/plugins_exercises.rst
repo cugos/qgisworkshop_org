@@ -124,13 +124,13 @@ Here's the whole\  ``selectFeature()`` \function so we can see the above in cont
         else:   
                 QMessageBox.information( self.iface.mainWindow(),"Info", "No layer currently selected in TOC" )
     
-\  **6.** \Finally, just as an extra precaution, let's write two lines in the\  ``run()`` \function that set the current layer and data provider once the plugin is first opened. Most people will have layers already loaded before they open our plugin. Since our current layer and data provider are set automatically when a different layer is selected in the TOC, then they won't have any value to begin with. Now the\  ``run()`` \function will look like this::
+\  **6.** \Just as an extra precaution, let's write two lines in the\  ``run()`` \function that set the current layer and data provider once the plugin is first opened. Most people will have layers already loaded before they open our plugin. Since our current layer and data provider are set automatically when a different layer is selected in the TOC, then they won't have any value to begin with. Now the\  ``run()`` \function will look like this::
 
   # run method that performs all the real work
     def run(self):
         # set the current layer immediately if it exists, otherwise it will be set on user selection
         self.cLayer = self.iface.mapCanvas().currentLayer()
-        self.provider = cLayer.dataProvider()
+        if self.cLayer: self.provider = cLayer.dataProvider()
         # make our clickTool the tool that we'll use for now 
         self.canvas.setMapTool(self.clickTool) 
 
@@ -143,10 +143,22 @@ Here's the whole\  ``selectFeature()`` \function so we can see the above in cont
             # substitute with your code
             pass
 
+\  **7.** \We need to create a connection to a signal that broadcasts when a layer is changed. At the end of\  ``initGui()`` \write this code to connect a custom function we'll create next to\  ``currentLayerchanged()`` \signal of QgisInterface::
 
-\  **7.** \The whole module should now resemble\  `this module <../_static/vector_selectbypoint(2nd_hour_ex_1).rst>`_ \
+        # connect to the currentLayerChanged signal of QgsInterface
+        result = QObject.connect(self.iface, SIGNAL("currentLayerChanged(QgsMapLayer *)"), self.handleLayerChange)
+        # QMessageBox.information( self.iface.mainWindow(),"Info", "connect = %s"%str(result) )
 
-\  **8.** \Test out your changes. One good test is to load two shapefile layers (hopefully both have a 'NAME' field). Then try switching between the layers and click on different features to make sure the tool works and doesn't break. 
+\  **8.** \Our custome function to handle a layer change will look like this::
+
+    def handleLayerChange(self, layer):
+            self.cLayer = self.canvas.currentLayer()        
+            if self.cLayer:
+                self.provider = self.cLayer.dataProvider()
+
+\  **9.** \The whole module should now resemble\  `this module <../_static/vector_selectbypoint(2nd_hour_ex_1).rst>`_ \
+
+\  **10.** \Test out your changes. One good test is to load two shapefile layers (hopefully both have a 'NAME' field). Then try switching between the layers and click on different features to make sure the tool works and doesn't break. 
  
 ---------------------------
 
@@ -163,4 +175,45 @@ Here's the whole\  ``selectFeature()`` \function so we can see the above in cont
 3. Create On-the-Fly Raster Value Emitter
 --------------------------------------------------------
 
-# stub
+In this final exercise you will use all that you have learned up to this point to create a simple (maybe even crude) raster value display tool. The purpose is for you to figure out the programmatic steps based on a few clues.
+
+The Tool Requirements
+*************************
+
+* Display the value of every band for any raster on map canvas mouse hover. That sounds confusing, but the idea is that your tool should work with a single grayscale raster or an RGBA raster without blowing up. There will be no mouse clicks, we'll just be responding to the normal mouse cursor movement over the map canvas
+
+* Feedback of raster values will be output to a GUI (your choice on how to implement this on the GUI)
+
+Hints
+***************
+
+* You will want to connect a custom function to the map canvas signal\  `xyCoordinates <http://doc.qgis.org/head/classQgsMapCanvas.html#bf90fbd211ea419ded7c934fd289f0ab>`_ \
+
+* You can get raster values for each band like this::
+
+    rLayer = self.iface.mapCanvas().currentLayer()
+    success, data = rLayer.identify(QgsPoint(-122, 47))
+    for band, value in data.items():
+        print str(band) + " = " + str(value)
+
+Solution
+************
+
+If you want to peek at one possible solution (thought a very ugly one) then check out these modules:
+
+    `main module <../_static/rastervaluedisplay.py`_
+
+    `dialog module <../_static/rastervaluedisplaydialog.py`_
+
+    `ui compiled python module <../_static/ui_rastervaluedisplay.py`_
+
+To get a visual idea about how simple my tool was, here's a picture:
+
+.. image:: ../_static/raster_value_final.png
+    :scale: 100%
+    :align: center
+
+
+
+
+   

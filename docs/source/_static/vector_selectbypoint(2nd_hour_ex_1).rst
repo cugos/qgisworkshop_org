@@ -127,7 +127,7 @@
         def run(self):
             # set the current layer immediately if it exists, otherwise it will be set on user selection
             self.cLayer = self.iface.mapCanvas().currentLayer()
-            self.provider = cLayer.dataProvider()
+            if self.cLayer: self.provider = self.cLayer.dataProvider()
             # make our clickTool the tool that we'll use for now 
             self.canvas.setMapTool(self.clickTool) 
 
