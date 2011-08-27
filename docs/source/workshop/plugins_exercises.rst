@@ -126,7 +126,7 @@ Here's the whole\  ``selectFeature()`` \function so we can see the above in cont
     
 \  **6.** \Just as an extra precaution, let's write two lines in the\  ``run()`` \function that set the current layer and data provider once the plugin is first opened. Most people will have layers already loaded before they open our plugin. Since our current layer and data provider are set automatically when a different layer is selected in the TOC, then they won't have any value to begin with. Now the\  ``run()`` \function will look like this::
 
-  # run method that performs all the real work
+    # run method that performs all the real work
     def run(self):
         # set the current layer immediately if it exists, otherwise it will be set on user selection
         self.cLayer = self.iface.mapCanvas().currentLayer()
@@ -149,7 +149,7 @@ Here's the whole\  ``selectFeature()`` \function so we can see the above in cont
         result = QObject.connect(self.iface, SIGNAL("currentLayerChanged(QgsMapLayer *)"), self.handleLayerChange)
         # QMessageBox.information( self.iface.mainWindow(),"Info", "connect = %s"%str(result) )
 
-\  **8.** \Our custome function to handle a layer change will look like this::
+\  **8.** \Our custom function to handle a layer change will look like this::
 
     def handleLayerChange(self, layer):
             self.cLayer = self.canvas.currentLayer()        
@@ -201,11 +201,11 @@ Solution
 
 If you want to peek at one possible solution (thought a very ugly one) then check out these modules:
 
-    `main module <../_static/rastervaluedisplay.py`_
+    * The main Python module\  `here <../_static/rastervaluedisplay.py>`_
 
-    `dialog module <../_static/rastervaluedisplaydialog.py`_
+    * The dialog module\  `there <../_static/rastervaluedisplaydialog.py>`_
 
-    `ui compiled python module <../_static/ui_rastervaluedisplay.py`_
+    * The compiled ui module\  `over here <../_static/ui_rastervaluedisplay.py>`_
 
 To get a visual idea about how simple my tool was, here's a picture:
 
@@ -216,4 +216,4 @@ To get a visual idea about how simple my tool was, here's a picture:
 
 
 
-   
+ 
