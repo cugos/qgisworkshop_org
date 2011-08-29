@@ -5,7 +5,7 @@ Exercises
 1. Expanding the Tutorial Plugin
 --------------------------------
 
-You might have noticed (at least i did) that there's a couple ridiculous things happening in the tutorial module\  ``vector_selectbypoint.py`` \. Let's talk about these and change things around in this next section: 
+You might have noticed there's a couple interesting things happening in the module\  ``vector_selectbypoint.py`` \from the tutorial. Let's talk about some changes and then move around some code in the next example: 
 
     1. Everytime we click the map canvas a signal is sent out, and our slot (or handler function)\  ``selectFeature()`` \runs and does a number of things before selecting a feature:
         * gets the current layer
@@ -166,8 +166,7 @@ Here's the whole\  ``selectFeature()`` \function so we can see the above in cont
 2. Using File Dialogs for Input and Output 
 ----------------------------------------------
 
-# stub
-
+In this next exercise we are going to build another tool using the 'Plugin Builder'. This time our tool will work with file dialogs to output 
 
 -------------------------------------
 
@@ -212,8 +211,5 @@ To get a visual idea about how simple my tool was, here's a picture:
 .. image:: ../_static/raster_value_final.png
     :scale: 100%
     :align: center
-
-
-
 
    
