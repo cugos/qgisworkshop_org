@@ -39,10 +39,10 @@ You will need to add the pdb.set_trace() where you would like to set a break poi
 Pdb Commands and Tricks
 ---------------------------
 
-Pdb (like other debugging tools) also has a set of command-line options that enhance the debugging experience. We'll go through some of the most popular commands below. For a full list hcheck out the\  `official documentation <http://docs.python.org/library/pdb.html>`_ \.
+Pdb (like other debugging tools) also has command-line options that enhance the debugging experience. We'll go through some of the most popular commands below. For a full list check out the\  `official documentation <http://docs.python.org/library/pdb.html>`_ \.
 
 
-\  **1.** \Once\  ``set_trace()`` \gets hit and has put us into a Pdb session we can see where we are in our code execute with the command\  ``list`` \.::
+\  **1.** \Once\  ``set_trace()`` \gets hit and throws us into a Pdb session we can see where we are in our code execution with the command\  ``list`` \.::
 
     (Pdb) list
      74         # run method that performs all the real work
@@ -60,7 +60,7 @@ Pdb (like other debugging tools) also has a set of command-line options that enh
 Notice the cute little arrow\  ``->`` \. This command without arguments gives us 11 lines back with the currently executing line in the middle.
 
 
-\  **2.** \The\  ``list`` \command is pretty dynamic, which  means we can list out any portion of code using two numeric line-number arguments. Here's a couple variations on this command::
+\  **2.** \The\  ``list`` \command is pretty dynamic, which means we can list out any portion of code using two numeric line-number arguments. Here's a couple variations on this command::
 
     (Pdb) list 60
      55             #QMessageBox.information( self.iface.mainWindow(),"Info", "connect = %s"%str(result) )
@@ -94,7 +94,7 @@ Notice the cute little arrow\  ``->`` \. This command without arguments gives us
 
 A single numberic arguments prints out the line we wanted buffered by 5 lines before and after. Two arguments prints us a the range of code for those line numbers.
 
-\  **3.** \We can also set more breakpoints once we are in Pdb. We can use the\  ``break`` \command or just\ ``b`` \for shorthand plus a numberic argument that designates what line number we want to put a breakpoint on::
+\  **3.** \We can also set more breakpoints once we are in Pdb. We can use the\  ``break`` \command or just\  ``b`` \for shorthand plus a numberic argument that designates what line number we want to put a breakpoint on::
 
     (Pdb) b 64
     Breakpoint 1 at /home/gcorradini/.qgis/python/plugins/rastervaluedisplay/rastervaluedisplay.py:64
@@ -105,7 +105,7 @@ A single numberic arguments prints out the line we wanted buffered by 5 lines be
     Num Type         Disp Enb   Where
     1   breakpoint   keep yes   at /home/gcorradini/.qgis/python/plugins/rastervaluedisplay/rastervaluedisplay.py:64
 
-\  **5.** \Now that I've set a new breakpoint, I'll want to continue my code execute until I hit it. I can continue execution with the\  ``c`` \or\ ``continue`` \command.::
+\  **5.** \Now that I've set a new breakpoint, I'll want to continue my code execute until I hit it. I can continue execution with the\  ``c`` \or\  ``continue`` \command.::
 
     (Pdb) c
     > /home/gcorradini/.qgis/python/plugins/rastervaluedisplay/rastervaluedisplay.py(64)handleXY()
@@ -125,7 +125,7 @@ A single numberic arguments prints out the line we wanted buffered by 5 lines be
 
 Notice that when i listed out where the execution stopped I got a pretty\  ``B->`` \to show it was a breakpoint. 
 
-\  **6.** \Traversing execution line-by-line can happen with two commands:\  ``step`` \and\  ``next`` \. Though\  ``step`` \will walk into every function (even Python standard functions) and\  ``next`` \will just execute them and move to the next line. So be sure you understand your outcome. Assuming my execution was on the last breakpoint above,\  ``next`` \should bring me to line 65::
+\  **6.** \We can traverse our code line-by-line with two commands:\  ``step`` \and\  ``next`` \. Though\  ``step`` \will walk into every function (even Python standard functions) and\  ``next`` \will just execute them and move to the next line. So be sure you understand your outcome. Assuming my execution was on the last breakpoint above,\  ``next`` \should bring me to line 65::
 
     (Pdb) n
     > /home/gcorradini/.qgis/python/plugins/rastervaluedisplay/rastervaluedisplay.py(65)handleXY()
@@ -146,7 +146,7 @@ Notice that when i listed out where the execution stopped I got a pretty\  ``B->
 
 Yep, that worked (Yah!)
 
-\  **7.** \Finally, we can remove breakpoints with the command\  ``clear`` \or\ ``cl`` \for short. We then list a numeric line number arguments to remove.::
+\  **7.** \Finally, we can remove breakpoints with the command\  ``clear`` \or\  ``cl`` \for short. We then give a numeric line-number argument where a breakpoint exists::
 
     (Pdb) cl 1
     Deleted breakpoint 1
