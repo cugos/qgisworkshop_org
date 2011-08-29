@@ -1,6 +1,6 @@
 .. session_3 (3rd hour)
 
-Event-Driven Plugins / Debugging Plugins / Setting up Plugin Repositories
+Event-Driven Notes / Debugging / Plugin Repositories
 ---------------------------------------------------------------------------------------
 
 .. toctree::
