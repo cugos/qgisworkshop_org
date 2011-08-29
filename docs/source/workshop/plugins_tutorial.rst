@@ -864,11 +864,4 @@ Now it's time to make our tool active/inactive depending on the state of our che
     :scale: 100%
     :align: center
 
--------------------------------------
-
-
-How to Debug Your Plugin
----------------------------
-
-# stub
 
