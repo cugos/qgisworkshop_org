@@ -1,6 +1,7 @@
-=================
+
+===================
 Debugging Plugins
-=================
+===================
 
 Python console in QGIS
 ----------------------
@@ -34,3 +35,9 @@ You will need to add the pdb.set_trace() where you would like to set a break poi
     PyQt4.QtCore.QString(u'50m_admin_0_boundary_breakaway_disputed_areas')
     (Pdb) 
     
+
+Pdb Commands and Tricks
+---------------------------
+
+
+
