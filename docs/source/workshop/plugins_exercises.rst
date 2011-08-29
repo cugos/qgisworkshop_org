@@ -156,7 +156,7 @@ Here's the whole\  ``selectFeature()`` \function so we can see the above in cont
             if self.cLayer:
                 self.provider = self.cLayer.dataProvider()
 
-\  **9.** \The whole module should now resemble\  `this module <../_static/vector_selectbypoint(2nd_hour_ex_1).rst>`_ \
+\  **9.** \The whole module should now resemble\  `this module <../_static/vector_selectbypoint(2nd_hour_ex_1).py>`_ \
 
 \  **10.** \Test out your changes. One good test is to load two shapefile layers (hopefully both have a 'NAME' field). Then try switching between the layers and click on different features to make sure the tool works and doesn't break. 
  
