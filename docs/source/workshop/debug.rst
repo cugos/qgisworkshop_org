@@ -4,11 +4,11 @@ Debugging Plugins
 ===================
 
 Python console in QGIS
-----------------------
+--------------------------
 As we have been doing throughout this workshop, debugging via the python console is always available.
 
 Using the PyQT debug hook
---------------------
+----------------------------
 When trying to debug python plugins, one of the best methods is to use \ `PDB <http://docs.python.org/library/pdb.html>`_ \.  When using \ `PDB <http://docs.python.org/library/pdb.html>`_ \ you need to add the following code to your plugin python file(s)::
 
     from PyQt4 import QtCore
