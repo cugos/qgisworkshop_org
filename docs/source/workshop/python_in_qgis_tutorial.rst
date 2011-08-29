@@ -35,7 +35,7 @@ Accessing Layers
 
 .. note:: The hyperlinks that follow all reference the\  `QGIS API documentation <http://doc.qgis.org>`_ \. Click on them to view the classes and methods we are referencing below
 
-There's a number of ways to access the layers in QGIS. Each way starts by first referencing the\  `QgsInterface class <http://doc.qgis.org/head/classQgisInterface.html>`_ \which is called\  **iface** \in the Python bindings.
+There's a number of ways to access the layers in QGIS. Each way starts by first referencing the\  `QgisInterface class <http://doc.qgis.org/head/classQgisInterface.html>`_ \which is called\  **iface** \in the Python bindings.
 
 From the Python Console we access\  **iface** \by calling the following command::
     
@@ -46,7 +46,7 @@ Type the above command into the Python Console and you should see this output::
     >>> qgis.utils.iface
     <qgis.gui.QgisInterface object at 0x925266c>
 
-Running the above command prints out the actual name of the QGIS class we are dealing with -- indeed iface is the QgsInterface object 
+Running the above command prints out the actual name of the QGIS class we are dealing with -- indeed iface is the QgisInterface object 
 
 Method 1
 *********
@@ -70,7 +70,7 @@ Depending on which layer is selected in the table of contents you will see eithe
 
     \1) The more visually appealing way to browse class attributes is to access the\  `QGIS API documentation <http://doc.qgis.org>`_ \and search for the class you're working with.
 
-    \2) The Pythonic way (though less visually appealing) is to run the following command on a object you want to know more about::
+    \2) The Pythonic way (though less visually appealing) is to run the following command on an object you want to know more about::
         
             >>> help(aLayer) 
 
@@ -84,7 +84,7 @@ Depending on which layer is selected in the table of contents you will see eithe
              ...
              # output truncated for demonstration
 
-The pile of text printed out in the shell is hard to navigate. Above is an example of some of the attributes you might see. It's probably better to use the API above.
+The pile of text printed out in the shell is hard to navigate. Above is an example of some of the attributes you might see. It's probably better to use the API link above.
 
 Method 2
 **********
@@ -150,7 +150,7 @@ Other Excercises
 Loading Layers into QGIS
 -----------------------------
 
-Maybe when you were looking at the QgsInterface class you noticed a couple addLayer methods? Let's use these to load layers into QGIS. 
+Maybe when you were looking at the QgisInterface class you noticed a couple addLayer methods? Let's use these to load layers into QGIS. 
 
 \  **1.** \Start by turning off all layers currenlty in QGIS by unchecking them. Then with a blank map, re-add the SR_50M and populated places data as a different name::
 
@@ -165,7 +165,7 @@ The method\  `addVectorLayer <http://doc.qgis.org/head/classQgisInterface.html#3
 
     - the second argument is the basename -- the name that the layer takes in the table of contents
 
-    - the third argument is the provider key. Basically, the function wants to know what driver will be used to read this data. For our purposes, the "ogr" will be used most of the time with vector data 
+    - the third argument is the provider key. Basically, the function wants to know what driver will be used to read this data. For our purposes, "ogr" will be used most of the time with vector data 
 
 Notice that the\  `addRasterLayer <http://doc.qgis.org/head/classQgisInterface.html#808a34b507a8c4204d607a5857d62748>`_ \only takes two arguments -- the path and basename for the layer. 
 
@@ -174,9 +174,9 @@ If you go look at the\  **addRasterLayer** \function definition in the link abov
 Adding a PostGIS Layer
 ***********************
 
-You might be wondering how you would handle adding data that exists in PostGIS.
+You might be wondering how you handle adding data that exists in PostGIS. Luckily for you, we have PostGIS setup on the virtual machine with some vector layers already loaded.
 
-If it's vector data we just use the same function as we did above\  `addVectorLayer <http://doc.qgis.org/head/classQgisInterface.html#39be50fe9974de17177861ad89e7f36e>`_ \. However, specifying the path is a little different. 
+Accessing PostGIS vector data uses the same function as we did above --\  `addVectorLayer <http://doc.qgis.org/head/classQgisInterface.html#39be50fe9974de17177861ad89e7f36e>`_ \. However, specifying the path is a little different. 
 
 QGIS supports the idea of uniform resource identifiers (URIs) as data-source descriptions for handling input from databases, CSVs and GPX files. The URI we pass to the database includes such parameters as the database name, username, password and the port it runs on (among other parameters).
 
@@ -211,10 +211,15 @@ For example, with the reference to the geometry of an object we can access these
     - combine
     - difference 
 
-Geometry in a Vector Layer
+Vector Layer Geometry
 ********************************************
 
-There's number of ways to access a Layer's features and each feature geometry. We will NOT walk through all of them here. One way to access a layer is through the\  `QgsVectorDataProvider <http://doc.qgis.org/head/classQgsVectorDataProvider.html>`_ \class. You can get a reference to a data provider directly from your\  `QgsVectorLayer <http://doc.qgis.org/head/classQgsVectorLayer.html>`_ \class.
+There's a number of ways to access layer features and an individual feature geometry. We will\  **NOT** \walk through all of them here. 
+
+Method 1
+**********
+
+One way to access a layer's features is through the\  `QgsVectorDataProvider <http://doc.qgis.org/head/classQgsVectorDataProvider.html>`_ \class. You can get a reference to a data provider directly from your\  `QgsVectorLayer <http://doc.qgis.org/head/classQgsVectorLayer.html>`_ \class.
 
 \  **1.** \First, remove all layers from QGIS
 
@@ -245,9 +250,9 @@ The\  ``select()`` \function reads the vector layer's attributes and geometry in
 
 When we run\  ``select()`` \without any arguments passed we are only getting the default options. "Default" options in this case means::
 
-    - Geometry -- retrieve every feature geometry
     - Attributes -- do not retrieve any attributes
     - Rectangle Filter -- do not use a spatial filter of a rectangle (think bounding box)
+    - Geometry -- retrieve every feature geometry
     - Intersection Test -- do not run the accurate intersection test  
 
 To summarize, when we ran\  ``select()`` \we retrieved all feature geometries but no attributes.
@@ -282,13 +287,30 @@ It seems the island of Aruba has a featureID of 0.
     :scale: 43%
     :align: center
 
-As a quick side note, here's another way to get the Aruba feature (assuming that we know the feature's ID) with the\  `featureAtId() function <http://doc.qgis.org/head/classQgsVectorDataProvider.html#583a432e2e1046392abf79bf1e58f404>`_ \of the QgsVectorDataProvider class ::
+Method 2
+**********
+
+Although we didn't use it above, many times you'll use\  ``QgsVectorDataProvider`` \with a\  ``while`` \statement to loop through all layer features. In these cases your workflow is probably requiring you to use all features. However, there are many workflows where you already have a feature ID. In these cases, you'll want to retrieve a single feature's attributes and geometry using something similar to the\  ``select()`` \function. Here's how we do that.
+
+The function\  `featureAtId() function <http://doc.qgis.org/head/classQgsVectorDataProvider.html#583a432e2e1046392abf79bf1e58f404>`_ \of the QgsVectorDataProvider class is just like the select statement with a few different arguments::
+
+    ## Arguments
+    - featureID -- the feature id you want to retrieve
+    - feature -- the empty QgsFeature that you are passing into the function to initialize
+    - fetchGeometry -- a boolean value that reflects whether we want the geom returned or not (defaults to True)
+    - attributeList -- a list containing the indexes of the attribute fields to copy (defaults to an empty list -- no attributes)
+
+\  **1.** \If we don't care about getting a feature's attributes, then we can ignore the last two attributes. Run this statement to get the Aruba feature again::
 
     >>> feat = QgsFeature()
     >>> provider.featureAtId(0, feat)
     True
 
-\  **8.** \With that geometry reference we can start quality checks on the geometry to make sure we want to use it in further processing::
+
+Geometry Types
+****************
+
+\  **2.** \With any geometry reference we can do quality checks to make sure we want to use this geometry in further processing::
 
     >>> feat.geometry().asPolygon()
     [[(-69.8991,12.452), (-69.8957,12.423), (-69.9422,12.4385), (-70.0041,12.5005), (-70.0661,12.547), (-70.0509,12.5971), (-70.0351,12.6141), (-69.9731,12.5676), (-69.9118,12.4805), (-69.8991,12.452)]]
@@ -305,7 +327,7 @@ As a quick side note, here's another way to get the Aruba feature (assuming that
 
 This geometry is valid, not empty and looks to be a simple Polygon (as opposed to a MultiPolygon).
 
-\  **9.** \To be sure that this geometry is of the 'type' we intend to use we can also use these methods to quality check::
+\  **3.** \To be sure that this geometry is of the 'type' we intend to use we can also use these methods to quality check::
 
     >>> feat.geometry().wkbType()
     3
@@ -323,7 +345,7 @@ Note a couple things. Geometry types return an integer (essentially a lookup) th
         >>> QGis.Polygon
         2
 
-\10. Now let's do a very simple spatial operation like a buffer:: 
+\  **4.** \Now let's do a very simple spatial operation like a buffer:: 
 
     >>> buff_geom = feat.geometry().buffer(12, 2)
     >>> buff_geom.asPolygon()
@@ -336,7 +358,7 @@ We buffered our polygon by 12 degrees. We can see this created more vetices in t
     >>> buff_geom.area() > feat.geometry().area()
     True
 
-\11. Let's test the Aruba geometry against an intersecting QgsPoint geometry as a last example::
+\  **5.** \Let's test the Aruba geometry against an intersecting QgsPoint geometry as a last example::
 
     >>> # does the Aruba geometry intersect with Seattle (-122.361,47.642) -- I hope not!
     >>> feat.geometry().intersects(QgsGeometry.fromPoint(QgsPoint(-122.361,47.642)))
@@ -413,7 +435,7 @@ The above isn't very useful output yet. To get useful column output we need to a
 
 \  **6.** \Now let's get some meaningful output from the QgsField object::
  
-    >>> for key,value in columns.items(): print str(key) + " = " + str(value.name()) + " | " + str(value.
+    >>> for key,value in columns.items(): print str(key) + " = " + str(value.name()) 
     ... 
     0 = ScaleRank
     1 = FeatureCla
@@ -450,7 +472,12 @@ The above isn't very useful output yet. To get useful column output we need to a
 
 The take home point is that the QgsField object gives us the names and data types of the attribute columns but\  **NOT** \the individual feature attribute values. These have to be accessed through the features themselves.
 
-\  **8.** \We've already seen how to get at vector features. The example below reviews that workflow and also adds the necessary steps to select only certain attributes using the\  ``dataProvider.select() function`` \. This time however we will be passing in\  **ALL** \the\  ``select()`` \function arguments. Notes on each step are included below::
+\  **8.** \We've already seen how to retrieve vector features using two functions:
+
+    \1) The QgsVectorDataProvider's\  ``select()`` \function
+    \2) The QgsVectorDataProvider's\  ``featureAtId()`` \function
+
+The example below reviews how to retrieve features and also adds the necessary steps to select only certain attributes using the\  ``dataProvider.select() function`` \. This time however we will be passing in\  **ALL** \the\  ``select()`` \function arguments. Notes on each step are included with the code below::
 
     >>> # Create an empty list that will hold the column indexes for the columns we are interested in 
     >>> selectList = []
@@ -475,7 +502,7 @@ The take home point is that the QgsField object gives us the names and data type
     ...
     # OUTPUT TRUNCATED FOR DEMONSTRATION
 
-\  **9.** \We're very close already to creating a table structure -- actually, a Python data structure that represents a table in a database. The table will be a Python dictionary where the keys are the featureIDs for each feature and the values will be nested dictionaries that have keys with column names and values with the column value. Reworking the above example gives us::
+\  **9.** \This next example is a little harder to understand. The point is to show you how to create dictionaries. We're going to create a table data structure -- a Python dictionary that represents a table in a database. The table is a dictionary where the keys are the featureIDs for each feature and the values will be nested dictionaries that have keys with column names and values with the column value. Reworking the above example gives us::
 
     >>> provider.select(selectList, rect, True, False)
     >>> table = {}
@@ -506,7 +533,7 @@ Raster
 In this next example we'll be querying raster cell values with QgsPoints using the\  `QgsRasterLayer.identify() function <http://doc.qgis.org/head/classQgsRasterLayer.html#4bcb29bba8fc0fca1e0bed41b6a0ee9b>`_ \. Although the C++ API shows the identify() function taking two arguments the Python bindings really only need a QgsPoint() to be passed as an argument.
 
 
-\  **1.** \Load the shaded relief into QGIS located at::
+\  **1.** \Load the following shaded relief into QGIS::
 
     /home/qgis/natural_earth_50m/raster/shaded_relief/SR_50M/SR_50M.tif
 
@@ -619,6 +646,4 @@ When a raster layer is loaded into QGIS it gets a default\  `DrawingStyle <http:
     >>> rLayer.triggerRepaint()
     >>> qgis.utils.iface.legendInterface().refreshLayerSymbology(rLayer)
 
-Vector
-*******
 
