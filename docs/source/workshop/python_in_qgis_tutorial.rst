@@ -33,7 +33,7 @@ Setup
 Accessing Layers
 --------------------------
 
-.. note:: The hyperlinks that follow all reference the QGIS API Documentation. Click on them to view the classes and methods we are referencing below
+.. note:: The hyperlinks that follow all reference the\  `QGIS API documentation <http://doc.qgis.org>`_ \. Click on them to view the classes and methods we are referencing below
 
 There's a number of ways to access the layers in QGIS. Each way starts by first referencing the\  `QgsInterface class <http://doc.qgis.org/head/classQgisInterface.html>`_ \which is called\  **iface** \in the Python bindings.
 
@@ -66,7 +66,7 @@ Depending on which layer is selected in the table of contents you will see eithe
     >>> aLayer.name()
     PyQt4.QtCore.QString(u'SR_50M')
 
-\  **3.** \How do you get an idea about what functions this Python class has available? There's really two ways:
+\  **3.** \How do you get an idea about what functions this Python object has available? There's really two ways:
 
     \1) The more visually appealing way to browse class attributes is to access the\  `QGIS API documentation <http://doc.qgis.org>`_ \and search for the class you're working with.
 
