@@ -5,7 +5,7 @@ Tutorial -- Building A Plugin
 Building Our First Plugin with 'Plugin Builder'
 -----------------------------------------------------
 
-Now it's time to get our feet wet by building our first plugin using\  **Plugin Builder** \to help us.
+Now it's time to get our feet with the\  **Plugin Builder** \.
 
 \  **1.** \On the QGIS menu bar click on the\  ``Plugin Builder`` \icon to launch the plugin:
 

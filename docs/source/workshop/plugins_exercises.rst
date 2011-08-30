@@ -163,12 +163,56 @@ Here's the whole\  ``selectFeature()`` \function so we can see the above in cont
 ---------------------------
 
 
-2. Using File Dialogs for Input and Output 
-----------------------------------------------
+2. Writing Shapfiles, File Dialogs  
+---------------------------------------------------
 
-In this next exercise we are going to build another tool using the 'Plugin Builder'. This time our tool will work with file dialogs to output 
+In this next exercise we are going to build another tool using the 'Plugin Builder'. This time our tool will focus writing shapefiles and using file dialogs.
 
--------------------------------------
+The tool requirements:
+
+    1. This tool generates bounding boxes (bbox) from selected polygon features
+    2. The bbox's (minX,minY,maxX,maxY) is saved as an attribute field in the shapefile
+    3. We will focus our attention on allowing the user to save the bbox features multiple ways:
+        * each bbox feature can be saved as a seperate shapfiles on disk
+        * each bbox feature can be saved as a record in a single shapefile
+        * all bbox features can be merged into a single bbox that contains them all
+
+Building The Tool
+*******************
+
+\  **1.** \Select the 'Plugin Builder' button on the QGIS menu bar.
+
+\  **2.** \Fill out the necessary information as you'd like, here's some hints::
+        
+    class name =  poly2bbox
+    descriptive title = Poly2Bbox
+    description = a tool that saves polygon feature bboxes to shapefile
+    
+
+\  **3.** \Save the project to your workspace folder located in your home directory::
+
+            /home/qgis/workspace/
+
+\  **4.** \Using the bash shell change directories to the plugin directory where you saved your project
+
+\  **5.** \Now run the make command and inspect your output to make sure it looks good::
+
+    $ make
+    pyuic4 -o ui_poly2bbox.py ui_poly2bbox.ui
+    pyrcc4 -o resources.py  resources.qrc
+
+\  **6.** \Open up\  **Qt 4 Designer** \and try to make a GUI that resemble this GUI::
+
+    image here
+
+\  **7.** \Create a connection to the selectionChanged function
+
+\  **8.** \Create some properties in your GUI dialog to set and get the TextBrowser
+
+\  **9.** \Create some properties to get and fetch the GUI dialog radio buttons
+
+\  **10.** \Create the custom function  that fires on selectionChanged. This function is responsible for fetching the ID of the feature that is selectionj
+
 
 
 3. Create On-the-Fly Raster Value Emitter
