@@ -68,10 +68,7 @@ We can also see that each of the\  ``.ui`` \files have been compiled into Python
     -rw-r--r--  1 qgis qgis 1.9K 2011-07-07 13:41 ui_results.ui
 
 
-Notice the\  ``__init__.py`` \file. If you opened this file and looked at its guts, then you'd see high-level plugin descriptions such as names and verions numbers::
-    
-
-    .. class:: expand code
+Notice the\  ``__init__.py`` \file. If you opened this file and looked at its guts, then you'd see high-level plugin descriptions such as names and verions numbers\  .. class:: expand code \, for example::
 
     def name():
         return "Plugin Builder"
