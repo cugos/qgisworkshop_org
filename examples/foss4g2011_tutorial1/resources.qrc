@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/plugins/foss4g2011_tutorial1" >
+        <file>icon.png</file>
+    </qresource>
+</RCC>

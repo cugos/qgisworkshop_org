@@ -1,3 +1,23 @@
+"""
+/***************************************************************************
+ foss4g2011_tutorial1
+                                 A QGIS plugin
+ Tutorial #1 for FOSS4G 2011 Workshop
+                              -------------------
+        begin                : 2011-08-31
+        copyright            : (C) 2011 by FOSS4G
+        email                : info@cugos.org
+ ***************************************************************************/
+
+/***************************************************************************
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ ***************************************************************************/
+"""
 # Import the PyQt and QGIS libraries
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
@@ -6,10 +26,9 @@ from qgis.gui import *
 # Initialize Qt resources from file resources.py
 import resources
 # Import the code for the dialog
-from vector_selectbypointdialog import vector_selectbypointDialog
-import pdb
+from foss4g2011_tutorial1dialog import foss4g2011_tutorial1Dialog
 
-class vector_selectbypoint:
+class foss4g2011_tutorial1:
 
     def __init__(self, iface):
         # Save reference to the QGIS interface
@@ -19,7 +38,7 @@ class vector_selectbypoint:
         # out click tool will emit a QgsPoint on every click
         self.clickTool = QgsMapToolEmitPoint(self.canvas)
         # create our GUI dialog
-        self.dlg = vector_selectbypointDialog()
+        self.dlg = foss4g2011_tutorial1Dialog()
         # create a list to hold our selected feature ids
         self.selectList = []
         # current layer ref (set in handleLayerChange)
@@ -29,19 +48,18 @@ class vector_selectbypoint:
 
     def initGui(self):
         # Create action that will start plugin configuration
-        self.action = QAction(QIcon(":/plugins/vector_selectbypoint/icon.png"), \
-            "some text that appears in the menu", self.iface.mainWindow())
+        self.action = QAction(QIcon(":/plugins/foss4g2011_tutorial1/icon.png"), \
+            "Tutorial #1 for FOSS4G 2011 Workshop", self.iface.mainWindow())
         # connect the action to the run method
         QObject.connect(self.action, SIGNAL("triggered()"), self.run)
 
         # Add toolbar button and menu item
         self.iface.addToolBarIcon(self.action)
-        self.iface.addPluginToMenu("&some text that appears in the menu", self.action)
-
+        self.iface.addPluginToMenu("Tutorial #1 for FOSS4G 2011 Workshop", self.action) 
         # connect our custom function to a clickTool signal that the canvas was clicked
         # result = QObject.connect(self.clickTool, SIGNAL("canvasClicked(const QgsPoint &, Qt::MouseButton)"), self.handleMouseDown)
         #QMessageBox.information( self.iface.mainWindow(),"Info", "connect = %s"%str(result) )
-    
+
         # connect to state change signal of checkbox
         result = QObject.connect(self.dlg.getChkActivate(), SIGNAL("stateChanged(int)"), self.changeActive)
 
@@ -52,7 +70,7 @@ class vector_selectbypoint:
 
     def unload(self):
         # Remove the plugin menu item and icon
-        self.iface.removePluginMenu("&some text that appears in the menu",self.action)
+        self.iface.removePluginMenu("&Tutorial #1 for FOSS4G 2011 Workshop",self.action)
         self.iface.removeToolBarIcon(self.action)
 
     def handleMouseDown(self, point, button):
@@ -61,7 +79,7 @@ class vector_selectbypoint:
         #QMessageBox.information( self.iface.mainWindow(),"Info", "X,Y = %s,%s" % (str(point.x()),str(point.y())) )
 
     def handleLayerChange(self, layer):
-        self.cLayer = self.canvas.currentLayer()		
+        self.cLayer = self.canvas.currentLayer()        
         if self.cLayer:
             self.provider = self.cLayer.dataProvider()
 
@@ -87,27 +105,27 @@ class vector_selectbypoint:
         self.selectList = []
         #QMessageBox.information( self.iface.mainWindow(),"Info", "in selectFeature function" )
         # setup the provider select 
-        pntGeom = QgsGeometry.fromPoint(point)	
-        pntBuff = pntGeom.buffer(2.0,1) #buffer it 2 degrees and return with 1 segment
-        rect = pntGeom.boundingBox()
+        pntGeom = QgsGeometry.fromPoint(point)  
+        pntBuff = pntGeom.buffer(1.0,1) #buffer it 2 degrees and return with 1 segment
+        rect = pntBuff.boundingBox()
         if self.cLayer:
             feat = QgsFeature()
             # create the select statement
-            self.provider.select([],rect) # the arguments mean no attributes returned, and do a bbox filter with our buffered rectangle to limit the amount of features	
+            self.provider.select([],rect) # the arguments mean no attributes returned, and do a bbox filter with our buffered rectangle to limit the amount of features
             while self.provider.nextFeature(feat):
                 # if the feat geom returned from the selection intersects our point then put it in a list
-                if feat.geometry().intersects(pntGeom):
+                if feat.geometry().intersects(pntBuff):
                     self.selectList.append(feat.id())
 
             if self.selectList:
-                # make the actual selection	
+                # make the actual selection 
                 self.cLayer.setSelectedFeatures(self.selectList)
                 # update the TextBrowser
                 self.updateTextBrowser()
-        else:	
+        else:   
                 QMessageBox.information( self.iface.mainWindow(),"Info", "No layer currently selected in TOC" )
 
-    
+
     def changeActive(self,state):
         if (state==Qt.Checked):
             # connect to click signal
@@ -129,13 +147,12 @@ class vector_selectbypoint:
         # make our clickTool the tool that we'll use for now 
         self.canvas.setMapTool(self.clickTool) 
 
-            # show the dialog
-            self.dlg.show()
-            result = self.dlg.exec_()
-            # See if OK was pressed
-            if result == 1:
-                # do something useful (delete the line containing pass and
-                # substitute with your code
-                pass
-
+        # show the dialog
+        self.dlg.show()
+        result = self.dlg.exec_()
+        # See if OK was pressed
+        if result == 1:
+            # do something useful (delete the line containing pass and
+            # substitute with your code
+            pass
 
