@@ -85,6 +85,7 @@ Notice the\  ``__init__.py`` \file. If you opened this file and looked at its gu
         # load PluginBuilder class from file PluginBuilder
         from pluginbuilder import PluginBuilder
         return PluginBuilder(iface)
+
 .. end expand code
 
 Also notice the resource files associated with this project below. Remember that the\  ``.qrc`` \file has to be compiled into a Python module. Here's all of those files::
