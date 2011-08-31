@@ -22,9 +22,8 @@
 from PyQt4 import QtCore, QtGui
 from ui_foss4g2011_example3 import Ui_foss4g2011_example3
 # create the dialog for zoom to point
-class foss4g2011_example3Dialog(QtGui.QDialog):
-    def __init__(self):
-        QtGui.QDialog.__init__(self)
-        # Set up the user interface from Designer.
-        self.ui = Ui_foss4g2011_example3()
-        self.ui.setupUi(self)
+class foss4g2011_example3Dialog(QtGui.QDialog, Ui_foss4g2011_example3):
+    def __init__(self, iface, fl):
+        QtGui.QDialog.__init__(self, iface.mainWindow(), fl)
+        self.iface = iface
+        self.setupUi(self)

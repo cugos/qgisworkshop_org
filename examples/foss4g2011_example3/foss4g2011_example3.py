@@ -52,13 +52,8 @@ class foss4g2011_example3:
     # run method that performs all the real work
     def run(self):
 
+        flags = Qt.WindowTitleHint | Qt.WindowSystemMenuHint | Qt.WindowMaximizeButtonHint 
         # create and show the dialog
-        dlg = foss4g2011_example3Dialog()
+        dlg = foss4g2011_example3Dialog(self.iface,flags)
         # show the dialog
         dlg.show()
-        result = dlg.exec_()
-        # See if OK was pressed
-        if result == 1:
-            # do something useful (delete the line containing pass and
-            # substitute with your code
-            pass
