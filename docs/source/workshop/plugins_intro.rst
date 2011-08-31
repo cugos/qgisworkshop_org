@@ -67,8 +67,6 @@ We can also see that each of the\  ``.ui`` \files have been compiled into Python
     -rw-r--r--  1 qgis qgis 1.7K 2011-07-07 13:41 ui_results.py
     -rw-r--r--  1 qgis qgis 1.9K 2011-07-07 13:41 ui_results.ui
 
-.. class:: expand code
-
 Notice the\  ``__init__.py`` \file. If you opened this file and looked at its guts, then you'd see high-level plugin descriptions such as names and verions numbers::
 
     def name():
@@ -85,7 +83,6 @@ Notice the\  ``__init__.py`` \file. If you opened this file and looked at its gu
         # load PluginBuilder class from file PluginBuilder
         from pluginbuilder import PluginBuilder
         return PluginBuilder(iface)
-.. end expand code
 
 Also notice the resource files associated with this project below. Remember that the\  ``.qrc`` \file has to be compiled into a Python module. Here's all of those files::
 
