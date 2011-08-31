@@ -84,6 +84,8 @@ class foss4g2011_example1:
         if self.selectList:
             # ############ EXAMPLE 1 EDITS GO HERE ####################  
             ''' write code that will output ALL selected feature attributes into the Text Browser''' 
+            ''' instead of using the dataProvider.select() function get the actual QgsFeature using dataProvider.featureAtId() '''
+
             self.dlg.setTextBrowser("example text\nto populate TextBrowser")
             
 
