@@ -16,6 +16,7 @@ To create QGIS Python plugins you'll need at least 4 types of files in your proj
 -----------------------------
 
 To get a better idea about how these different file types comprise a plugin project let's look at a Python plugin that is already installed on your system.  
+
 \  **1.** \Open a new bash shell. The bash shell can be started by holding down\  ``<Cntl>-<ALT>`` \keys and then pressing\  ``t`` \at the same time. You should see a purple window pop open with a blinking cursor.
 
 .. image:: ../_static/terminal_window_open.png
@@ -66,7 +67,11 @@ We can also see that each of the\  ``.ui`` \files have been compiled into Python
     -rw-r--r--  1 qgis qgis 1.7K 2011-07-07 13:41 ui_results.py
     -rw-r--r--  1 qgis qgis 1.9K 2011-07-07 13:41 ui_results.ui
 
+
 Notice the\  ``__init__.py`` \file. If you opened this file and looked at its guts, then you'd see high-level plugin descriptions such as names and verions numbers::
+    
+
+    .. class:: expand code
 
     def name():
         return "Plugin Builder"
