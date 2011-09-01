@@ -61,6 +61,13 @@
                     </widget>
                    </item>
                    <item>
+                    <widget class="QPushButton" name="emitCurrentLayerChanged">
+                     <property name="text">
+                      <string>emitCurrentLayerChanged</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
                     <spacer name="verticalSpacer">
                      <property name="orientation">
                       <enum>Qt::Vertical</enum>
@@ -82,8 +89,8 @@
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>300</width>
-                  <height>533</height>
+                  <width>148</width>
+                  <height>76</height>
                  </rect>
                 </property>
                 <attribute name="label">

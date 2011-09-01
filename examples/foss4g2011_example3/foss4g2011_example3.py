@@ -66,6 +66,11 @@ class foss4g2011_example3(QObject):
         QObject.connect(self.dlg.currentLayerChangedCheckBox, SIGNAL("stateChanged(int)"), self.check_currentLayerChanged)
         QObject.connect(self.dlg.xyCoordinatesCheckBox, SIGNAL("stateChanged(int)"), self.check_xyCoordinates)
         QObject.connect(self.dlg.mapToolSetCheckBox, SIGNAL("stateChanged(int)"), self.check_mapToolSet)
+        QObject.connect(self.dlg.emitCurrentLayerChanged, SIGNAL("clicked(bool)"), self.emitCurrentLayerChanged)
+
+    def emitCurrentLayerChanged(self, checked):
+        #QMessageBox.information( self.iface.mainWindow(),"Info", str(checked) )
+        self.iface.emit(SIGNAL("currentLayerChanged(QgsMapLayer*)"), self.iface.mapCanvas().currentLayer() )
 
     def check_currentLayerChanged(self, state):
         # if now checked, we need to connect to the signal
