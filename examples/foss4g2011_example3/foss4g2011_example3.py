@@ -22,14 +22,20 @@
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 from qgis.core import *
+from qgis.gui import *
 # Initialize Qt resources from file resources.py
 import resources
 # Import the code for the dialog
 from foss4g2011_example3dialog import foss4g2011_example3Dialog
+#import pdb
 
-class foss4g2011_example3:
+#pyqtRemoveInputHook()
+#pdb.set_trace()
+
+class foss4g2011_example3(QObject):
 
     def __init__(self, iface):
+        QObject.__init__(self)
         # Save reference to the QGIS interface
         self.iface = iface
 
@@ -52,8 +58,44 @@ class foss4g2011_example3:
     # run method that performs all the real work
     def run(self):
 
-        flags = Qt.WindowTitleHint | Qt.WindowSystemMenuHint | Qt.WindowMaximizeButtonHint 
         # create and show the dialog
-        dlg = foss4g2011_example3Dialog(self.iface,flags)
+        self.dlg = foss4g2011_example3Dialog(self.iface)
         # show the dialog
-        dlg.show()
+        self.dlg.show()
+
+        QObject.connect(self.dlg.currentLayerChangedCheckBox, SIGNAL("stateChanged(int)"), self.check_currentLayerChanged)
+        QObject.connect(self.dlg.xyCoordinatesCheckBox, SIGNAL("stateChanged(int)"), self.check_xyCoordinates)
+        QObject.connect(self.dlg.mapToolSetCheckBox, SIGNAL("stateChanged(int)"), self.check_mapToolSet)
+
+    def check_currentLayerChanged(self, state):
+        # if now checked, we need to connect to the signal
+        if state == Qt.Checked:
+            QObject.connect(self.iface, SIGNAL("currentLayerChanged(QgsMapLayer*)"), self.listen_currentLayerChanged)        
+        # if now NOT checked, we need to un-connect to the signal
+        else:
+            QObject.disconnect(self.iface, SIGNAL("currentLayerChanged(QgsMapLayer*)"), self.listen_currentLayerChanged)        
+
+    def listen_currentLayerChanged(self,mapLayer):
+        self.dlg.outputTextEdit.append("currentLayerChanged - %s" % (mapLayer.name() if mapLayer else ""))
+
+    def check_xyCoordinates(self, state):
+        # if now checked, we need to connect to the signal
+        if state == Qt.Checked:
+            QObject.connect(self.iface.mapCanvas(), SIGNAL("xyCoordinates(const QgsPoint &)"), self.listen_xyCoordinates)        
+        # if now NOT checked, we need to un-connect to the signal
+        else:
+            QObject.disconnect(self.iface.mapCanvas(), SIGNAL("xyCoordinates(const QgsPoint &)"), self.listen_xyCoordinates)        
+
+    def listen_xyCoordinates(self,point):
+        self.dlg.outputTextEdit.append("xyCoordinates - %d,%d" % (point.x() if point else "",point.y() if point else ""))
+
+    def check_mapToolSet(self, state):
+        # if now checked, we need to connect to the signal
+        if state == Qt.Checked:
+            QObject.connect(self.iface.mapCanvas(), SIGNAL("mapToolSet(QgsMapTool *)"), self.listen_mapToolSet)        
+        # if now NOT checked, we need to un-connect to the signal
+        else:
+            QObject.disconnect(self.iface.mapCanvas(), SIGNAL("mapToolSet(QgsMapTool *)"), self.listen_mapToolSet)        
+
+    def listen_mapToolSet(self,tool):
+        self.dlg.outputTextEdit.append("mapToolSet - %s" % (tool.action().text() if isinstance(tool,QgsMapTool) else "unidentified tool"))
