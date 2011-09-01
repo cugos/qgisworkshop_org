@@ -28,3 +28,12 @@ class foss4g2011_example2Dialog(QtGui.QDialog):
         # Set up the user interface from Designer.
         self.ui = Ui_foss4g2011_example2()
         self.ui.setupUi(self)
+
+    def clearTextBrowser(self):
+        self.ui.txtFeedback.clear() 
+
+    def setTextBrowser(self,value):
+        self.ui.txtFeedback.setText(value)
+
+
+

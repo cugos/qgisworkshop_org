@@ -22,6 +22,7 @@
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 from qgis.core import *
+from qgis.gui import *
 # Initialize Qt resources from file resources.py
 import resources
 # Import the code for the dialog
@@ -32,6 +33,10 @@ class foss4g2011_example2:
     def __init__(self, iface):
         # Save reference to the QGIS interface
         self.iface = iface
+        # map canvas ref
+        self.canvas = self.iface.mapCanvas()
+        # create and show the dialog
+        self.dlg = foss4g2011_example2Dialog()
 
     def initGui(self):
         # Create action that will start plugin configuration
@@ -42,23 +47,36 @@ class foss4g2011_example2:
 
         # Add toolbar button and menu item
         self.iface.addToolBarIcon(self.action)
-        self.iface.addPluginToMenu("&Example #2 for FOSS4G 2011 Workshop", self.action)
+        self.iface.addPluginToMenu("Example #2 for FOSS4G 2011 Workshop", self.action)
+        
+        #Add a connection to the xycoord signal of the map canvas
+        result = QObject.connect(self.canvas, SIGNAL("xyCoordinates (const QgsPoint &)"), self.handleXY)
+        #QMessageBox.information( self.iface.mainWindow(),"Info", "connect = %s"%str(result) )
 
     def unload(self):
         # Remove the plugin menu item and icon
         self.iface.removePluginMenu("&Example #2 for FOSS4G 2011 Workshop",self.action)
         self.iface.removeToolBarIcon(self.action)
 
+    def handleXY(self, point):
+        self.dlg.clearTextBrowser()
+        self.cLayer = self.canvas.currentLayer()
+        if self.cLayer:
+            if self.cLayer.type() == 1:
+                success, data = self.cLayer.identify(point)
+                final = "" 
+                for key,value in data.items():
+                    final += str(key) + " > " + str(value) + "\n"
+                self.dlg.setTextBrowser(final) 
+
     # run method that performs all the real work
     def run(self):
-
-        # create and show the dialog
-        dlg = foss4g2011_example2Dialog()
         # show the dialog
-        dlg.show()
-        result = dlg.exec_()
+        self.dlg.show()
+        result = self.dlg.exec_()
         # See if OK was pressed
         if result == 1:
             # do something useful (delete the line containing pass and
             # substitute with your code
             pass
+
