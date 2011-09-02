@@ -80,10 +80,11 @@ class foss4g2011_example1:
             self.provider = self.cLayer.dataProvider()
 
     def updateTextBrowser(self):
-        # check to make sure we have a feature selected in our selectList
+        # check to make sure we have a feature selected in our selectList -- note that there might be more than one feature
         if self.selectList:
+
             # ############ EXAMPLE 1 EDITS GO HERE ####################  
-            ''' write code that will output ALL selected feature attributes into the Text Browser''' 
+            ''' write code that will output ALL selected feature attributes for a single feature into the Text Browser''' 
             ''' instead of using the dataProvider.select() function get the actual QgsFeature using dataProvider.featureAtId() '''
 
             self.dlg.setTextBrowser("example text\nto populate TextBrowser")
@@ -92,11 +93,8 @@ class foss4g2011_example1:
     def selectFeature(self, point, button):
         # reset selection list on each new selection
         self.selectList = []
-        # setup the provider select 
         pntGeom = QgsGeometry.fromPoint(point)  
-        # buffer it 20 degrees and return with 1 segment
-        pntBuff = pntGeom.buffer(20.0,1)         
-        # get the bbox rectangle 
+        pntBuff = pntGeom.buffer( (self.canvas.mapUnitsPerPixel() * 2),0) 
         rect = pntBuff.boundingBox()
         if self.cLayer:
             feat = QgsFeature()
@@ -104,12 +102,12 @@ class foss4g2011_example1:
             self.provider.select([],rect) # the arguments mean no attributes returned, and do a bbox filter with our buffered rectangle to limit the amount of features 
             while self.provider.nextFeature(feat):
                 # if the feat geom returned from the selection intersects our point then put it in a list
-                if feat.geometry().intersects(pntGeom):
+                if feat.geometry().intersects(pntBuff):
                     self.selectList.append(feat.id())
 
             if self.selectList:
                 # make the actual selection 
-                self.cLayer.setSelectedFeatures(self.selectList)
+                self.cLayer.setSelectedFeatures([self.selectList[0]])
                 # update the TextBrowser
                 self.updateTextBrowser()
         else:   
