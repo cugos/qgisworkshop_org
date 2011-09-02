@@ -103,13 +103,6 @@ Those two statements are the commands we need to compile the appropriate resourc
 Extending the Plugin Builder Templates
 -----------------------------------------  
 
-Building plugins is an iterative process, many consecutive steps are repeated. I like to think that building a plugin generally follows this workflow:
-
-    1. Choose to implement one small part of overall plugin idea at a time
-    2. Customize the GUI desgin with Qt Designer to fit our interactive needs (remember to recompile the .ui file)
-    3. Begin programming tool logic but do it as a proof-of-concept with QMessageBoxe(s) giving feedback to make sure it is working
-    4. Once tool logic has been proofed, tie the tool logic to the GUI and test
-
 The Plugin Idea and Implementation Workflow
 **********************************************
 
@@ -131,7 +124,7 @@ We can tackle the implementation tasks one at a time:
 
 ---------------------------------------
 
-\1 Designing the GUI
+\1) Designing the GUI
 ------------------------
 
 Let's talk about what the GUI will look like. The requirements for this tool are pretty straightforward:
@@ -217,7 +210,7 @@ Notice that the Makefile is smart. It knows that there were only changes to the\
 
 ---------------------------------------
 
-\2 Implement Map Canvas Click Action 
+\2) Implement Map Canvas Click Action 
 ----------------------------------------
 
 \  **1.** \Let's begin by opening up the main Python module that runs our tool's logic and having a look around. Most of you will be more comfortable browsing and editing code in a text editor like gedit. Open gedit by clicking the notepad icon on the top menue bar of Ubuntu:
@@ -572,7 +565,7 @@ Some things to notice about this file:
     :align: center
 
 
-\3 Implement Feature Selection on Map Canvas Click
+\3) Implement Feature Selection on Map Canvas Click
 -----------------------------------------------------
 
 Now the goal will be select the feature we click on in the map. There's only a couple things we need to implement in this next section:
@@ -712,7 +705,7 @@ Notice that we are putting a QMessageBox box immediately after the connection to
     :align: center
 
 
-\4 Implement the Tool Activationo w/ Checkbox
+\4) Implement the Tool Activationo w/ Checkbox
 ------------------------------------------------------
 
 Now it's time to make our tool active/inactive depending on the state of our checkbox at the bottom left. The only portion of our tool that will become inactive is the feedback mechanism -- that means our tool will still be able to select features just not report the QgsPoint to the TextBrowser. We are only going to need two more steps for this next implementation:
@@ -869,7 +862,7 @@ Now it's time to make our tool active/inactive depending on the state of our che
 
 --------------------------------
 
-\5  Make a Sexier Tool -- Yah!
+\5)  Make a Sexier Tool -- Yah!
 -------------------------------------
 
 You might have noticed a couple interesting things happening in the module\  ``vector_selectbypoint.py`` \ that I find annoying. Let's talk about some changes and then move around some code in the next steps: 

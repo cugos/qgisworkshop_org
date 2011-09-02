@@ -65,7 +65,7 @@ Let's review how we install Python plugins breifly. We'll also add the PyQGIS FO
     :scale: 70%
     :align: center
 
-.. note:: You can also check out the repository with your\  `web browser <http://www.qgisworkshop.org/plugins/plugins.xml`_ \
+.. note:: You can also check out the repository with your\  `web browser <http://www.qgisworkshop.org/plugins/plugins.xml>`_ \
 
 \  **5.** \If you go back to the\  ``Plugins`` \tab you can filter for\  ``foss4g2011_workshop_examples`` \in the\  ``repositories`` \drop down next to the filter textbox:
 
