@@ -36,15 +36,15 @@
                 </size>
                </property>
                <property name="currentIndex">
-                <number>0</number>
+                <number>2</number>
                </property>
                <widget class="QWidget" name="page">
                 <property name="geometry">
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>300</width>
-                  <height>533</height>
+                  <width>216</width>
+                  <height>81</height>
                  </rect>
                 </property>
                 <attribute name="label">
@@ -61,7 +61,7 @@
                     </widget>
                    </item>
                    <item>
-                    <widget class="QPushButton" name="emitCurrentLayerChanged">
+                    <widget class="QPushButton" name="emitCurrentLayerChangedBtn">
                      <property name="text">
                       <string>emitCurrentLayerChanged</string>
                      </property>
@@ -129,6 +129,72 @@
                   </layout>
                  </item>
                 </layout>
+               </widget>
+               <widget class="QWidget" name="page_3">
+                <property name="geometry">
+                 <rect>
+                  <x>0</x>
+                  <y>0</y>
+                  <width>300</width>
+                  <height>502</height>
+                 </rect>
+                </property>
+                <attribute name="label">
+                 <string>QgsVectorLayer</string>
+                </attribute>
+                <widget class="QWidget" name="verticalLayoutWidget">
+                 <property name="geometry">
+                  <rect>
+                   <x>10</x>
+                   <y>10</y>
+                   <width>271</width>
+                   <height>481</height>
+                  </rect>
+                 </property>
+                 <layout class="QVBoxLayout" name="verticalLayout_3">
+                  <item>
+                   <widget class="QCheckBox" name="editingStartedCheckBox">
+                    <property name="text">
+                     <string>editingStarted</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QPushButton" name="emitStartedEditingBtn">
+                    <property name="text">
+                     <string>emitStartedEditing</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QCheckBox" name="editingStoppedCheckBox">
+                    <property name="text">
+                     <string>editingStopped</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QPushButton" name="emitStoppedEditingBtn">
+                    <property name="text">
+                     <string>emitStoppedEditing</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <spacer name="verticalSpacer_3">
+                    <property name="orientation">
+                     <enum>Qt::Vertical</enum>
+                    </property>
+                    <property name="sizeHint" stdset="0">
+                     <size>
+                      <width>20</width>
+                      <height>40</height>
+                     </size>
+                    </property>
+                   </spacer>
+                  </item>
+                 </layout>
+                </widget>
                </widget>
               </widget>
              </item>

@@ -17,3 +17,9 @@
 # Logs #
 ###########
 *.log
+
+# compiled resources and ui files #
+###################################
+ui_*_example*.py
+ui_*_tutorial*.py
+resources.py

@@ -63,13 +63,61 @@ class foss4g2011_example3(QObject):
         # show the dialog
         self.dlg.show()
 
+        # QgisInterface
         QObject.connect(self.dlg.currentLayerChangedCheckBox, SIGNAL("stateChanged(int)"), self.check_currentLayerChanged)
+        QObject.connect(self.dlg.emitCurrentLayerChangedBtn, SIGNAL("clicked(bool)"), self.btn_emitCurrentLayerChanged)
+        # QgsMapCanvas
         QObject.connect(self.dlg.xyCoordinatesCheckBox, SIGNAL("stateChanged(int)"), self.check_xyCoordinates)
         QObject.connect(self.dlg.mapToolSetCheckBox, SIGNAL("stateChanged(int)"), self.check_mapToolSet)
-        QObject.connect(self.dlg.emitCurrentLayerChanged, SIGNAL("clicked(bool)"), self.emitCurrentLayerChanged)
+        # QgsVectorLayer
+        QObject.connect(self.dlg.editingStartedCheckBox, SIGNAL("stateChanged(int)"), self.check_editingStarted)
+        QObject.connect(self.dlg.editingStoppedCheckBox, SIGNAL("stateChanged(int)"), self.check_editingStopped)
+        QObject.connect(self.dlg.emitStartedEditingBtn, SIGNAL("clicked(bool)"), self.btn_emitStartedEditing)
+        QObject.connect(self.dlg.emitStoppedEditingBtn, SIGNAL("clicked(bool)"), self.btn_emitStoppedEditing)
 
-    def emitCurrentLayerChanged(self, checked):
-        #QMessageBox.information( self.iface.mainWindow(),"Info", str(checked) )
+
+    def btn_emitStartedEditing(self, checked):
+        # this function has iface emit a currentLayerChanged signal that should be picked up by our listening slots
+        if self.iface.mapCanvas().currentLayer():
+            self.iface.mapCanvas().currentLayer().emit(SIGNAL("editingStarted( )"))
+        else:
+            QMessageBox.information(self.iface.mainWindow(), "Info", "Make sure you have a QgsVectorLayer selected in the TOC to emit a SIGNAL(editingStarted( ))")
+
+    def btn_emitStoppedEditing(self, checked):
+        # this function has iface emit a currentLayerChanged signal that should be picked up by our listening slots
+        if self.iface.mapCanvas().currentLayer():
+            self.iface.mapCanvas().currentLayer().emit(SIGNAL("editingStopped( )"))
+        else:
+            QMessageBox.information(self.iface.mainWindow(), "Info", "Make sure you have a QgsVectorLayer selected in the TOC to emit a SIGNAL(editingStopped( ))")
+
+    def check_editingStopped(self, state):
+        # if now checked, we need to connect to the signal
+        if state == Qt.Checked and (True if self.iface.mapCanvas().currentLayer() else False and self.iface.mapCanvas().currentLayer().type == 0):
+            QObject.connect(self.iface.mapCanvas().currentLayer(), SIGNAL("editingStopped( )"), self.listen_editingStopped)        
+        # if now NOT checked, we need to un-connect to the signal
+        elif state == Qt.Unchecked and (True if self.iface.mapCanvas().currentLayer() else False and self.iface.mapCanvas().currentLayer().type == 0):
+            QObject.disconnect(self.iface.mapCanvas().currentLayer(), SIGNAL("editingStopped( )"), self.listen_editingStopped)        
+        else:
+            QMessageBox.information(self.iface.mainWindow(), "Info", "Make sure you have a QgsVectorLayer selected in the TOC to connect/disconnect to SIGNAL(editingStopped)")
+
+    def listen_editingStopped(self):
+        self.dlg.outputTextEdit.append("editingStopped - %s" % (self.iface.mapCanvas().currentLayer().name() if self.iface.mapCanvas().currentLayer() else ""))
+
+    def check_editingStarted(self, state):
+        # if now checked, we need to connect to the signal
+        if state == Qt.Checked and (True if self.iface.mapCanvas().currentLayer() else False and self.iface.mapCanvas().currentLayer().type == 0):
+            QObject.connect(self.iface.mapCanvas().currentLayer(), SIGNAL("editingStarted( )"), self.listen_editingStarted)        
+        # if now NOT checked, we need to un-connect to the signal
+        elif state == Qt.Unchecked and (True if self.iface.mapCanvas().currentLayer() else False and self.iface.mapCanvas().currentLayer().type == 0):
+            QObject.disconnect(self.iface.mapCanvas().currentLayer(), SIGNAL("editingStarted( )"), self.listen_editingStarted)        
+        else:
+            QMessageBox.information(self.iface.mainWindow(), "Info", "Make sure you have a QgsVectorLayer selected in the TOC to connect/disconnect to SIGNAL(editingStarted)")
+
+    def listen_editingStarted(self):
+        self.dlg.outputTextEdit.append("editingStarted- %s" % (self.iface.mapCanvas().currentLayer().name() if self.iface.mapCanvas().currentLayer() else ""))
+        
+    def btn_emitCurrentLayerChanged(self, checked):
+        # this function has iface emit a currentLayerChanged signal that should be picked up by our listening slots
         self.iface.emit(SIGNAL("currentLayerChanged(QgsMapLayer*)"), self.iface.mapCanvas().currentLayer() )
 
     def check_currentLayerChanged(self, state):
