@@ -91,47 +91,4 @@ Also notice the resource files associated with this project below. Remember that
 
 With that said, it's probably a good guess that anything else with a\  ``.py`` \extension in this directory that we didn't talk about is related to the main plugin logic. There also seems to be some documents and images that we won't be concerned with at this point.
 
-----------------------------
-
-Installing QGIS Plugins
-------------------------------
-
-So how did the\  ``pluginbuilder`` \plugin get installed? How did it get in this directory? 
-
-Let's review how we install Python plugins breifly.
-
-\  **1.** \On the menu bar of QGIS click the\  ``Plugins > Fetch Python Plugins`` \item:
-
-.. image:: ../_static/plugins_menu_click_1.png
-    :scale: 100%
-    :align: center
-
-\  **2.** \A new dialog shows up with a list of available Python plugins for install. The tutorial authors have already setup QGIS to fetch 3rd-party plugins. If the tutorial authors had not done this there would be less plugins listed here. Click on the\  ``Repository`` \tab. This lists all the plugin repositories that are being searched for plugins. At the very bottom is a\  ``3rd Party Repositories`` \button. Click this button and QGSI will begin searching 3rd-party repositories for plugins: 
-
-.. image:: ../_static/add_3rd_partyplugins_new.png
-    :scale: 100%
-    :align: center
-
-\  **3.** \Now go to the\  ``Plugins`` \tab. The plugins for each repository show up here. Choose a plugin to download. I chose to install the osmpoly_export plugin:
-
-.. image:: ../_static/qigs_install_osm_plugin.png
-    :scale: 100%
-    :align: center
-
-\  **4.** \In the bash shell or folder browser navigate to\  ``/home/qgis/.qgis/python/plugins`` \. The plugin you chose to install should now be located here::
-
-    $ cd /home/qgis/.qgis/python/plugins/
-    $ ls -lah
-    total 16K
-    drwxr-xr-x 4 qgis qgis 4.0K 2011-08-20 12:26 .
-    drwxr-xr-x 4 qgis qgis 4.0K 2011-07-07 13:41 ..
-    drwxr-xr-x 2 qgis qgis 4.0K 2011-08-20 12:26 osmpoly_export
-    drwxr-xr-x 3 qgis qgis 4.0K 2011-07-07 13:41 pluginbuilder
-
-\  **5.** \To turn any plugin on or off you can manage it by clicking\  ``Plugins > Manage Plugins`` \. The QGIS Plugin Manager dialog will launch with checkboxes next to the plugin you want to turn on or off:
-
-.. image:: ../_static/plugin_manager_console.png
-    :scale: 100%
-    :align: center
-
 
