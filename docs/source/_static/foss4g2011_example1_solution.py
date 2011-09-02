@@ -84,11 +84,23 @@ class foss4g2011_example1:
         # check to make sure we have a feature selected in our selectList -- note that there might be more than one feature
         if self.selectList:
 
-            # ***************EXAMPLE 1 EDITS GO HERE********************
-            ''' write code that will output ALL attributes for a single selected feature into the Text Browser. 
-                instead of using the dataProvider.select() function get the actual QgsFeature using dataProvider.featureAtId() '''
+            # ############ EXAMPLE 1 EDITS GO HERE ####################  
+            ''' write code that will output ALL selected feature attributes for a single feature into the Text Browser''' 
+            ''' instead of using the dataProvider.select() function get the actual QgsFeature using dataProvider.featureAtId() '''
+            # get all the field Indexes for the feature
+            fields = self.provider.fields()
+            # get the feature by passing in empty Feature
+            feat = QgsFeature()
+            # going to get first feature since there could potentially be more than one
+            if self.provider.featureAtId(self.selectList[0], feat, True, fields.keys()):
+                attMap = feat.attributeMap()
+                output = "FEATURE ID: %i\n" % feat.id()
+                for index,qgsfield in fields.items():
+                    #pyqtRemoveInputHook()
+                    #pdb.set_trace()
+                    output += "\t" + str(qgsfield.name()) + " : " + str( (attMap[index]).toString() ) + "\n"
         
-            self.dlg.setTextBrowser("example text output\n to TextBrowser")
+                self.dlg.setTextBrowser(output)
             
 
     def selectFeature(self, point, button):
