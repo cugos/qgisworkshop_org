@@ -36,15 +36,15 @@
                 </size>
                </property>
                <property name="currentIndex">
-                <number>2</number>
+                <number>1</number>
                </property>
                <widget class="QWidget" name="page">
                 <property name="geometry">
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>216</width>
-                  <height>81</height>
+                  <width>300</width>
+                  <height>502</height>
                  </rect>
                 </property>
                 <attribute name="label">
@@ -89,8 +89,8 @@
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>148</width>
-                  <height>76</height>
+                  <width>300</width>
+                  <height>502</height>
                  </rect>
                 </property>
                 <attribute name="label">
@@ -103,6 +103,13 @@
                     <widget class="QCheckBox" name="xyCoordinatesCheckBox">
                      <property name="text">
                       <string>xyCoordinates</string>
+                     </property>
+                    </widget>
+                   </item>
+                   <item>
+                    <widget class="QPushButton" name="emitXYCoordinates">
+                     <property name="text">
+                      <string>emitXyCoordinates</string>
                      </property>
                     </widget>
                    </item>

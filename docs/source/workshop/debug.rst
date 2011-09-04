@@ -57,7 +57,7 @@ Pdb (like other debugging tools) also has command-line options that enhance the 
      83                 # do something useful (delete the line containing pass and
      84                 # substitute with your code
 
-Notice the cute little arrow\  ``->`` \. This command without arguments gives us 11 lines back with the currently executing line in the middle.
+Notice the cute little arrow\  ``->`` \. This command without arguments returns 11 lines, with the currently executing line in the middle.
 
 
 \  **2.** \The\  ``list`` \command is pretty dynamic, which means we can list out any portion of code using two numeric line-number arguments. Here's a couple variations on this command::

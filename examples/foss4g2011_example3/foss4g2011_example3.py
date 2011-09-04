@@ -68,6 +68,7 @@ class foss4g2011_example3(QObject):
         QObject.connect(self.dlg.emitCurrentLayerChangedBtn, SIGNAL("clicked(bool)"), self.btn_emitCurrentLayerChanged)
         # QgsMapCanvas
         QObject.connect(self.dlg.xyCoordinatesCheckBox, SIGNAL("stateChanged(int)"), self.check_xyCoordinates)
+        QObject.connect(self.dlg.emitXYCoordinates, SIGNAL("clicked(bool)"), self.btn_emitXYCoordinates)
         QObject.connect(self.dlg.mapToolSetCheckBox, SIGNAL("stateChanged(int)"), self.check_mapToolSet)
         # QgsVectorLayer
         QObject.connect(self.dlg.editingStartedCheckBox, SIGNAL("stateChanged(int)"), self.check_editingStarted)
@@ -130,6 +131,9 @@ class foss4g2011_example3(QObject):
 
     def listen_currentLayerChanged(self,mapLayer):
         self.dlg.outputTextEdit.append("currentLayerChanged - %s" % (mapLayer.name() if mapLayer else ""))
+
+    def btn_emitXYCoordinates(self, checked):
+        self.iface.mapCanvas().emit(SIGNAL("xyCoordinates(const QgsPoint &)"), QgsPoint(-122,45))
 
     def check_xyCoordinates(self, state):
         # if now checked, we need to connect to the signal
