@@ -75,7 +75,27 @@ class foss4g2011_example3(QObject):
         QObject.connect(self.dlg.editingStoppedCheckBox, SIGNAL("stateChanged(int)"), self.check_editingStopped)
         QObject.connect(self.dlg.emitStartedEditingBtn, SIGNAL("clicked(bool)"), self.btn_emitStartedEditing)
         QObject.connect(self.dlg.emitStoppedEditingBtn, SIGNAL("clicked(bool)"), self.btn_emitStoppedEditing)
+        # Custom defined SIGNALS
+        QObject.connect(self.dlg.feedbackStatusCheckBox, SIGNAL("stateChanged(int)"), self.check_feedbackStatus)
+        QObject.connect(self.dlg.emitFeedbackStatusBtn, SIGNAL("clicked(bool)"), self.btn_emitFeedbackStatus)
+    
+    def feedbackStatus(self):
+        # do some really cool feedback stuff
+        print "giving feedback now\n"  
+        
+    def btn_emitFeedbackStatus(self, checked):
+       self.emit(SIGNAL("feedbackStatus(PyQt_PyObject)"), "take this as feedback!")
 
+    def check_feedbackStatus(self, state):
+        # if now checked, we need to connect to the signal
+        if state == Qt.Checked:
+            QObject.connect(self, SIGNAL("feedbackStatus(PyQt_PyObject)"), self.listen_feedbackStatus)        
+        # if now NOT checked, we need to un-connect to the signal
+        else:
+            QObject.disconnect(self, SIGNAL("feedbackStatus(PyQt_PyObject)"), self.listen_feedbackStatus)        
+
+    def listen_feedbackStatus(self, message):
+        self.dlg.outputTextEdit.append("feedbackStatus - %s" % (message if message else ""))
 
     def btn_emitStartedEditing(self, checked):
         # this function has iface emit a currentLayerChanged signal that should be picked up by our listening slots
