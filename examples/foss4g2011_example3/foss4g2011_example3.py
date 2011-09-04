@@ -80,11 +80,11 @@ class foss4g2011_example3(QObject):
         QObject.connect(self.dlg.emitFeedbackStatusBtn, SIGNAL("clicked(bool)"), self.btn_emitFeedbackStatus)
     
     def feedbackStatus(self):
-        # do some really cool feedback stuff
-        print "giving feedback now\n"  
+        # do some really cool analysis and feedback....or
+        print "I don't do anything useful - Yah!"  
         
     def btn_emitFeedbackStatus(self, checked):
-       self.emit(SIGNAL("feedbackStatus(PyQt_PyObject)"), "take this as feedback!")
+       self.emit(SIGNAL("feedbackStatus(PyQt_PyObject)"), "Bruce Lee is my hero!")
 
     def check_feedbackStatus(self, state):
         # if now checked, we need to connect to the signal
