@@ -6,9 +6,7 @@ Tutorial -- PyQGIS
 Setup
 -------------
 
-\  **1.** \To begin open up a new QGIS session by clicking the QGIS icon on the top menu bar.
-
-    All the data we will be using is located in the\  ``natural_earth_50m`` \directory of your qgis user home path::
+\  **1.** \To begin open up a new QGIS session by clicking the QGIS icon on the top menu bar. All the data we will be using is located in the\  ``natural_earth_50m`` \directory of your qgis user home path::
 
     /home/qgis/natural_earth_50m
 
@@ -35,9 +33,7 @@ Accessing Layers
 
 .. note:: The hyperlinks that follow all reference the\  `QGIS API documentation <http://doc.qgis.org>`_ \. Click on them to view the classes and methods we are referencing below
 
-There's a number of ways to access the layers in QGIS. Each way starts by first referencing the\  `QgisInterface class <http://doc.qgis.org/head/classQgisInterface.html>`_ \which is called\  **iface** \in the Python bindings.
-
-From the Python Console we access\  **iface** \by calling the following command::
+There's a number of ways to access the layers in QGIS. Each way starts by first referencing the\  `QgisInterface class <http://doc.qgis.org/head/classQgisInterface.html>`_ \which is called\  **iface** \in the Python bindings. From the Python Console we access\  **iface** \by calling the following command::
     
     >>> qgis.utils.iface
 
@@ -122,9 +118,7 @@ Now we should see both layer names printed out.
 Method 4
 **********
 
-It's also useful sometimes to access layers in the order they are stacked in the table of contents.
-
-Layers are stacked top-down and accessed through a zero-based index. That means the first layer (topmost layer) starts at index 0.
+It's also useful sometimes to access layers in the order they are stacked in the table of contents. Layers are stacked top-down and accessed through a zero-based index. That means the first layer (topmost layer) starts at index 0.
 
 \  **1.** \We access layers using the\  `QgsMapCanvas.layer() function <http://doc.qgis.org/head/classQgsMapCanvas.html#de2251f2227bc0f0efefd09810a193cd>`_ \and pass in a integer designating the index we want::
 
@@ -414,7 +408,6 @@ The above isn't very useful output yet. To get useful column output we need to a
     [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45]
     >>>
     >>> columns.values()
-    [<qgis.core.QgsField object at 0xd8df66c>, <qgis.core.QgsField object at 0xd8df6ac>, <qgis.core.QgsField object at 0xd8df62c>, <qgis.core.QgsField object at 0xd8df5ec>, <qgis.core.QgsField object at 0xd8df5ac>, <qgis.core.QgsField object at 0xd8df56c>, <qgis.core.QgsField object at 0xd8df52c>, <qgis.core.QgsField object at 0xd8df4ec>, <qgis.core.QgsField object at 0xd8df4ac>, <qgis.core.QgsField object at 0xd8df46c>, <qgis.core.QgsField object at 0xd8df42c>, <qgis.core.QgsField object at 0xd8df3ec>, <qgis.core.QgsField object at 0xd8df3ac>, <qgis.core.QgsField object at 0xd8df36c>, <qgis.core.QgsField object at 0xd8df32c>, # TRUNCATED OUTPUT ON PURPOSE ]
 
 
 \  **5.** \To loop through the keys and values at once we can do this::
@@ -431,7 +424,7 @@ The above isn't very useful output yet. To get useful column output we need to a
     7 = <qgis.core.QgsField object at 0xd8df4ec>
     8 = <qgis.core.QgsField object at 0xd8df4ac>
     
-    # TRUNCATED OUTPUT ON PURPOSE
+    # TRUNCATED OUTPUT
 
 \  **6.** \Now let's get some meaningful output from the QgsField object::
  
@@ -454,7 +447,7 @@ The above isn't very useful output yet. To get useful column output we need to a
     14 = NAME_ALT
     15 = LOCAL_LNG
 
-    # TRUNCATED OUTPUT ON PURPOSE
+    # TRUNCATED OUTPUT 
 
 \  **7.** \We can add other QgsField attributes to the iteration above::
 
@@ -475,56 +468,48 @@ The take home point is that the QgsField object gives us the names and data type
 \  **8.** \We've already seen how to retrieve vector features using two functions:
 
     \1) The QgsVectorDataProvider's\  ``select()`` \function
+
     \2) The QgsVectorDataProvider's\  ``featureAtId()`` \function
 
 The example below reviews how to retrieve features and also adds the necessary steps to select only certain attributes using the\  ``dataProvider.select() function`` \. This time however we will be passing in\  **ALL** \the\  ``select()`` \function arguments. Notes on each step are included with the code below::
 
-    >>> # Create an empty list that will hold the column indexes for the columns we are interested in 
-    >>> selectList = []
-    >>> # For each column name we are interested in retreiving get its index and add it to the above selectList
-    >>> for column in ['LEVEL', 'TYPE', 'NAME', 'SORTNAME']:
-    ...     selectList.append(provider.fieldNameIndex(column))
-    ... 
-    >>> # Our column index output 
-    >>> selectList
-    [5, 6, 7, 8]
-    >>> # Create a bounding box rectangle that we will use as a filter to only get features that intersect with it
-    >>> rect = QgsRectangle(QgsPoint(0,0),QgsPoint(20, 34))
-    >>> # The infamous select statement that queries our vector layer for all geometry, attributes indexes we passed and only the features that intersect our QgsRectangle
-    >>> provider.select(selectList, rect, True, False)
-    >>> feat = QgsFeature()
-    >>> # walk through each feature of our select statement and get the attributes
-    >>> while provider.nextFeature(feat):
-    ...     # we get our dictionary of attribute index keys pointing to field values for this feature
-    ...     map = feat.attributeMap()
-    ...     # for each feature's attributes print out the value
-    ...     for key, value in map.items(): print value.toString()
-    ...
-    # OUTPUT TRUNCATED FOR DEMONSTRATION
+    # Get refs
+    cLayer = qgis.utils.iface.activeLayer()
+    provider = cLayer.dataProvider()
+    # Create an empty list that will hold the column indexes for the columns we are interested in 
+    selectList = []
+    # For each column name we are interested in retreiving get its index and add it to the above selectList
+    for column in ['LEVEL', 'TYPE', 'NAME', 'SORTNAME']:
+        selectList.append(provider.fieldNameIndex(column))
+    # Our column index output 
+    selectList
+    # Create a bounding box rectangle that we will use as a filter to only get features that intersect with it
+    rect = QgsRectangle(QgsPoint(0,0),QgsPoint(20, 34))
+    # The infamous select statement that queries our vector layer for all geometry, attributes indexes we passed and only the features that intersect our QgsRectangle
+    provider.select(selectList, rect, True, False)
+    feat = QgsFeature()
+    # walk through each feature of our select statement and get the attributes
+    while provider.nextFeature(feat):
+        # we get our dictionary of attribute index keys pointing to field values for this feature
+        map = feat.attributeMap()
+        # for each feature's attributes print out the value
+        for key, value in map.items(): print value.toString()
 
 \  **9.** \This next example is a little harder to understand. The point is to show you how to create dictionaries. We're going to create a table data structure -- a Python dictionary that represents a table in a database. The table is a dictionary where the keys are the featureIDs for each feature and the values will be nested dictionaries that have keys with column names and values with the column value. Reworking the above example gives us::
 
-    >>> provider.select(selectList, rect, True, False)
-    >>> table = {}
-    >>> 
-    >>> while provider.nextFeature(feat):
-    ...     attributeMap = feat.attributeMap()
-    ...     table[feat.id()] = { 'LEVEL' : attributeMap[provider.fieldNameIndex('LEVEL')].toString() \
-    ...                           , 'NAME' : attributeMap[provider.fieldNameIndex('NAME')].toString() \
-    ...                           , 'SORTNAME' : attributeMap[provider.fieldNameIndex('SORTNAME')].toString() \
-    ...                           , 'TYPE' : attributeMap[provider.fieldNameIndex('TYPE')].toString() \ 
-    ...                         }
-    >>>
-    >>> for id, record in table.items(): print str(id) + " --> " + str(record)
-    ...
-    158 --> {'SORTNAME': PyQt4.QtCore.QString(u'Nigeria'), 'TYPE': PyQt4.QtCore.QString(u'Sovereign'), 'NAME': PyQt4.QtCore.QString(u'Nigeria'), 'LEVEL': PyQt4.QtCore.QString(u'2')}
-    38 --> {'SORTNAME': PyQt4.QtCore.QString(u'Central African Republic'), 'TYPE': PyQt4.QtCore.QString(u'Sovereign'), 'NAME': PyQt4.QtCore.QString(u'Central African Republic'), 'LEVEL': PyQt4.QtCore.QString(u'2')}
-    142 --> {'SORTNAME': PyQt4.QtCore.QString(u'Mali'), 'TYPE': PyQt4.QtCore.QString(u'Sovereign'), 'NAME': PyQt4.QtCore.QString(u'Mali'), 'LEVEL': PyQt4.QtCore.QString(u'2')}
-    156 --> {'SORTNAME': PyQt4.QtCore.QString(u'Niger'), 'TYPE': PyQt4.QtCore.QString(u'Sovereign'), 'NAME': PyQt4.QtCore.QString(u'Niger'), 'LEVEL': PyQt4.QtCore.QString(u'2')}
-    75 --> {'SORTNAME': PyQt4.QtCore.QString(u'Gabon'), 'TYPE': PyQt4.QtCore.QString(u'Sovereign'), 'NAME': PyQt4.QtCore.QString(u'Gabon'), 'LEVEL': PyQt4.QtCore.QString(u'2')}
-    44 --> {'SORTNAME': PyQt4.QtCore.QString(u'Cameroon'), 'TYPE': PyQt4.QtCore.QString(u'Sovereign'), 'NAME': PyQt4.QtCore.QString(u'Cameroon'), 'LEVEL': PyQt4.QtCore.QString(u'2')}
-    45 --> {'SORTNAME': PyQt4.QtCore.QString(u'Congo (Kinshasa)'), 'TYPE': PyQt4.QtCore.QString(u'Sovereign'), 'NAME': PyQt4.QtCore.QString(u'Democratic Republic of the Congo'), 'LEVEL': PyQt4.QtCore.QString(u'2')}
-    # TRUNCATED FOR DEMO 
+    # Get refs
+    cLayer = qgis.utils.iface.activeLayer()
+    provider = cLayer.dataProvider()
+    provider.select(selectList, rect, True, False)
+    table = {}
+    while provider.nextFeature(feat):
+        attributeMap = feat.attributeMap()
+        table[feat.id()] = { 'LEVEL' : str(attributeMap[provider.fieldNameIndex('LEVEL')].toString()) \
+                              , 'NAME' : str(attributeMap[provider.fieldNameIndex('NAME')].toString()) \
+                              , 'SORTNAME' : str(attributeMap[provider.fieldNameIndex('SORTNAME')].toString()) \
+                              , 'TYPE' : str(attributeMap[provider.fieldNameIndex('TYPE')].toString()) \ 
+                            }
+    for id, record in table.items(): print str(id) + " --> " + str(record)
 
 
 Raster
@@ -566,84 +551,4 @@ In this next example we'll be querying raster cell values with QgsPoints using t
     ... 
     Band 1 = 202
     >>> 
-
-------------------------------------------------------
-
-Symbology
---------------
-
-Let's go through some quick symbology moves using raster and vector data types.
-
-Raster
-********
-
-Remember that the class\  `QGis <http://doc.qgis.org/head/classQGis.html>`_ \references some global constants that represent basic vector data types. These data types can be used for comaprison like this::
-
-    >>> myPoint = QgsGeometry.fromPoint(QgsPoint(-122,47))
-    >>> myPoint
-    <qgis.core.QgsGeometry object at 0xcb6822c>
-    >>> myPoint.asPoint()
-    (-122,47)
-    >>> myPoint.type()
-    0
-    >>> QGis.Point
-    0
-    >>> myPoint.wkbType()
-    1
-    >>> QGis.WKBPoint
-    1
-    >>> myPoint.type() == QGis.Point
-    True
-    >>> myPoint.wkbType() == QGis.WKBPoint
-    True
-
-
-Raster data also has it's own global constants that represent raster data types (Color, Paletted, GrayOrUndefined, Multiband) as well as the differnt types of shading and drawing that can happen. These are defined in the\  `QgsRasterLayer class <http://doc.qgis.org/head/classQgsRasterLayer.html#37e287fd16e799bddcf0e5533de07c13>`_ \. To get an idea about what integer lookup each one represents we can do exactly what we did above::
-
-    >>> # Here a couple raster types
-    >>> QgsRasterLayer.Palette
-    1
-    >>> QgsRasterLayer.Multiband
-    2
-    >>> # Here are a couple raster drawing styles
-    >>> QgsRasterLayer.SingleBandGray
-    1
-    >>> QgsRasterLayer.SingleBandPseudoColor
-    2
-    >>> # Here a couple raster shaded styles
-    >>> QgsRasterLayer.UndefinedShader
-    0
-    >>> QgsRasterLayer.PseudoColorShader
-    1
-
-When a raster layer is loaded into QGIS it gets a default\  `DrawingStyle <http://doc.qgis.org/head/classQgsRasterLayer.html#36796f1a303dac9848ba3dce3e5527dc>`_ \based on it's\  `LayerType <http://doc.qgis.org/head/classQgsRasterLayer.html#37e287fd16e799bddcf0e5533de07c13>`_ \.
-
-\  **1.** \Let's see what kind of raster type and drawing style our raster layer has. Make sure you have reference to the raster layer first::
-
-    >>> rLayer = qgis.utils.iface.mapCanvas().layers()[1]
-    >>> rLayer.name()
-    PyQt4.QtCore.QString(u'SR_50M')
-    >>> rLayer.rasterType()
-    0
-    >>> rLayer.rasterType() == QgsRasterLayer.GrayOrUndefined
-    True
-    >>> rLayer.colorShadingAlgorithm()
-    2
-    >>> rLayer.colorShadingAlgorithm() == QgsRasterLayer.FreakOutShader
-    True
-    >>> rLayer.drawingStyle()
-    1
-    >>> rLayer.drawingStyle() == QgsRasterLayer.SingleBandGray
-    True
-
-
-\  **2.** \Changing between these global shading or drawing styles is arbitrary. When you are done, refresh the map::
-
-    >>> rLayer.setColorShadingAlgorithm(QgsRasterLayer.PseudoColorShader)
-    >>> rLayer.setDrawingStyle(QgsRasterLayer.SingleBandPseudoColor)
-    >>> # Now setup the refresh to see the change
-    >>> rLayer.setCacheImage(None)
-    >>> rLayer.triggerRepaint()
-    >>> qgis.utils.iface.legendInterface().refreshLayerSymbology(rLayer)
-
 

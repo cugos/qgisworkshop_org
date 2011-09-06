@@ -1,0 +1,79 @@
+------------------------------------------------------
+
+Symbology
+--------------
+
+Let's go through some quick symbology moves using raster and vector data types.
+
+Raster
+********
+
+Remember that the class\  `QGis <http://doc.qgis.org/head/classQGis.html>`_ \references some global constants that represent basic vector data types. These data types can be used for comaprison like this::
+
+    >>> myPoint = QgsGeometry.fromPoint(QgsPoint(-122,47))
+    >>> myPoint
+    <qgis.core.QgsGeometry object at 0xcb6822c>
+    >>> myPoint.asPoint()
+    (-122,47)
+    >>> myPoint.type()
+    0
+    >>> QGis.Point
+    0
+    >>> myPoint.wkbType()
+    1
+    >>> QGis.WKBPoint
+    1
+    >>> myPoint.type() == QGis.Point
+    True
+    >>> myPoint.wkbType() == QGis.WKBPoint
+    True
+
+
+Raster data also has it's own global constants that represent raster data types (Color, Paletted, GrayOrUndefined, Multiband) as well as the differnt types of shading and drawing that can happen. These are defined in the\  `QgsRasterLayer class <http://doc.qgis.org/head/classQgsRasterLayer.html#37e287fd16e799bddcf0e5533de07c13>`_ \. To get an idea about what integer lookup each one represents we can do exactly what we did above::
+
+    >>> # Here a couple raster types
+    >>> QgsRasterLayer.Palette
+    1
+    >>> QgsRasterLayer.Multiband
+    2
+    >>> # Here are a couple raster drawing styles
+    >>> QgsRasterLayer.SingleBandGray
+    1
+    >>> QgsRasterLayer.SingleBandPseudoColor
+    2
+    >>> # Here a couple raster shaded styles
+    >>> QgsRasterLayer.UndefinedShader
+    0
+    >>> QgsRasterLayer.PseudoColorShader
+    1
+
+When a raster layer is loaded into QGIS it gets a default\  `DrawingStyle <http://doc.qgis.org/head/classQgsRasterLayer.html#36796f1a303dac9848ba3dce3e5527dc>`_ \based on it's\  `LayerType <http://doc.qgis.org/head/classQgsRasterLayer.html#37e287fd16e799bddcf0e5533de07c13>`_ \.
+
+\  **1.** \Let's see what kind of raster type and drawing style our raster layer has. Make sure you have reference to the raster layer first::
+
+    >>> rLayer = qgis.utils.iface.mapCanvas().layers()[1]
+    >>> rLayer.name()
+    PyQt4.QtCore.QString(u'SR_50M')
+    >>> rLayer.rasterType()
+    0
+    >>> rLayer.rasterType() == QgsRasterLayer.GrayOrUndefined
+    True
+    >>> rLayer.colorShadingAlgorithm()
+    2
+    >>> rLayer.colorShadingAlgorithm() == QgsRasterLayer.FreakOutShader
+    True
+    >>> rLayer.drawingStyle()
+    1
+    >>> rLayer.drawingStyle() == QgsRasterLayer.SingleBandGray
+    True
+
+
+\  **2.** \Changing between these global shading or drawing styles is arbitrary. When you are done, refresh the map::
+
+    >>> rLayer.setColorShadingAlgorithm(QgsRasterLayer.PseudoColorShader)
+    >>> rLayer.setDrawingStyle(QgsRasterLayer.SingleBandPseudoColor)
+    >>> # Now setup the refresh to see the change
+    >>> rLayer.setCacheImage(None)
+    >>> rLayer.triggerRepaint()
+    >>> qgis.utils.iface.legendInterface().refreshLayerSymbology(rLayer)
+
