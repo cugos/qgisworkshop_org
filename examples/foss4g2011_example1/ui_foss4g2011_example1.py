@@ -2,8 +2,8 @@
 
 # Form implementation generated from reading ui file 'ui_foss4g2011_example1.ui'
 #
-# Created: Wed Aug 31 12:22:27 2011
-#      by: PyQt4 UI code generator 4.7.4
+# Created: Wed Aug 31 14:20:35 2011
+#      by: PyQt4 UI code generator 4.7.3
 #
 # WARNING! All changes made in this file will be lost!
 
