@@ -15,6 +15,19 @@
     <update_date>2011-08-31</update_date>
   </pyqgis_plugin>
 
+  <pyqgis_plugin name='foss4g2011_example1_solutionset' version='0.1'>
+    <description>Solution Set for Example #1 for FOSS4G 2011 Workshop</description>
+    <version>0.1</version>
+    <qgis_minimum_version>1.0</qgis_minimum_version>
+    <homepage>http://www.qgisworkshop.org</homepage>
+    <file_name>foss4g2011_example1_solutionset.zip</file_name>
+    <author_name>FOSS4G</author_name>
+    <download_url>http://www.qgisworkshop.org/plugins/dl/foss4g2011_example1_solutionset.zip</download_url>
+    <uploaded_by>gcorradini</uploaded_by>
+    <create_date>2011-08-31</create_date>
+    <update_date>2011-08-31</update_date>
+  </pyqgis_plugin>
+
   <pyqgis_plugin name='foss4g2011_example2' version='0.1'>
     <description>Example #2 for FOSS4G 2011 Workshop</description>
     <version>0.1</version>
