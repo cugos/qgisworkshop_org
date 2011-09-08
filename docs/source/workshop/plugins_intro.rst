@@ -1,9 +1,6 @@
 =====================================
-Plugins -- Lecture and Demo
-=====================================
-
 Plugin Architecture
----------------------
+=====================================
 
 QGIS Python plugins are just a set of Python modules that describe everything from our plugin resources to the code that runs the plugin logic. We'll save the details for the sections below, but here's a high-level overview of those file types.
 

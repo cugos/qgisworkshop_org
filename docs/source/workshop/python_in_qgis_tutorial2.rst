@@ -1,5 +1,5 @@
 ==============================================
-Tutorial -- QGIS Python Console
+Tutorial #2 -- Exploring the QGIS Python Console
 ==============================================
 
 

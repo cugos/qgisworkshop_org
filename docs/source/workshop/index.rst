@@ -5,38 +5,57 @@
 Workshop
 ==========================================
 
-Introduction
+Introduction - Tools
 -----------------
 
 .. toctree::
-   :maxdepth: 3
+    :maxdepth: 2
+    
+    qgis
 
-   introduction
+    python
 
-1st Hour
+    qt
+
+    pyqt
+
+1st Hour - Exploring how Python can be used in QGIS
 -----------------
 
 .. toctree::
-   :maxdepth: 3
+    :maxdepth: 2
+    
+    python_in_qgis_intro
 
-   session_1
+    python_in_qgis_tutorial1
 
+    python_in_qgis_tutorial2
+    
+    python_in_qgis_exercises
 
-2nd Hour
+2nd Hour - Building Python Plugins
 ----------------
 
 .. toctree::
-   :maxdepth: 3
+    :maxdepth: 2
 
-   session_2
+    plugins_intro
 
-3rd Hour
+    plugins_tutorial
+
+    plugins_exercises    
+
+3rd Hour - Event-Driven Notes / Debugging / Plugin Repositories
 ------------------
 
 .. toctree::
-   :maxdepth: 3
+    :maxdepth: 2
 
-   session_3
+    event_driven_plugins
+
+    debug
+
+    repositories
 
 
 

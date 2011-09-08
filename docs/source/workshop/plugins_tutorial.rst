@@ -1,5 +1,5 @@
 =======================================
-Tutorial -- Building A Plugin
+Tutorial -- Building A Simple Plugin
 =======================================
 
 Building Our First Plugin with 'Plugin Builder'
