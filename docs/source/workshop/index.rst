@@ -1,12 +1,12 @@
 .. QGIS Workshop - VM Install Notes
 
-.. qgis python qt pyqt python_in_qgis plugins designer qgis_api debug repositories 
+.. qgis python qt pyqt python_in_qgis plugins designer qgis_api debug repositories
 
 Workshop
 ==========================================
 
 Introduction - Tools
------------------
+--------------------
 
 .. toctree::
     :maxdepth: 2
@@ -20,7 +20,7 @@ Introduction - Tools
     pyqt
 
 1st Hour - Exploring how Python can be used in QGIS
------------------
+---------------------------------------------------
 
 .. toctree::
     :maxdepth: 2
@@ -34,7 +34,7 @@ Introduction - Tools
     python_in_qgis_exercises
 
 2nd Hour - Building Python Plugins
-----------------
+----------------------------------
 
 .. toctree::
     :maxdepth: 2
@@ -46,7 +46,7 @@ Introduction - Tools
     plugins_exercises    
 
 3rd Hour - Event-Driven Notes / Debugging / Plugin Repositories
-------------------
+---------------------------------------------------------------
 
 .. toctree::
     :maxdepth: 2
@@ -56,8 +56,3 @@ Introduction - Tools
     debug
 
     repositories
-
-
-
-
-
