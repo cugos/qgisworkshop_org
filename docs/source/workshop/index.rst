@@ -56,3 +56,11 @@ Introduction - Tools
     debug
 
     repositories
+
+Workshop Hard Copy Handout
+--------------------------
+
+.. toctree::
+    :maxdepth: 2
+
+    handout/handout.rst
