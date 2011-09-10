@@ -1,6 +1,6 @@
 """
 /***************************************************************************
- foss4g2011_example1
+ foss4g2011_example1_solution
                                  A QGIS plugin
  Example #1 for FOSS4G 2011 Workshop
                               -------------------
@@ -27,9 +27,9 @@ import pdb
 # Initialize Qt resources from file resources.py
 import resources
 # Import the code for the dialog
-from foss4g2011_example1dialog import foss4g2011_example1Dialog
+from foss4g2011_example1_solutiondialog import foss4g2011_example1_solutionDialog
 
-class foss4g2011_example1:
+class foss4g2011_example1_solution:
 
     def __init__(self, iface):
         # Save reference to the QGIS interface
@@ -39,7 +39,7 @@ class foss4g2011_example1:
         # the identify tool will emit a QgsPoint on every click
         self.clickTool = QgsMapToolEmitPoint(self.canvas)
         # create our GUI dialog
-        self.dlg = foss4g2011_example1Dialog()
+        self.dlg = foss4g2011_example1_solutionDialog()
         # create a list to hold our selected feature ids
         self.selectList = []
         # current layer ref (set in handleLayerChange)
@@ -49,14 +49,14 @@ class foss4g2011_example1:
 
     def initGui(self):
         # Create action that will start plugin configuration
-        self.action = QAction(QIcon(":/plugins/foss4g2011_example1/icon.png"), \
-            "Example #1 for FOSS4G 2011 Workshop", self.iface.mainWindow())
+        self.action = QAction(QIcon(":/plugins/foss4g2011_example1_solution/icon.png"), \
+            "Example #1 Solution for FOSS4G 2011 Workshop", self.iface.mainWindow())
         # connect the action to the run method
         QObject.connect(self.action, SIGNAL("triggered()"), self.run)
 
         # Add toolbar button and menu item
         self.iface.addToolBarIcon(self.action)
-        self.iface.addPluginToMenu("&Example #1 for FOSS4G 2011 Workshop", self.action)
+        self.iface.addPluginToMenu("&Example #1 Solution for FOSS4G 2011 Workshop", self.action)
 
         # connect to the currentLayerChanged signal of QgsInterface
         result = QObject.connect(self.iface, SIGNAL("currentLayerChanged(QgsMapLayer *)"), self.handleLayerChange)
@@ -67,7 +67,7 @@ class foss4g2011_example1:
 
     def unload(self):
         # Remove the plugin menu item and icon
-        self.iface.removePluginMenu("Example #1 for FOSS4G 2011 Workshop",self.action)
+        self.iface.removePluginMenu("Example #1 Solution for FOSS4G 2011 Workshop",self.action)
         self.iface.removeToolBarIcon(self.action)
 
 
@@ -84,11 +84,23 @@ class foss4g2011_example1:
         # check to make sure we have a feature selected in our selectList -- note that there might be more than one feature
         if self.selectList:
 
-            # ***************EXAMPLE 1 EDITS GO HERE********************
-            ''' write code that will output ALL attributes for a single selected feature into the Text Browser. 
-                instead of using the dataProvider.select() function get the actual QgsFeature using dataProvider.featureAtId() '''
+            # ############ EXAMPLE 1 EDITS GO HERE ####################  
+            ''' write code that will output ALL selected feature attributes for a single feature into the Text Browser''' 
+            ''' instead of using the dataProvider.select() function get the actual QgsFeature using dataProvider.featureAtId() '''
+            # get all the field Indexes for the feature
+            fields = self.provider.fields()
+            # get the feature by passing in empty Feature
+            feat = QgsFeature()
+            # going to get first feature since there could potentially be more than one
+            if self.provider.featureAtId(self.selectList[0], feat, True, fields.keys()):
+                attMap = feat.attributeMap()
+                output = "FEATURE ID: %i\n" % feat.id()
+                for index,qgsfield in fields.items():
+                    #pyqtRemoveInputHook()
+                    #pdb.set_trace()
+                    output += "\t" + str(qgsfield.name()) + " : " + str( (attMap[index]).toString() ) + "\n"
         
-            self.dlg.setTextBrowser("example text output\n to TextBrowser")
+                self.dlg.setTextBrowser(output)
             
 
     def selectFeature(self, point, button):

@@ -1,6 +1,6 @@
 """
 /***************************************************************************
- foss4g2011_example1_solutionset
+ foss4g2011_example1_solution
                                  A QGIS plugin
  Solution Set for Example #1 FOSS4G 2011 Workshop
                              -------------------
@@ -20,9 +20,9 @@
  This script initializes the plugin, making it known to QGIS.
 """
 def name():
-    return "foss4g2011_example1_solutionset"
+    return "foss4g2011_example1_solution"
 def description():
-    return "Solution Set for Example #1 FOSS4G 2011 Workshop"
+    return "Example #1 Solution FOSS4G 2011 Workshop"
 def version():
     return "Version 0.1"
 def icon():
@@ -30,6 +30,6 @@ def icon():
 def qgisMinimumVersion():
     return "1.0"
 def classFactory(iface):
-    # load foss4g2011_example1_solutionset class from file foss4g2011_example1_solutionset
-    from foss4g2011_example1_solutionset import foss4g2011_example1_solutionset
-    return foss4g2011_example1_solutionset(iface)
+    # load foss4g2011_example1_solution class from file foss4g2011_example1_solution
+    from foss4g2011_example1_solution import foss4g2011_example1_solution
+    return foss4g2011_example1_solution(iface)

@@ -1,7 +1,7 @@
 #/***************************************************************************
-# foss4g2011_example1
+# foss4g2011_example1_starter
 # 
-# Example #1 for FOSS4G 2011 Workshop
+# Example #1 Starter for FOSS4G 2011 Workshop
 #                             -------------------
 #        begin                : 2011-08-31
 #        copyright            : (C) 2011 by FOSS4G
@@ -19,13 +19,13 @@
 
 # Makefile for a PyQGIS plugin 
 
-PLUGINNAME = foss4g2011_example1
+PLUGINNAME = foss4g2011_example1_starter
 
-PY_FILES = foss4g2011_example1.py foss4g2011_example1dialog.py __init__.py
+PY_FILES = foss4g2011_example1_starter.py foss4g2011_example1_starterdialog.py __init__.py
 
 EXTRAS = icon.png 
 
-UI_FILES = ui_foss4g2011_example1.py
+UI_FILES = ui_foss4g2011_example1_starter.py
 
 RESOURCE_FILES = resources.py
 
