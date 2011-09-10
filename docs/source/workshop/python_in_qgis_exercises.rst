@@ -58,7 +58,7 @@ In the last hour we went through examples using\  ``dataProvider.select()`` \and
 Solution
 ************
 
-There is a solution set plugin for this tool. Open this plugin and use it or browse the source code at\  ``/home/qgis/.qgis/python/plugins/foss4g2011_example1_solutionset/foss4g2011_example1_solutionset.py``\for ideas::
+There is a solution set plugin for this tool. Open this plugin and use it or browse the source code at\  ``/home/qgis/.qgis/python/plugins/foss4g2011_example1_solutionset/foss4g2011_example1_solutionset.py``\for ideas:
 
 .. image:: ../_static/raster_value_final.png
     :scale: 100%
