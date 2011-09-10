@@ -1,7 +1,7 @@
 #/***************************************************************************
-# foss4g2011_tutorial1
+# foss4g2011_tutorial2_solution
 # 
-# Tutorial #1 for FOSS4G 2011 Workshop
+# Tutorial #2 solution for FOSS4G 2011 Workshop
 #                             -------------------
 #        begin                : 2011-08-31
 #        copyright            : (C) 2011 by FOSS4G
@@ -19,13 +19,13 @@
 
 # Makefile for a PyQGIS plugin 
 
-PLUGINNAME = foss4g2011_tutorial1
+PLUGINNAME = foss4g2011_tutorial2_solution
 
-PY_FILES = foss4g2011_tutorial1.py foss4g2011_tutorial1dialog.py __init__.py
+PY_FILES = foss4g2011_tutorial2_solution.py foss4g2011_tutorial2_solutiondialog.py __init__.py
 
 EXTRAS = icon.png 
 
-UI_FILES = ui_foss4g2011_tutorial1.py
+UI_FILES = ui_foss4g2011_tutorial2_solution.py
 
 RESOURCE_FILES = resources.py
 

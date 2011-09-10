@@ -1,8 +1,8 @@
 """
 /***************************************************************************
- foss4g2011_tutorial1
+ foss4g2011_tutorial2_solution
                                  A QGIS plugin
- Tutorial #1 for FOSS4G 2011 Workshop
+ Tutorial #2 solution for FOSS4G 2011 Workshop
                               -------------------
         begin                : 2011-08-31
         copyright            : (C) 2011 by FOSS4G
@@ -26,9 +26,9 @@ from qgis.gui import *
 # Initialize Qt resources from file resources.py
 import resources
 # Import the code for the dialog
-from foss4g2011_tutorial1dialog import foss4g2011_tutorial1Dialog
+from foss4g2011_tutorial2_solutiondialog import foss4g2011_tutorial2_solutionDialog
 
-class foss4g2011_tutorial1:
+class foss4g2011_tutorial2_solution:
 
     def __init__(self, iface):
         # Save reference to the QGIS interface
@@ -38,7 +38,7 @@ class foss4g2011_tutorial1:
         # out click tool will emit a QgsPoint on every click
         self.clickTool = QgsMapToolEmitPoint(self.canvas)
         # create our GUI dialog
-        self.dlg = foss4g2011_tutorial1Dialog()
+        self.dlg = foss4g2011_tutorial2_solutionDialog()
         # create a list to hold our selected feature ids
         self.selectList = []
         # current layer ref (set in handleLayerChange)
@@ -48,14 +48,14 @@ class foss4g2011_tutorial1:
 
     def initGui(self):
         # Create action that will start plugin configuration
-        self.action = QAction(QIcon(":/plugins/foss4g2011_tutorial1/icon.png"), \
-            "Tutorial #1 for FOSS4G 2011 Workshop", self.iface.mainWindow())
+        self.action = QAction(QIcon(":/plugins/foss4g2011_tutorial2_solution/icon.png"), \
+            "Tutorial #2 solution for FOSS4G 2011 Workshop", self.iface.mainWindow())
         # connect the action to the run method
         QObject.connect(self.action, SIGNAL("triggered()"), self.run)
 
         # Add toolbar button and menu item
         self.iface.addToolBarIcon(self.action)
-        self.iface.addPluginToMenu("Tutorial #1 for FOSS4G 2011 Workshop", self.action) 
+        self.iface.addPluginToMenu("Tutorial #2 solution for FOSS4G 2011 Workshop", self.action) 
 
         # connect to stateChanged signal of checkbox
         result = QObject.connect(self.dlg.getChkActivate(), SIGNAL("stateChanged(int)"), self.changeActive)
@@ -65,7 +65,7 @@ class foss4g2011_tutorial1:
 
     def unload(self):
         # Remove the plugin menu item and icon
-        self.iface.removePluginMenu("&Tutorial #1 for FOSS4G 2011 Workshop",self.action)
+        self.iface.removePluginMenu("&Tutorial #2 solution for FOSS4G 2011 Workshop",self.action)
         self.iface.removeToolBarIcon(self.action)
 
     def handleMouseDown(self, point, button):

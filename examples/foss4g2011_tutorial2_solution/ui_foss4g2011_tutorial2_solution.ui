@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>foss4g2011_tutorial1</class>
- <widget class="QDialog" name="foss4g2011_tutorial1">
+ <class>foss4g2011_tutorial2_solution</class>
+ <widget class="QDialog" name="foss4g2011_tutorial2_solution">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>foss4g2011_tutorial1</string>
+   <string>foss4g2011_tutorial2_solution</string>
   </property>
   <widget class="QDialogButtonBox" name="buttonBox">
    <property name="geometry">
@@ -59,7 +59,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>
-   <receiver>foss4g2011_tutorial1</receiver>
+   <receiver>foss4g2011_tutorial2_solution</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -75,7 +75,7 @@
   <connection>
    <sender>buttonBox</sender>
    <signal>rejected()</signal>
-   <receiver>foss4g2011_tutorial1</receiver>
+   <receiver>foss4g2011_tutorial2_solution</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

@@ -1,8 +1,8 @@
 """
 /***************************************************************************
- foss4g2011_tutorial1
+ foss4g2011_tutorial2_solution
                                  A QGIS plugin
- Tutorial #1 for FOSS4G 2011 Workshop
+ Tutorial #2 solution for FOSS4G 2011 Workshop
                              -------------------
         begin                : 2011-08-31
         copyright            : (C) 2011 by FOSS4G
@@ -20,9 +20,9 @@
  This script initializes the plugin, making it known to QGIS.
 """
 def name():
-    return "foss4g2011_tutorial1"
+    return "foss4g2011_tutorial2_solution"
 def description():
-    return "Tutorial #1 for FOSS4G 2011 Workshop"
+    return "Tutorial #2 solution for FOSS4G 2011 Workshop"
 def version():
     return "Version 0.1"
 def icon():
@@ -30,6 +30,6 @@ def icon():
 def qgisMinimumVersion():
     return "1.0"
 def classFactory(iface):
-    # load foss4g2011_tutorial1 class from file foss4g2011_tutorial1
-    from foss4g2011_tutorial1 import foss4g2011_tutorial1
-    return foss4g2011_tutorial1(iface)
+    # load foss4g2011_tutorial2_solution class from file foss4g2011_tutorial2_solution
+    from foss4g2011_tutorial2_solution import foss4g2011_tutorial2_solution
+    return foss4g2011_tutorial2_solution(iface)
