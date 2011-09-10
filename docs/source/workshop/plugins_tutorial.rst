@@ -449,7 +449,7 @@ Notice that we are putting a QMessageBox box immediately after the connection to
     :align: center
 
 
-\4) Implement the Tool Activationo w/ Checkbox
+\4) Implement the Tool Activation w/ Checkbox
 ------------------------------------------------------
 
 Now it's time to make our tool active/inactive depending on the state of our checkbox at the bottom left. The only portion of our tool that will become inactive is the feedback mechanism -- that means our tool will still be able to select features just not report the QgsPoint to the TextBrowser. We are only going to need two more steps for this next implementation:
@@ -485,7 +485,7 @@ Now it's time to make our tool active/inactive depending on the state of our che
         return self.ui.chkActivate
 
 
-\  **5.** \Your code should now look similar to\  `this code <../static/active_click_1.py>`_
+\  **5.** \Your code should now look similar to\  `this code <../static/activate_click_1.py>`_
 
 \  **6.** \Save and close your Python modules. Reload the plugin.
 
