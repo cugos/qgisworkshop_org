@@ -5,7 +5,7 @@ Tutorial -- Building A Simple Plugin
 Building Our First Plugin with 'Plugin Builder'
 -----------------------------------------------------
 
-Now it's time to get our feet with the\  **Plugin Builder** \.
+It's time to get our feet with the\  **Plugin Builder** \.
 
 \  **1.** \On the QGIS menu bar click on the\  ``Plugin Builder`` \icon to launch the plugin:
 
@@ -13,13 +13,13 @@ Now it's time to get our feet with the\  **Plugin Builder** \.
     :scale: 100%
     :align: center
 
-\  **2.** \The main Plugin Builder dialog will appear. This is where we fill out our basic configuration information that Plugin Builder uses to create the template files. We will then modify the template files to build out our plugin. All the fields in the dialog below are required. Fill these fields out like the picture shows. Then click the\  ``Ok`` \button.:
+\  **2.** \The main Plugin Builder dialog will appear. This is where we fill out the basic configuration information that Plugin Builder uses to create the template files. We'll then modify the template files to build out our plugin. All the fields in the dialog below are required. Fill these fields out like the picture shows. Then click the\  ``Ok`` \button.:
 
 .. image:: ../_static/plugin_builder_main_dialog.png 
     :scale: 70%
     :align: center
 
-\  **3.** \A file dialog will open. Create a\ ``workspace`` \folder inside your\  ``/home/qgis/`` \directory. Save your plugin project by selecting the\  ``workspace`` \directory in the file dialog:
+\  **3.** \A file dialog will open. Create a\  ``workspace`` \folder inside your\  ``/home/qgis/`` \directory. Save your plugin project by selecting the\  ``workspace`` \directory in the file dialog:
 
 .. image:: ../_static/plugin_builder_save_dir.png 
     :scale: 100%
@@ -213,76 +213,31 @@ Notice that the Makefile is smart. It knows that there were only changes to the\
 \2) Implement Map Canvas Click Action 
 ----------------------------------------
 
-\  **1.** \Let's begin by opening up the main Python module that runs our tool's logic and having a look around. Most of you will be more comfortable browsing and editing code in a text editor like gedit. Open gedit by clicking the notepad icon on the top menue bar of Ubuntu:
+\  **1.** \Most of you will be more comfortable browsing and editing code in a text editor like gedit. Open gedit by clicking the notepad icon on the top menue bar of Ubuntu:
 
 .. image:: ../_static/open_gedit.png
     :scale: 100%
     :align: center
 
-\  **2.** \Now navigate to your workspace plugin folder\  ``/home/qgis/workspace/vector_selectbypoint`` \and open the file\  ``vector_selectbypoing.py`` \. Your code should look exactly like this::
-
-    # Import the PyQt and QGIS libraries
-    from PyQt4.QtCore import *
-    from PyQt4.QtGui import *
-    from qgis.core import *
-    # Initialize Qt resources from file resources.py
-    import resources
-    # Import the code for the dialog
-    from vector_selectbypointdialog import vector_selectbypointDialog
-
-    class vector_selectbypoint:
-
-        def __init__(self, iface):
-            # Save reference to the QGIS interface
-            self.iface = iface
-
-        def initGui(self):
-            # Create action that will start plugin configuration
-            self.action = QAction(QIcon(":/plugins/vector_selectbypoint/icon.png"), \
-                "some text that appears in the menu", self.iface.mainWindow())
-            # connect the action to the run method
-            QObject.connect(self.action, SIGNAL("triggered()"), self.run)
-
-            # Add toolbar button and menu item
-            self.iface.addToolBarIcon(self.action)
-            self.iface.addPluginToMenu("&some text that appears in the menu", self.action)
-
-        def unload(self):
-            # Remove the plugin menu item and icon
-            self.iface.removePluginMenu("&some text that appears in the menu",self.action)
-            self.iface.removeToolBarIcon(self.action)
-
-        # run method that performs all the real work
-        def run(self):
-            # create and show the dialog
-            dlg = vector_selectbypointDialog()
-            # show the dialog
-            dlg.show()
-            result = dlg.exec_()
-            # See if OK was pressed
-            if result == 1:
-                # do something useful (delete the line containing pass and
-                # substitute with your code
-                pass
-
+\  **2.** \Now navigate to your workspace plugin folder\  ``/home/qgis/workspace/vector_selectbypoint`` \and open the file\  ``vector_selectbypoing.py`` \. Your code should look exactly like\  `this module <../_static/mapcanvas_click_1.py>`_ 
 
 \  **3.** \Let's walk through some important things about this file.
 
-QGIS needs special class methods to exist in your main Python class for it to work. These are\  ``initGui()`` \,\  ``__init__()`` \and\  ``unload`` \. If we read through the code comments in those functions we can intuit that\  ``initGui()`` \and\  ``__init__()`` \get called at plugin startup and that some of the code in the\  ``initGui()`` \function is responsible for adding our plugin to the menu. The function\  ``unload()`` \does the opposite -- it tears down things we setup at intialization. 
+* QGIS needs special class methods to exist in your main Python class for it to work. These are\  ``initGui()`` \,\  ``__init__()`` \and\  ``unload`` \. If we read through the code comments in those functions we can intuit that\  ``initGui()`` \and\  ``__init__()`` \get called at plugin startup and that some of the code in the\  ``initGui()`` \function is responsible for adding our plugin to the menu. The function\  ``unload()`` \does the opposite -- it tears down things we setup at intialization. 
 
-Also notice that our reference to the QgsInterface class is under\  ``__init__()`` \. From this class attribute we can create a reference to other parts of the QGIS system such as the map canvas.
+* Also notice that our reference to the QgsInterface class is under\  ``__init__()`` \. From this class attribute we can create a reference to other parts of the QGIS system such as the map canvas.
 
-Another important thing to note is that our dialog is being created under the\  ``run()`` \method with these lines::
+* Another important thing to note is that our dialog is being created under the\  ``run()`` \method with these lines::
 
     dlg = vector_selectbypointDialog()
     # show the dialog
     dlg.show()
 
-The\ ``vector_selectbypointDialog()`` \class that is being instatiated in that last code snippet was imported from our Python module dialog. If you were to open that Python module you'd notice it references the Python module that was compiled from our\  ``.ui`` \file --\  ``ui_vector_selectbypoint.py`` \. At the top of the file::
+The\  ``vector_selectbypointDialog()`` \class that is being instatiated in that last code snippet was imported from our Python module dialog. If you were to open that Python module you'd notice it references the Python module that was compiled from our\  ``.ui`` \file --\  ``ui_vector_selectbypoint.py`` \. At the top of the file::
 
     from vector_selectbypointdialog import vector_selectbypointDialog
 
-Execution of the\  ``run()`` \method is then halted. It waits for some user input to move forward. That user input (in this case) is in the form of a button click. The rest of the code in the\  ``run()`` \method then decides what button was clicked\  ``Cancel == 0 and OK == 1`` \. When we first start writing plugins your code tends to fall under the\  ``run()`` \method, though you'll see it doesn't need to be put there in the future::
+* Execution of the\  ``run()`` \method is then halted. It waits for some user input to move forward. That user input (in this case) is in the form of a button click. The rest of the code in the\  ``run()`` \method then decides what button was clicked\  ``Cancel == 0 and OK == 1`` \. When we first start writing plugins your code tends to fall under the\  ``run()`` \method, though you'll see it doesn't need to be put there in the future::
 
     result = dlg.exec_()
     # See if OK was pressed
