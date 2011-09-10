@@ -452,44 +452,46 @@ Notice that we are putting a QMessageBox box immediately after the connection to
 \4) Implement the Tool Activation w/ Checkbox
 ------------------------------------------------------
 
-Now it's time to make our tool active/inactive depending on the state of our checkbox at the bottom left. The only portion of our tool that will become inactive is the feedback mechanism -- that means our tool will still be able to select features just not report the QgsPoint to the TextBrowser. We are only going to need two more steps for this next implementation:
+It's time to make the tool active/inactive depending on the state of our checkbox at the bottom left. We are only going to need two more steps for this next implementation:
 
 1.  We need to make a connection to a checkbox signal that fires when it's clicked. The handler function will check the state (checked vs unchecked) of the checkbox. 
+
 2.  We need to create the handler function that checks the state of the checkbox and then appropriately enables or disables a connection to the map-canvas clicked signal. That means we are going to move around some existing code. 
 
 \  **1.** \Add a connection for the checkbox signal\  ``stateChanged()`` \at the end of\  ``initGui()`` \. The name of the function that will respond to this event is\  ``changeActive()`` \. We will create that function next::
 
-    QObject.connect(self.dlg.getChkActivate(),SIGNAL("stateChanged(int)"),self.changeActive)
+    QObject.connect(self.dlg.ui.chkActivate,SIGNAL("stateChanged(int)"),self.changeActive)
 
-\  **2.** \While we are under\  ``initGui()`` \we are going to comment out our previous code to connect the function\  ``handleMouseDown`` \. This code will be moved under our checkbox handling function:: 
+\  **2.** \While we are under\  ``initGui()`` \we are going to comment out our previous code to connect the function\  ``handleMouseDown`` \and the function\  ``selectFeature``\. This code will be moved under our checkbox handling function:: 
 
     # connect our custom function to a clickTool signal that the canvas was clicked
-    # result = QObject.connect(self.clickTool, SIGNAL("canvasClicked(const QgsPoint &, Qt::MouseButton)"), self.handleMouseDown)
-    # QMessageBox.information( self.iface.mainWindow(),"Info", "connect = %s"%str(result) )
+    #result = QObject.connect(self.clickTool, SIGNAL("canvasClicked(const QgsPoint &, Qt::MouseButton)"), self.handleMouseDown)
+    #QMessageBox.information( self.iface.mainWindow(),"Info", "connect = %s"%str(result) )
+
+    # connect our select function to the canvasClicked signal
+    #result = QObject.connect(self.clickTool, SIGNAL("canvasClicked(const QgsPoint &, Qt::MouseButton)"), self.selectFeature)
+    #QMessageBox.information( self.iface.mainWindow(),"Info", "connect = %s"%str(result) )
 
 
-\  **3.** \Now we create a custom function that fires everytime the checkbox state changes form checked to unchecked and vice versa. The idea is that if the box is checked (activated), then we need to connect\  ``handleMouseDown`` \to the map-canvas click signal. If unchecked, then disconnect from the map-canvas click signal::
+\  **3.** \Now we create a custom function that fires everytime the checkbox state changes from checked to unchecked and vice versa. The idea is that if the box is checked (activated), then we need to connect\  ``handleMouseDown`` \and\  ``selectFeature`` \to the map-canvas click signal. If unchecked, then disconnect from the map-canvas click signal::
 
-    def changeActive(self,state):
+   def changeActive(self,state):
         if (state==Qt.Checked):
                 # connect to click signal
                 QObject.connect(self.clickTool, SIGNAL("canvasClicked(const QgsPoint &, Qt::MouseButton)"), self.handleMouseDown)
+                # connect our select function to the canvasClicked signal
+                QObject.connect(self.clickTool, SIGNAL("canvasClicked(const QgsPoint &, Qt::MouseButton)"), self.selectFeature)
         else:
                 # disconnect from click signal
                 QObject.disconnect(self.clickTool, SIGNAL("canvasClicked(const QgsPoint &, Qt::MouseButton)"), self.handleMouseDown)
+                # disconnect our select function to the canvasClicked signal
+                QObject.disconnect(self.clickTool, SIGNAL("canvasClicked(const QgsPoint &, Qt::MouseButton)"), self.selectFeature)
 
+\  **4.** \Your code should now look similar to\  `this code <../_static/activate_click_1.py>`_
 
-\  **4.** \Finally, we need to make a change in\  ``vector_selectbypointdialog.py`` \and create a function that returns a reference to the checkbox object. Create this function at the end of the class::
+\  **5.** \Save and close your Python modules. Reload the plugin.
 
-    def getChkActivate(self):
-        return self.ui.chkActivate
-
-
-\  **5.** \Your code should now look similar to\  `this code <../_static/activate_click_1.py>`_
-
-\  **6.** \Save and close your Python modules. Reload the plugin.
-
-\  **7.** \After you intially bring up our tool the activate checkbox should be unchecked. Remember, this means we should still be able to select features just not see any feedback in the TextBrowser. Test this out:
+\  **6.** \After you intially bring up our tool the activate checkbox should be unchecked. Remember, this means we shouldn't be able to select features or have output to the TextBrowser.
 
 .. image:: ../_static/plugin_tut_notactive.png
     :scale: 100%
@@ -508,13 +510,13 @@ Now it's time to make our tool active/inactive depending on the state of our che
 
 You might have noticed a couple interesting things happening in the module\  ``vector_selectbypoint.py`` \ that I find annoying. Let's talk about some changes and then move around some code in the next steps: 
 
-    \1. Everytime we click the map canvas a signal is sent out, and our slot (or handler function)\  ``selectFeature()`` \runs and does a number of things before selecting a feature:
+    \  **1.** \Everytime we click the map canvas a signal is sent out, and our slot (or handler function)\  ``selectFeature()`` \runs and does a number of things before selecting a feature:
         * gets the current layer and sets a local function variable
         * gets the current layer's data provider and sets a local function variable
 
     **SOLUTION** \:This doesn't seem like the most intuitive place to get the current layer and it's data provider. Let's reorganize things around events and make this simpler. Whenever a layer is selected in the TOC it will fire a signal. This seems like a good place to put any intialization code for the current layer or data provider since we'll be handling layers one-at-a-time. 
 
-    \2. Relaying the QgsPoint X,Y coordinates on map canvas clicks isn't putting our TextBrowser to great use.
+    \  **2.** \Relaying the QgsPoint X,Y coordinates on map canvas clicks isn't putting our TextBrowser to great use.
 
     **SOLUTION** \:Let's output something more useful to the TextBrowser. We want to output a 'NAME' attribute to the TextBrowser if it exists for a given layer. 
 
