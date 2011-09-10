@@ -1,8 +1,8 @@
 """
 /***************************************************************************
- foss4g2011_example3Dialog
+ foss4g2011_example3_solution
                                  A QGIS plugin
- Example #3 from FOSS4G 2011 Workshop
+ Example #3 solution from FOSS4G 2011 Workshop
                              -------------------
         begin                : 2011-08-31
         copyright            : (C) 2011 by FOSS4G
@@ -17,13 +17,19 @@
  *   (at your option) any later version.                                   *
  *                                                                         *
  ***************************************************************************/
+ This script initializes the plugin, making it known to QGIS.
 """
-
-from PyQt4 import QtCore, QtGui
-from ui_foss4g2011_example3 import Ui_foss4g2011_example3
-# create the dialog for zoom to point
-class foss4g2011_example3Dialog(QtGui.QDialog, Ui_foss4g2011_example3):
-    def __init__(self, iface):
-        QtGui.QDialog.__init__(self, iface.mainWindow())
-        self.iface = iface
-        self.setupUi(self)
+def name():
+    return "Example #3 solution from FOSS4G 2011 Workshop"
+def description():
+    return "Example #3 solution from FOSS4G 2011 Workshop"
+def version():
+    return "Version 0.1"
+def icon():
+    return "icon.png"
+def qgisMinimumVersion():
+    return "1.7"
+def classFactory(iface):
+    # load foss4g2011_example3_solution class from file foss4g2011_example3_solution
+    from foss4g2011_example3_solution import foss4g2011_example3_solution
+    return foss4g2011_example3_solution(iface)
