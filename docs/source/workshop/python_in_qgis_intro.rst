@@ -5,6 +5,10 @@ Python in QGIS
 
 When we use the term\  **PyQGIS** \we are refering to the QGIS Python bindings. Specifically, we are referring to a Python application programming interface (API) that wraps the QGIS C++ library. Here is the\   `C++ QGIS API documentation <http://doc.qgis.org>`_ \.
 
+.. image:: ../_static/pyqgis_tools.png
+    :scale: 80%
+    :align: center
+
 We'll be using the C++ QGIS API documentation as a roadmap to understanding PyQGIS because the PyQGIS API documentation is nonexistent. This can be a little confusing at times. But for the most part the Python bindings are a mirror of the C++ library.
 
 We will become very familiar with parts of the above documentation as we build plugins. For now it's good to note that there's a number of ways to interact with QGIS using Python. Here are the most common ways:
