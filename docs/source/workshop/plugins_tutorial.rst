@@ -440,7 +440,7 @@ Notice that we are putting a QMessageBox box immediately after the connection to
             else:
                     QMessageBox.information( self.iface.mainWindow(),"Info", "No layer currently selected in TOC" )
 
-\  **3.** \Your whole Python module should now look like\  `this over there <../static/featureselect_1.py>`_
+\  **3.** \Your whole Python module should now look like\  `this over there <../_static/featureselect_1.py>`_
 
 \  **4.** \Save your edits and close your files. Reload the plugin and test it. You should see at least two message boxes -- one after loading the plugin that tests the signal connection result and a second after you click the map canvas. This second message box tells us that we are\  ``in selectFeature function`` \. The code we wrote after this message box will either complete a selection or fail:
 
@@ -485,7 +485,7 @@ Now it's time to make our tool active/inactive depending on the state of our che
         return self.ui.chkActivate
 
 
-\  **5.** \Your code should now look similar to\  `this code <../static/activate_click_1.py>`_
+\  **5.** \Your code should now look similar to\  `this code <../_static/activate_click_1.py>`_
 
 \  **6.** \Save and close your Python modules. Reload the plugin.
 
