@@ -51,10 +51,11 @@ class vector_selectbypoint:
 
     def selectFeature(self, point, button):
         QMessageBox.information( self.iface.mainWindow(),"Info", "in selectFeature function" )
-        # setup the provider select
-        pntGeom = QgsGeometry.fromPoint(point)
-        pntBuff = pntGeom.buffer(2.0,1) #buffer it 2 degrees and return with 1 segment
-        rect = pntGeom.boundingBox()
+        # setup the provider select to filter results based on a rectangle
+        pntGeom = QgsGeometry.fromPoint(point)  
+        # scale-dependent buffer of 2 pixels-worth of map units
+        pntBuff = pntGeom.buffer( (self.canvas.mapUnitsPerPixel() * 2),0) 
+        rect = pntBuff.boundingBox()
         # get currentLayer and dataProvider
         cLayer = self.canvas.currentLayer()
         selectList = []

@@ -418,10 +418,11 @@ Notice that we are putting a QMessageBox box immediately after the connection to
 
      def selectFeature(self, point, button):
             QMessageBox.information( self.iface.mainWindow(),"Info", "in selectFeature function" )
-            # setup the provider select 
-            pntGeom = QgsGeometry.fromPoint(point)
-            pntBuff = pntGeom.buffer(2.0,1) #buffer it 2 degrees and return with 1 segment
-            rect = pntGeom.boundingBox()
+            # setup the provider select to filter results based on a rectangle
+            pntGeom = QgsGeometry.fromPoint(point)  
+            # scale-dependent buffer of 2 pixels-worth of map units
+            pntBuff = pntGeom.buffer( (self.canvas.mapUnitsPerPixel() * 2),0) 
+            rect = pntBuff.boundingBox()
             # get currentLayer and dataProvider
             cLayer = self.canvas.currentLayer()
             selectList = []
@@ -572,27 +573,7 @@ The reason we want these to be class variables instead of function variables is 
                     self.dlg.setTextBrowser( str( attMap[nIndx].toString() ))
 
 
-\  **4.** \Because our function\  ``handleMouseDown()`` \will not be used anymore, let's make sure that we change the connections in the function\  ``changeActive()`` \to do something useful. Instead of activating/deactivating the TextBrowser feedback, I'll update this code the following way.
-
-Comment out the following code under the\  ``initGui()`` \function::
-
-    result = QObject.connect(self.clickTool, SIGNAL("canvasClicked(const QgsPoint &, Qt::MouseButton)"), self.selectFeature) 
-
-Now move this code into the\  ``changeActive()`` \function to replace the previous connection. Now the function\  ``changeActive()`` \will activate/deactivate our ability to select features. Make your function look like this::
-
- def changeActive(self,state):
-        if (state==Qt.Checked):
-            # connect to click signal
-            # QObject.connect(self.clickTool, SIGNAL("canvasClicked(const QgsPoint &, Qt::MouseButton)"), self.handleMouseDown)
-            # connect our select function to the canvasClicked signal
-            QObject.connect(self.clickTool, SIGNAL("canvasClicked(const QgsPoint &, Qt::MouseButton)"), self.selectFeature)
-        else:
-            # disconnect from click signal
-            # QObject.disconnect(self.clickTool, SIGNAL("canvasClicked(const QgsPoint &, Qt::MouseButton)"), self.handleMouseDown)
-            # disconnect our select function to the canvasClicked signal
-            QObject.connect(self.clickTool, SIGNAL("canvasClicked(const QgsPoint &, Qt::MouseButton)"), self.selectFeature)
-
-\  **5.** \The second-to-last thing we need to do is somehow call our\  ``updateTextBrowser()`` \function. We could create another connection but we want to ensure the sequential order of events here -- meaning, we want to update the TextBrowser only after the\  ``selectFeature()`` \function executes. To accomplish this we will call\  ``updateTextBrowser()`` \at the very end of the\ ``selectFeature()`` \function by changing around a couple things like so::
+\  **4.** \We need to somehow call our\  ``updateTextBrowser()`` \function. We could create another signal connection but we want to ensure the sequential order of events here -- meaning, we want to update the TextBrowser only after the\  ``selectFeature()`` \function executes. To accomplish this we will call\  ``updateTextBrowser()`` \at the very end of the\ ``selectFeature()`` \function by changing around a couple things like so::
 
     if self.selectList:
             # make the actual selection 
@@ -606,10 +587,11 @@ Here's the whole\  ``selectFeature()`` \function so we can see the above in cont
         # reset selection list on each new selection
         self.selectList = []
         #QMessageBox.information( self.iface.mainWindow(),"Info", "in selectFeature function" )
-        # setup the provider select 
+        # setup the provider select to filter results based on a rectangle
         pntGeom = QgsGeometry.fromPoint(point)  
-        pntBuff = pntGeom.buffer(2.0,1) #buffer it 2 degrees and return with 1 segment
-        rect = pntGeom.boundingBox()
+        # scale-dependent buffer of 2 pixels-worth of map units
+        pntBuff = pntGeom.buffer( (self.canvas.mapUnitsPerPixel() * 2),0) 
+        rect = pntBuff.boundingBox()
         if self.cLayer:
             feat = QgsFeature()
             # create the select statement

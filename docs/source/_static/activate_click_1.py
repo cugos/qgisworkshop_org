@@ -19,6 +19,12 @@ class vector_selectbypoint:
         self.clickTool = QgsMapToolEmitPoint(self.canvas)
         # create our GUI dialog
         self.dlg = vector_selectbypointDialog()
+        # create a list to hold our selected feature ids
+        self.selectList = []
+        # current layer ref (set in handleLayerChange)
+        self.cLayer = None
+        # current layer dataProvider ref (set in handleLayerChange)
+        self.provider = None
 
     def initGui(self):
         # Create action that will start plugin configuration
@@ -32,15 +38,26 @@ class vector_selectbypoint:
         self.iface.addPluginToMenu("&some text that appears in the menu", self.action)
 
         # connect our custom function to a clickTool signal that the canvas was clicked
-        # result = QObject.connect(self.clickTool, SIGNAL("canvasClicked(const QgsPoint &, Qt::MouseButton)"), self.handleMouseDown)
+        #result = QObject.connect(self.clickTool, SIGNAL("canvasClicked(const QgsPoint &, Qt::MouseButton)"), self.handleMouseDown)
         #QMessageBox.information( self.iface.mainWindow(),"Info", "connect = %s"%str(result) )
 
         # connect our select function to the canvasClicked signal
-        result = QObject.connect(self.clickTool, SIGNAL("canvasClicked(const QgsPoint &, Qt::MouseButton)"), self.selectFeature)
-        # QMessageBox.information( self.iface.mainWindow(),"Info", "connect = %s"%str(result) )
+        #result = QObject.connect(self.clickTool, SIGNAL("canvasClicked(const QgsPoint &, Qt::MouseButton)"), self.selectFeature)
+        #QMessageBox.information( self.iface.mainWindow(),"Info", "connect = %s"%str(result) )
+    
+        QObject.connect(self.dlg.ui.chkActivate,SIGNAL("stateChanged(int)"),self.changeActive)
 
-        # connect to state change signal of checkbox
-        result = QObject.connect(self.dlg.getChkActivate(), SIGNAL("stateChanged(int)"), self.changeActive)
+    def changeActive(self,state):
+         if (state==Qt.Checked):
+                 # connect to click signal
+                 QObject.connect(self.clickTool, SIGNAL("canvasClicked(const QgsPoint &, Qt::MouseButton)"), self.handleMouseDown)
+                 # connect our select function to the canvasClicked signal
+                 QObject.connect(self.clickTool, SIGNAL("canvasClicked(const QgsPoint &, Qt::MouseButton)"), self.selectFeature)
+         else:
+                 # disconnect from click signal
+                 QObject.disconnect(self.clickTool, SIGNAL("canvasClicked(const QgsPoint &, Qt::MouseButton)"), self.handleMouseDown)
+                 # disconnect our select function to the canvasClicked signal
+                 QObject.disconnect(self.clickTool, SIGNAL("canvasClicked(const QgsPoint &, Qt::MouseButton)"), self.selectFeature)
 
     def unload(self):
         # Remove the plugin menu item and icon
@@ -54,10 +71,11 @@ class vector_selectbypoint:
 
     def selectFeature(self, point, button):
         #QMessageBox.information( self.iface.mainWindow(),"Info", "in selectFeature function" )
-        # setup the provider select
-        pntGeom = QgsGeometry.fromPoint(point)
-        pntBuff = pntGeom.buffer(2.0,1) #buffer it 2 degrees and return with 1 segment
-        rect = pntGeom.boundingBox()
+        # setup the provider select to filter results based on a rectangle
+        pntGeom = QgsGeometry.fromPoint(point)  
+        # scale-dependent buffer of 2 pixels-worth of map units
+        pntBuff = pntGeom.buffer( (self.canvas.mapUnitsPerPixel() * 2),0) 
+        rect = pntBuff.boundingBox()
         # get currentLayer and dataProvider
         cLayer = self.canvas.currentLayer()
         selectList = []
@@ -76,16 +94,6 @@ class vector_selectbypoint:
         else:
                 QMessageBox.information( self.iface.mainWindow(),"Info", "No layer currently selected in TOC" )
 
-
-    def changeActive(self,state):
-        if (state==Qt.Checked):
-                # connect to map canvas click signal
-                QObject.connect(self.clickTool, SIGNAL("canvasClicked(const QgsPoint &, Qt::MouseButton)"), self.handleMouseDown)
-        else:
-                # disconnect from map canvas click signal
-                QObject.disconnect(self.clickTool, SIGNAL("canvasClicked(const QgsPoint &, Qt::MouseButton)"), self.handleMouseDown)
-
-
     # run method that performs all the real work
     def run(self):
         # make our clickTool the tool that we'll use for now
@@ -99,4 +107,3 @@ class vector_selectbypoint:
             # do something useful (delete the line containing pass and
             # substitute with your code
             pass
-
