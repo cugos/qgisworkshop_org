@@ -20,7 +20,7 @@
  This script initializes the plugin, making it known to QGIS.
 """
 def name():
-    return "Example #3 starter from FOSS4G 2011 Workshop"
+    return "foss4g2011_example3_starter"
 def description():
     return "Example #3 starter from FOSS4G 2011 Workshop"
 def version():
