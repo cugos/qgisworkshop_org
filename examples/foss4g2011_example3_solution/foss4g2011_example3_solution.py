@@ -1,8 +1,8 @@
 """
 /***************************************************************************
- foss4g2011_example3
+ foss4g2011_example3_solution
                                  A QGIS plugin
- Example #3 from FOSS4G 2011 Workshop
+ Example #3 solution from FOSS4G 2011 Workshop
                               -------------------
         begin                : 2011-08-31
         copyright            : (C) 2011 by FOSS4G
@@ -26,13 +26,13 @@ from qgis.gui import *
 # Initialize Qt resources from file resources.py
 import resources
 # Import the code for the dialog
-from foss4g2011_example3dialog import foss4g2011_example3Dialog
+from foss4g2011_example3_solutiondialog import foss4g2011_example3_solutionDialog
 #import pdb
 
 #pyqtRemoveInputHook()
 #pdb.set_trace()
 
-class foss4g2011_example3(QObject):
+class foss4g2011_example3_solution(QObject):
 
     def __init__(self, iface):
         QObject.__init__(self)
@@ -41,7 +41,7 @@ class foss4g2011_example3(QObject):
 
     def initGui(self):
         # Create action that will start plugin configuration
-        self.action = QAction(QIcon(":/plugins/foss4g2011_example3/icon.png"), \
+        self.action = QAction(QIcon(":/plugins/foss4g2011_example3_solution/icon.png"), \
             "Example #3", self.iface.mainWindow())
         # connect the action to the run method
         QObject.connect(self.action, SIGNAL("triggered()"), self.run)
@@ -59,7 +59,7 @@ class foss4g2011_example3(QObject):
     def run(self):
 
         # create and show the dialog
-        self.dlg = foss4g2011_example3Dialog(self.iface)
+        self.dlg = foss4g2011_example3_solutionDialog(self.iface)
         # show the dialog
         self.dlg.show()
 

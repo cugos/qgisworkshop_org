@@ -1,8 +1,8 @@
 """
 /***************************************************************************
- foss4g2011_example3
+ foss4g2011_example3_solution
                                  A QGIS plugin
- Example #3 from FOSS4G 2011 Workshop
+ Example #3 solution from FOSS4G 2011 Workshop
                              -------------------
         begin                : 2011-08-31
         copyright            : (C) 2011 by FOSS4G
@@ -20,9 +20,9 @@
  This script initializes the plugin, making it known to QGIS.
 """
 def name():
-    return "Example #3 from FOSS4G 2011 Workshop"
+    return "Example #3 solution from FOSS4G 2011 Workshop"
 def description():
-    return "Example #3 from FOSS4G 2011 Workshop"
+    return "Example #3 solution from FOSS4G 2011 Workshop"
 def version():
     return "Version 0.1"
 def icon():
@@ -30,6 +30,6 @@ def icon():
 def qgisMinimumVersion():
     return "1.7"
 def classFactory(iface):
-    # load foss4g2011_example3 class from file foss4g2011_example3
-    from foss4g2011_example3 import foss4g2011_example3
-    return foss4g2011_example3(iface)
+    # load foss4g2011_example3_solution class from file foss4g2011_example3_solution
+    from foss4g2011_example3_solution import foss4g2011_example3_solution
+    return foss4g2011_example3_solution(iface)
