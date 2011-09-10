@@ -38,22 +38,27 @@ Goal
 Hints
 ***************
 
-In the last hour we went through an example using\  ``dataProvider.featureAtId()`` \. Use this code as a guide for how to create your function::
+In the last hour we went through examples using\  ``dataProvider.select()`` \and\  ``dataProvider.featureAtId()`` \. Use the code below a guide for how to write your function::
 
+    # using the 50m_admin_0_countries.shp from natural earth download for this example
+    cLayer = qgis.utils.iface.mapCanvas().currentLayer()
+    provider = cLayer.dataProvider()
+    selectList = [ 24, 32, 45, 56 ]
+    if selectList:
+        for id in selectList:
+            nIndx = provider.fieldNameIndex('NAME')
+            sFeat = QgsFeature()
+            if provider.featureAtId(id, sFeat, True, [nIndx]):
+                if nIndx != -1:
+                    attMap = sFeat.attributeMap()
+                    # cast QString objects to Python strings
+                    print str( attMap[nIndx].toString() )
 
 
 Solution
 ************
 
-If you want to peek at one possible solution (thought a very ugly one) then check out these modules:
-
-    * The main Python module\  `here <../_static/rastervaluedisplay.py>`_
-
-    * The dialog module\  `there <../_static/rastervaluedisplaydialog.py>`_
-
-    * The compiled ui module\  `over here <../_static/ui_rastervaluedisplay.py>`_
-
-To get a visual idea about how simple my tool was, here's a picture:
+There is a solution set plugin for this tool. Open this plugin and use it or browse the source code at\  ``/home/qgis/.qgis/python/plugins/foss4g2011_example1_solutionset/foss4g2011_example1_solutionset.py``\for ideas::
 
 .. image:: ../_static/raster_value_final.png
     :scale: 100%

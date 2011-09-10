@@ -481,6 +481,7 @@ The example below reviews how to retrieve features and also adds the necessary s
     # For each column name we are interested in retreiving get its index and add it to the above selectList
     for column in ['LEVEL', 'TYPE', 'NAME', 'SORTNAME']:
         selectList.append(provider.fieldNameIndex(column))
+
     # Create a bounding box rectangle that we will use as a filter to only get features that intersect with it
     rect = QgsRectangle(QgsPoint(0,0),QgsPoint(20, 34))
     # The infamous select statement that queries our vector layer for all geometry, attributes indexes we passed and only the features that intersect our QgsRectangle
@@ -490,7 +491,8 @@ The example below reviews how to retrieve features and also adds the necessary s
     while provider.nextFeature(feat):
         # we get our dictionary of attribute index keys pointing to field values for this feature
         map = feat.attributeMap()
-        # for each feature's attributes print out the value
+
+    # for each feature's attributes print out the value
     for key, value in map.items():
         print value.toString()
 
