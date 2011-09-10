@@ -219,7 +219,7 @@ Notice that the Makefile is smart. It knows that there were only changes to the\
     :scale: 100%
     :align: center
 
-\  **2.** \Now navigate to your workspace plugin folder\  ``/home/qgis/workspace/vector_selectbypoint`` \and open the file\  ``vector_selectbypoing.py`` \. Your code should look exactly like\  `this module <../_static/mapcanvas_click_1.py>`_ 
+\  **2.** \Now navigate to your workspace plugin folder\  ``/home/qgis/workspace/vector_selectbypoint`` \and open the file\  ``vector_selectbypoing.py`` \. Your code should look exactly like\  `this here <../_static/mapcanvas_click_1.py>`_ 
 
 \  **3.** \Let's walk through some important things about this file.
 
