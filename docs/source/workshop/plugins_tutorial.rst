@@ -285,7 +285,7 @@ We know that the signal\  ``canvasClicked()`` \emits a QgsPoint. So in our\  ``h
     # make our clickTool the tool that we'll use for now 
     self.canvas.setMapTool(self.clickTool)
 
-\  **10.** \Your entire\  ``vector_selectbypoint.py`` \module should now look\  `similar to this module<../_static/mapcanvas_click_2.py>`_
+\  **10.** \Your entire\  ``vector_selectbypoint.py`` \module should now look\  `similar to this module <../_static/mapcanvas_click_2.py>`_
 
 
 Testing Your Edits 
