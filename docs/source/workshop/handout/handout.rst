@@ -65,6 +65,7 @@ Loop through all layer features::
     columnList = []
     for i in ['NAME']:
         columnList.append(provider.fieldNameIndex(i))
+
     rect = QgsRectangle(QgsPoint(0,0),QgsPoint(20, 34))
     provider.select(selectList, rect, True, False)
     feat = QgsFeature()
