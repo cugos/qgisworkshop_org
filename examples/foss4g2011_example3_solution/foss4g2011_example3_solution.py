@@ -42,17 +42,17 @@ class foss4g2011_example3_solution(QObject):
     def initGui(self):
         # Create action that will start plugin configuration
         self.action = QAction(QIcon(":/plugins/foss4g2011_example3_solution/icon.png"), \
-            "Example #3 Solution", self.iface.mainWindow())
+            "Example #3 Solution for FOSS4G 2011 Workshop", self.iface.mainWindow())
         # connect the action to the run method
         QObject.connect(self.action, SIGNAL("triggered()"), self.run)
 
         # Add toolbar button and menu item
         self.iface.addToolBarIcon(self.action)
-        self.iface.addPluginToMenu("&Example #3 Solution", self.action)
+        self.iface.addPluginToMenu("&Example #3 Solution for FOSS4G 2011 Workshop", self.action)
 
     def unload(self):
         # Remove the plugin menu item and icon
-        self.iface.removePluginMenu("&Example #3 Solution",self.action)
+        self.iface.removePluginMenu("&Example #3 Solution for FOSS4G 2011 Workshop",self.action)
         self.iface.removeToolBarIcon(self.action)
 
     # run method that performs all the real work
