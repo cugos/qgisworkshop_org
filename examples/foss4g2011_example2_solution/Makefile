@@ -1,5 +1,5 @@
 #/***************************************************************************
-# foss4g2011_example2
+# foss4g2011_example2_solution
 # 
 # Example #2 for FOSS4G 2011 Workshop
 #                             -------------------
@@ -19,13 +19,13 @@
 
 # Makefile for a PyQGIS plugin 
 
-PLUGINNAME = foss4g2011_example2
+PLUGINNAME = foss4g2011_example2_solution
 
-PY_FILES = foss4g2011_example2.py foss4g2011_example2dialog.py __init__.py
+PY_FILES = foss4g2011_example2_solution.py foss4g2011_example2_solutiondialog.py __init__.py
 
 EXTRAS = icon.png 
 
-UI_FILES = ui_foss4g2011_example2.py
+UI_FILES = ui_foss4g2011_example2_solution.py
 
 RESOURCE_FILES = resources.py
 

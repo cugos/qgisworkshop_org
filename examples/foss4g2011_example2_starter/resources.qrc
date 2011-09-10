@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/plugins/foss4g2011_example2" >
+    <qresource prefix="/plugins/foss4g2011_example2_starter" >
         <file>icon.png</file>
     </qresource>
 </RCC>

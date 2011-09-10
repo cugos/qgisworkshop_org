@@ -1,6 +1,6 @@
 """
 /***************************************************************************
- foss4g2011_example2
+ foss4g2011_example2_starter
                                  A QGIS plugin
  Example #2 for FOSS4G 2011 Workshop
                              -------------------
@@ -20,9 +20,9 @@
  This script initializes the plugin, making it known to QGIS.
 """
 def name():
-    return "foss4g2011_example2"
+    return "foss4g2011_example2_starter"
 def description():
-    return "Example #2 for FOSS4G 2011 Workshop"
+    return "Example #2 Starter for FOSS4G 2011 Workshop"
 def version():
     return "Version 0.1"
 def icon():
@@ -30,6 +30,6 @@ def icon():
 def qgisMinimumVersion():
     return "1.0"
 def classFactory(iface):
-    # load foss4g2011_example2 class from file foss4g2011_example2
-    from foss4g2011_example2 import foss4g2011_example2
-    return foss4g2011_example2(iface)
+    # load foss4g2011_example2_starter class from file foss4g2011_example2_starter
+    from foss4g2011_example2_starter import foss4g2011_example2_starter
+    return foss4g2011_example2_starter(iface)
