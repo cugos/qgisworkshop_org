@@ -1,6 +1,6 @@
 """
 /***************************************************************************
- foss4g2011_example2
+ foss4g2011_example2_starter
                                  A QGIS plugin
  Example #2 for FOSS4G 2011 Workshop
                               -------------------
@@ -26,9 +26,9 @@ from qgis.gui import *
 # Initialize Qt resources from file resources.py
 import resources
 # Import the code for the dialog
-from foss4g2011_example2dialog import foss4g2011_example2Dialog
+from foss4g2011_example2_starterdialog import foss4g2011_example2_starterDialog
 
-class foss4g2011_example2:
+class foss4g2011_example2_starter:
 
     def __init__(self, iface):
         # Save reference to the QGIS interface
@@ -36,18 +36,18 @@ class foss4g2011_example2:
         # map canvas ref
         self.canvas = self.iface.mapCanvas()
         # create and show the dialog
-        self.dlg = foss4g2011_example2Dialog()
+        self.dlg = foss4g2011_example2_starterDialog()
 
     def initGui(self):
         # Create action that will start plugin configuration
-        self.action = QAction(QIcon(":/plugins/foss4g2011_example2/icon.png"), \
-            "Example #2 for FOSS4G 2011 Workshop", self.iface.mainWindow())
+        self.action = QAction(QIcon(":/plugins/foss4g2011_example2_starter/icon.png"), \
+            "Example #2 Starter for FOSS4G 2011 Workshop", self.iface.mainWindow())
         # connect the action to the run method
         QObject.connect(self.action, SIGNAL("triggered()"), self.run)
 
         # Add toolbar button and menu item
         self.iface.addToolBarIcon(self.action)
-        self.iface.addPluginToMenu("Example #2 for FOSS4G 2011 Workshop", self.action)
+        self.iface.addPluginToMenu("Example #2 Starter for FOSS4G 2011 Workshop", self.action)
         
         #Add a connection to the xycoord signal of the map canvas
         result = QObject.connect(self.canvas, SIGNAL("xyCoordinates (const QgsPoint &)"), self.handleXY)
@@ -55,7 +55,7 @@ class foss4g2011_example2:
 
     def unload(self):
         # Remove the plugin menu item and icon
-        self.iface.removePluginMenu("&Example #2 for FOSS4G 2011 Workshop",self.action)
+        self.iface.removePluginMenu("&Example #2 Starter for FOSS4G 2011 Workshop",self.action)
         self.iface.removeToolBarIcon(self.action)
 
     def handleXY(self, point):
