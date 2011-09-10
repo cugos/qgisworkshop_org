@@ -63,7 +63,8 @@ Loop through all layer features::
     cLayer = qgis.utils.iface.mapCanvas().currentLayer()
     provider = cLayer.dataProvider()
     columnList = []
-    for i in ['NAME']: columnList.append(provider.fieldNameIndex(i))
+    for i in ['NAME']:
+        columnList.append(provider.fieldNameIndex(i))
     rect = QgsRectangle(QgsPoint(0,0),QgsPoint(20, 34))
     provider.select(selectList, rect, True, False)
     feat = QgsFeature()

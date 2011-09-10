@@ -481,8 +481,6 @@ The example below reviews how to retrieve features and also adds the necessary s
     # For each column name we are interested in retreiving get its index and add it to the above selectList
     for column in ['LEVEL', 'TYPE', 'NAME', 'SORTNAME']:
         selectList.append(provider.fieldNameIndex(column))
-    # Our column index output 
-    selectList
     # Create a bounding box rectangle that we will use as a filter to only get features that intersect with it
     rect = QgsRectangle(QgsPoint(0,0),QgsPoint(20, 34))
     # The infamous select statement that queries our vector layer for all geometry, attributes indexes we passed and only the features that intersect our QgsRectangle
@@ -493,7 +491,8 @@ The example below reviews how to retrieve features and also adds the necessary s
         # we get our dictionary of attribute index keys pointing to field values for this feature
         map = feat.attributeMap()
         # for each feature's attributes print out the value
-        for key, value in map.items(): print value.toString()
+    for key, value in map.items():
+        print value.toString()
 
 \  **9.** \This next example is a little harder to understand. The point is to show you how to create dictionaries. We're going to create a table data structure -- a Python dictionary that represents a table in a database. The table is a dictionary where the keys are the featureIDs for each feature and the values will be nested dictionaries that have keys with column names and values with the column value. Reworking the above example gives us::
 
@@ -509,7 +508,9 @@ The example below reviews how to retrieve features and also adds the necessary s
                               , 'SORTNAME' : str(attributeMap[provider.fieldNameIndex('SORTNAME')].toString()) \
                               , 'TYPE' : str(attributeMap[provider.fieldNameIndex('TYPE')].toString()) \ 
                             }
-    for id, record in table.items(): print str(id) + " --> " + str(record)
+
+    for id, record in table.items():
+        print str(id) + " --> " + str(record)
 
 
 Raster
