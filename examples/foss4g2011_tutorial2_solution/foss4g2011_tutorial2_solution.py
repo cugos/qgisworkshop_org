@@ -28,9 +28,10 @@ import resources
 # Import the code for the dialog
 from foss4g2011_tutorial2_solutiondialog import foss4g2011_tutorial2_solutionDialog
 
-class foss4g2011_tutorial2_solution:
+class foss4g2011_tutorial2_solution(QObject):
 
     def __init__(self, iface):
+        QObject.__init__(self)
         # Save reference to the QGIS interface
         self.iface = iface
         # reference to map canvas

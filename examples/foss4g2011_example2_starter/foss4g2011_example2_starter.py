@@ -50,24 +50,31 @@ class foss4g2011_example2_starter:
         self.iface.addPluginToMenu("Example #2 Starter for FOSS4G 2011 Workshop", self.action)
         
         #Add a connection to the xycoord signal of the map canvas
-        result = QObject.connect(self.canvas, SIGNAL("xyCoordinates (const QgsPoint &)"), self.handleXY)
-        #QMessageBox.information( self.iface.mainWindow(),"Info", "connect = %s"%str(result) )
+        # result = QObject.connect(self.canvas, SIGNAL("xyCoordinates (const QgsPoint &)"), self.handleXY)
+        # QMessageBox.information( self.iface.mainWindow(),"Info", "connect = %s"%str(result) )
+
+        #Add a connection to the triggered action
+        #result = QObject.connect(self.action, SIGNAL("triggered()"), self.bunkitty)
+        # QMessageBox.information( self.iface.mainWindow(),"Info", "connect = %s"%str(result) )
 
     def unload(self):
         # Remove the plugin menu item and icon
         self.iface.removePluginMenu("&Example #2 Starter for FOSS4G 2011 Workshop",self.action)
         self.iface.removeToolBarIcon(self.action)
 
-    def handleXY(self, point):
-        self.dlg.clearTextBrowser()
-        self.cLayer = self.canvas.currentLayer()
-        if self.cLayer:
-            if self.cLayer.type() == 1:
-                success, data = self.cLayer.identify(point)
-                final = "" 
-                for key,value in data.items():
-                    final += str(key) + " > " + str(value) + "\n"
-                self.dlg.setTextBrowser(final) 
+    #def handleXY(self, point):
+        #self.dlg.clearTextBrowser()
+        #self.cLayer = self.canvas.currentLayer()
+        #if self.cLayer:
+            #if self.cLayer.type() == 1:
+                #success, data = self.cLayer.identify(point)
+                #final = "" 
+                #for key,value in data.items():
+                    #final += str(key) + " > " + str(value) + "\n"
+                #self.dlg.setTextBrowser(final) 
+
+    #def bunkitty(self):
+        #QMessageBox.information( self.iface.mainWindow(),"Info", "BUNK KITTY")
 
     # run method that performs all the real work
     def run(self):
