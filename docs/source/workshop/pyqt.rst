@@ -36,97 +36,15 @@ Example of QT Designer XML structure::
       <property name="windowTitle">
        <string>Dialog</string>
       </property>
-      <widget class="QDialogButtonBox" name="buttonBox">
-       <property name="geometry">
-        <rect>
-         <x>290</x>
-         <y>240</y>
-         <width>101</width>
-         <height>241</height>
-        </rect>
-       </property>
-       <property name="orientation">
-        <enum>Qt::Vertical</enum>
-       </property>
-       <property name="standardButtons">
-        <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-       </property>
-      </widget>
-      <widget class="QComboBox" name="comboBox">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>10</y>
-         <width>371</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="acceptDrops">
-        <bool>true</bool>
-       </property>
-      </widget>
-      <widget class="QDateTimeEdit" name="dateTimeEdit">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>240</y>
-         <width>251</width>
-         <height>27</height>
-        </rect>
-       </property>
-      </widget>
-      <widget class="QPlainTextEdit" name="plainTextEdit">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>50</y>
-         <width>371</width>
-         <height>171</height>
-        </rect>
-       </property>
-      </widget>
      </widget>
      <resources/>
-     <connections>
-      <connection>
-       <sender>buttonBox</sender>
-       <signal>accepted()</signal>
-       <receiver>Dialog</receiver>
-       <slot>accept()</slot>
-       <hints>
-        <hint type="sourcelabel">
-         <x>248</x>
-         <y>254</y>
-        </hint>
-        <hint type="destinationlabel">
-         <x>157</x>
-         <y>274</y>
-        </hint>
-       </hints>
-      </connection>
-      <connection>
-       <sender>buttonBox</sender>
-       <signal>rejected()</signal>
-       <receiver>Dialog</receiver>
-       <slot>reject()</slot>
-       <hints>
-        <hint type="sourcelabel">
-         <x>316</x>
-         <y>260</y>
-        </hint>
-        <hint type="destinationlabel">
-         <x>286</x>
-         <y>274</y>
-        </hint>
-       </hints>
-      </connection>
-     </connections>
+     <connections/>
     </ui>
 
 Once rendered, the XML structure above describes this type of GUI dialog, a very simple example:
 
 .. image:: ../_static/qt_designer_form_example.png
-   :scale: 200 %
+   :scale: 100 %
    :align: center 
 
 
@@ -136,48 +54,49 @@ When we have an XML structure defining our GUI we need to turn it into a python 
 
 If I compile this XML file using\  **pyuic4** \it will magically turn in PyQt code (Yah!). Here's the compile statement from a bash shell::
 
-    pyuic4 form.ui
+    pyuic4 -x -o form.py form.ui
+
+Note that the -x creates an output python file that can be run directly to see an example rendering of the widget you have created.
 
 Here is the output -- a python module::
 
     # -*- coding: utf-8 -*-
-
-    # Form implementation generated from reading ui file 'test.ui'
+    
+    # Form implementation generated from reading ui file 'form.ui'
     #
-    # Created: Mon Jul  4 18:29:50 2011
-    #      by: PyQt4 UI code generator 4.7.2
+    # Created: Sun Sep 11 11:52:22 2011
+    #      by: PyQt4 UI code generator 4.8.3
     #
     # WARNING! All changes made in this file will be lost!
-
+    
     from PyQt4 import QtCore, QtGui
-
+    
+    try:
+        _fromUtf8 = QtCore.QString.fromUtf8
+    except AttributeError:
+        _fromUtf8 = lambda s: s
+    
     class Ui_Dialog(object):
         def setupUi(self, Dialog):
-            Dialog.setObjectName("Dialog")
+            Dialog.setObjectName(_fromUtf8("Dialog"))
             Dialog.resize(400, 300)
-            self.buttonBox = QtGui.QDialogButtonBox(Dialog)
-            self.buttonBox.setGeometry(QtCore.QRect(290, 240, 101, 241))
-            self.buttonBox.setOrientation(QtCore.Qt.Vertical)
-            self.buttonBox.setStandardButtons(QtGui.QDialogButtonBox.Cancel|QtGui.QDialogButtonBox.Ok)
-            self.buttonBox.setObjectName("buttonBox")
-            self.comboBox = QtGui.QComboBox(Dialog)
-            self.comboBox.setGeometry(QtCore.QRect(10, 10, 371, 31))
-            self.comboBox.setAcceptDrops(True)
-            self.comboBox.setObjectName("comboBox")
-            self.dateTimeEdit = QtGui.QDateTimeEdit(Dialog)
-            self.dateTimeEdit.setGeometry(QtCore.QRect(10, 240, 251, 27))
-            self.dateTimeEdit.setObjectName("dateTimeEdit")
-            self.plainTextEdit = QtGui.QPlainTextEdit(Dialog)
-            self.plainTextEdit.setGeometry(QtCore.QRect(10, 50, 371, 171))
-            self.plainTextEdit.setObjectName("plainTextEdit")
-
+    
             self.retranslateUi(Dialog)
-            QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL("accepted()"), Dialog.accept)
-            QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL("rejected()"), Dialog.reject)
             QtCore.QMetaObject.connectSlotsByName(Dialog)
-
+    
         def retranslateUi(self, Dialog):
-            Dialog.setWindowTitle(QtGui.QApplication.translate("Dialog", "Dialog", None, QtGui.QApplication.UnicodeUTF8))
+            Dialog.setWindowTitle(QtGui.QApplication.translate("Dialog", "Dialog", N
+    one, QtGui.QApplication.UnicodeUTF8))
+    
+    
+    if __name__ == "__main__":
+        import sys
+        app = QtGui.QApplication(sys.argv)
+        Dialog = QtGui.QDialog()
+        ui = Ui_Dialog()
+        ui.setupUi(Dialog)
+        Dialog.show()
+        sys.exit(app.exec_())
         
 First, notice the import statement::
 
