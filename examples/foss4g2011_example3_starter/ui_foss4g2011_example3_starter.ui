@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>861</width>
-    <height>686</height>
+    <width>738</width>
+    <height>529</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -36,7 +36,7 @@
                 </size>
                </property>
                <property name="currentIndex">
-                <number>3</number>
+                <number>0</number>
                </property>
                <widget class="QWidget" name="page">
                 <property name="geometry">
@@ -44,7 +44,7 @@
                   <x>0</x>
                   <y>0</y>
                   <width>300</width>
-                  <height>502</height>
+                  <height>314</height>
                  </rect>
                 </property>
                 <attribute name="label">
@@ -90,7 +90,7 @@
                   <x>0</x>
                   <y>0</y>
                   <width>300</width>
-                  <height>502</height>
+                  <height>471</height>
                  </rect>
                 </property>
                 <attribute name="label">
@@ -115,6 +115,9 @@
                    </item>
                    <item>
                     <widget class="QCheckBox" name="mapToolSetCheckBox">
+                     <property name="enabled">
+                      <bool>false</bool>
+                     </property>
                      <property name="text">
                       <string>mapToolSet</string>
                      </property>
@@ -143,7 +146,7 @@
                   <x>0</x>
                   <y>0</y>
                   <width>300</width>
-                  <height>471</height>
+                  <height>314</height>
                  </rect>
                 </property>
                 <attribute name="label">
@@ -204,6 +207,14 @@
                 </widget>
                </widget>
                <widget class="QWidget" name="page_4">
+                <property name="geometry">
+                 <rect>
+                  <x>0</x>
+                  <y>0</y>
+                  <width>300</width>
+                  <height>314</height>
+                 </rect>
+                </property>
                 <attribute name="label">
                  <string>self</string>
                 </attribute>
@@ -219,6 +230,9 @@
                  <layout class="QVBoxLayout" name="verticalLayout_5">
                   <item>
                    <widget class="QCheckBox" name="feedbackStatusCheckBox">
+                    <property name="enabled">
+                     <bool>false</bool>
+                    </property>
                     <property name="text">
                      <string>feedbackStatus</string>
                     </property>
@@ -226,6 +240,9 @@
                   </item>
                   <item>
                    <widget class="QPushButton" name="emitFeedbackStatusBtn">
+                    <property name="enabled">
+                     <bool>false</bool>
+                    </property>
                     <property name="text">
                      <string>emitFeedbackStatus</string>
                     </property>

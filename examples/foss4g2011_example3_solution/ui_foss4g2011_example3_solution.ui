@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>861</width>
-    <height>686</height>
+    <width>734</width>
+    <height>538</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -36,7 +36,7 @@
                 </size>
                </property>
                <property name="currentIndex">
-                <number>3</number>
+                <number>0</number>
                </property>
                <widget class="QWidget" name="page">
                 <property name="geometry">
@@ -44,7 +44,7 @@
                   <x>0</x>
                   <y>0</y>
                   <width>300</width>
-                  <height>502</height>
+                  <height>323</height>
                  </rect>
                 </property>
                 <attribute name="label">
@@ -89,8 +89,8 @@
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>300</width>
-                  <height>502</height>
+                  <width>168</width>
+                  <height>109</height>
                  </rect>
                 </property>
                 <attribute name="label">
@@ -142,8 +142,8 @@
                  <rect>
                   <x>0</x>
                   <y>0</y>
-                  <width>300</width>
-                  <height>471</height>
+                  <width>98</width>
+                  <height>28</height>
                  </rect>
                 </property>
                 <attribute name="label">
@@ -204,6 +204,14 @@
                 </widget>
                </widget>
                <widget class="QWidget" name="page_4">
+                <property name="geometry">
+                 <rect>
+                  <x>0</x>
+                  <y>0</y>
+                  <width>300</width>
+                  <height>323</height>
+                 </rect>
+                </property>
                 <attribute name="label">
                  <string>self</string>
                 </attribute>
