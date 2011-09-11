@@ -2,6 +2,9 @@
 <ui version="4.0">
  <class>foss4g2011_tutorial2_solution</class>
  <widget class="QDialog" name="foss4g2011_tutorial2_solution">
+  <property name="windowModality">
+   <enum>Qt::NonModal</enum>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -10,8 +13,14 @@
     <height>311</height>
    </rect>
   </property>
+  <property name="focusPolicy">
+   <enum>Qt::NoFocus</enum>
+  </property>
   <property name="windowTitle">
    <string>foss4g2011_tutorial2_solution</string>
+  </property>
+  <property name="modal">
+   <bool>false</bool>
   </property>
   <widget class="QDialogButtonBox" name="buttonBox">
    <property name="geometry">

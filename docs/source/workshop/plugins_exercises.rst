@@ -2,15 +2,29 @@
 Exercises
 =============================
 
-Create On-the-Fly Raster Value Emitter
+GOAL: On-the-Fly Raster Value Emitter
 --------------------------------------------------------
 
-In this final exercise you will use all that you have learned up to this point to create a simple (maybe even crude) raster value display tool. The purpose is for you to figure out the programmatic steps based on a few clues.
+In this exercise you build a plugin from start to finish using Plugin Builder . The goal will be to create a simple (maybe even crude) raster value display tool. The purpose is for you to figure out the programmatic steps based on a few clues. This exercise has a\  **starter** \and a\  **advanced** \component
+
+Starter Exercise
+----------------------
+
+If you don't feel comfortable using Plugin Builder to create a tool from start to finish, then you modify a plugin that is already built and try to make it look like the solution.
+
+1. Open Qgis and load the shaded relief raster layer\  ``/home/qgis/natural_earth_50m/raster/shaded_relief/SR_50M/SR_50M.tif``
+2. Click on the plugin tool called\  ``foss4g2011_example2_solution``\or\  ``E#2SOL`` 
+3. Hover the mouse cursor over the map and watch as the RGB values change dynamically. This is the end result that you will want to shoot for
+4. Navigate to\  ``/home/qgis/.qgis/python/plugins/foss4g2011_example2_starter/``
+5. Open the files\  ``foss4g2011_example2_starter.py`` \and\  ``foss4g2011_example2_starterdialog.py`` \and find the ares with commented code. You will want to uncomment code from these two files to make the tool work like the solution tool
+
+Advanced Exercise
+-----------------------
 
 The Tool Requirements
 *************************
 
-* Display the value of every band for any raster on map canvas mouse hover. That sounds confusing, but the idea is that your tool should work with a single grayscale raster or an RGBA raster without blowing up. There will be no mouse clicks, we'll just be responding to the normal mouse cursor movement over the map canvas
+* Display every band value for a raster on mouse hover. That sounds confusing, but the idea is that your tool should work with a single grayscale raster or an RGBA raster without blowing up. There will be no mouse clicks, we'll just be responding to the normal mouse cursor movement over the map canvas
 
 * Feedback of raster values will be output to a GUI (your choice on how to implement this on the GUI)
 
@@ -29,7 +43,7 @@ Hints
 Solution
 ************
 
-If you want to peek at one possible solution (thought a very ugly one) then check out these modules:
+If you want to peek at one possible solution (though a very ugly one) then check out these modules:
 
     * The main Python module\  `here <../_static/rastervaluedisplay.py>`_
 
