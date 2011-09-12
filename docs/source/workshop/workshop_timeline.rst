@@ -58,13 +58,13 @@ Sub Section #1 - 10 Minutes (Aaron)
 Sub Section #2 - 10 Minutes (Greg)
   - Debugging
 
-Sub Section #3 - 10 Minutes (Aaron)
-  - Repositories and Packaging
-
 Exercise - 30 Minutes (Greg & Aaron)
   - Simple - Go "enable" GUI element, uncomment code
   - Advanced - Go add a "new" signal to listen to (UI + Code)
   - Advanced - Create another custom signal/slot
+
+Sub Section #3 - 10 Minutes (Aaron)
+  - Repositories and Packaging
 
 
 Wrap-up - 15 minutes
