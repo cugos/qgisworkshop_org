@@ -40,6 +40,7 @@ Intro (Arc) - 10 Minutes (Aaron)
   - Managing files on FS
 
 Tutorial - 20 Minutes (Greg)
+
 Exercise - 30 Minutes (Greg & Aaron)
 
 Break #2 - 15 Minutes
@@ -54,13 +55,17 @@ Sub Section #1 - 10 Minutes (Aaron)
   - Custom can use PyObject
   - Threads
 
+Sub Section #2 - 10 Minutes (Greg)
+  - Debugging
+
+Sub Section #3 - 10 Minutes (Aaron)
+  - Repositories and Packaging
+
 Exercise - 30 Minutes (Greg & Aaron)
   - Simple - Go "enable" GUI element, uncomment code
   - Advanced - Go add a "new" signal to listen to (UI + Code)
   - Advanced - Create another custom signal/slot
 
-Sub Section #2 - 10 Minutes (Greg)
-Sub Section #3 - 10 Minutes (Aaron)
 
 Wrap-up - 15 minutes
 --------------------
