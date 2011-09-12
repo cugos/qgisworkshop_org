@@ -64,3 +64,11 @@ Workshop Hard Copy Handout
     :maxdepth: 2
 
     handout/handout.rst
+
+TimeLine
+--------
+
+.. toctree::
+    :maxdepth: 1
+    
+    workshop_timeline
