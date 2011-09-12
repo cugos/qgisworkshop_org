@@ -66,36 +66,38 @@ class foss4g2011_example3_starter(QObject):
         # QgisInterface
         QObject.connect(self.dlg.currentLayerChangedCheckBox, SIGNAL("stateChanged(int)"), self.check_currentLayerChanged)
         QObject.connect(self.dlg.emitCurrentLayerChangedBtn, SIGNAL("clicked(bool)"), self.btn_emitCurrentLayerChanged)
+
         # QgsMapCanvas
         QObject.connect(self.dlg.xyCoordinatesCheckBox, SIGNAL("stateChanged(int)"), self.check_xyCoordinates)
         QObject.connect(self.dlg.emitXYCoordinates, SIGNAL("clicked(bool)"), self.btn_emitXYCoordinates)
-        QObject.connect(self.dlg.mapToolSetCheckBox, SIGNAL("stateChanged(int)"), self.check_mapToolSet)
+        # mapToolSet Example
+        # QObject.connect(self.dlg.mapToolSetCheckBox, SIGNAL("stateChanged(int)"), self.check_mapToolSet)
+
         # QgsVectorLayer
         QObject.connect(self.dlg.editingStartedCheckBox, SIGNAL("stateChanged(int)"), self.check_editingStarted)
         QObject.connect(self.dlg.editingStoppedCheckBox, SIGNAL("stateChanged(int)"), self.check_editingStopped)
         QObject.connect(self.dlg.emitStartedEditingBtn, SIGNAL("clicked(bool)"), self.btn_emitStartedEditing)
         QObject.connect(self.dlg.emitStoppedEditingBtn, SIGNAL("clicked(bool)"), self.btn_emitStoppedEditing)
-        # Custom defined SIGNALS
-        QObject.connect(self.dlg.feedbackStatusCheckBox, SIGNAL("stateChanged(int)"), self.check_feedbackStatus)
-        QObject.connect(self.dlg.emitFeedbackStatusBtn, SIGNAL("clicked(bool)"), self.btn_emitFeedbackStatus)
+
+        # Custom defined SIGNALS example
+        # QObject.connect(self.dlg.feedbackStatusCheckBox, SIGNAL("stateChanged(int)"), self.check_feedbackStatus)
+        # QObject.connect(self.dlg.emitFeedbackStatusBtn, SIGNAL("clicked(bool)"), self.btn_emitFeedbackStatus)
+
     
-    def feedbackStatus(self):
-        # do some really cool analysis and feedback....or
-        print "I don't do anything useful - Yah!"  
-        
-    def btn_emitFeedbackStatus(self, checked):
-       self.emit(SIGNAL("feedbackStatus(PyQt_PyObject)"), "Bruce Lee is my hero!")
-
-    def check_feedbackStatus(self, state):
-        # if now checked, we need to connect to the signal
-        if state == Qt.Checked:
-            QObject.connect(self, SIGNAL("feedbackStatus(PyQt_PyObject)"), self.listen_feedbackStatus)        
-        # if now NOT checked, we need to un-connect to the signal
-        else:
-            QObject.disconnect(self, SIGNAL("feedbackStatus(PyQt_PyObject)"), self.listen_feedbackStatus)        
-
-    def listen_feedbackStatus(self, message):
-        self.dlg.outputTextEdit.append("feedbackStatus - %s" % (message if message else ""))
+    # Custom defined SIGNALS example
+    #def btn_emitFeedbackStatus(self, checked):
+    #   self.emit(SIGNAL("feedbackStatus(PyQt_PyObject)"), "Bruce Lee is my hero!")
+    #
+    #def check_feedbackStatus(self, state):
+    #    # if now checked, we need to connect to the signal
+    #    if state == Qt.Checked:
+    #        QObject.connect(self, SIGNAL("feedbackStatus(PyQt_PyObject)"), self.listen_feedbackStatus)        
+    #    # if now NOT checked, we need to un-connect to the signal
+    #    else:
+    #        QObject.disconnect(self, SIGNAL("feedbackStatus(PyQt_PyObject)"), self.listen_feedbackStatus)        
+    #
+    #def listen_feedbackStatus(self, message):
+    #    self.dlg.outputTextEdit.append("feedbackStatus - %s" % (message if message else ""))
 
     def btn_emitStartedEditing(self, checked):
         # this function has iface emit a currentLayerChanged signal that should be picked up by our listening slots
@@ -166,13 +168,14 @@ class foss4g2011_example3_starter(QObject):
     def listen_xyCoordinates(self,point):
         self.dlg.outputTextEdit.append("xyCoordinates - %d,%d" % (point.x() if point else "",point.y() if point else ""))
 
-    def check_mapToolSet(self, state):
-        # if now checked, we need to connect to the signal
-        if state == Qt.Checked:
-            QObject.connect(self.iface.mapCanvas(), SIGNAL("mapToolSet(QgsMapTool *)"), self.listen_mapToolSet)        
-        # if now NOT checked, we need to un-connect to the signal
-        else:
-            QObject.disconnect(self.iface.mapCanvas(), SIGNAL("mapToolSet(QgsMapTool *)"), self.listen_mapToolSet)        
-
-    def listen_mapToolSet(self,tool):
-        self.dlg.outputTextEdit.append("mapToolSet - %s" % (tool.action().text() if isinstance(tool,QgsMapTool) else "unidentified tool"))
+    # mapToolSet Example
+    #def check_mapToolSet(self, state):
+    #    # if now checked, we need to connect to the signal
+    #    if state == Qt.Checked:
+    #        QObject.connect(self.iface.mapCanvas(), SIGNAL("mapToolSet(QgsMapTool *)"), self.listen_mapToolSet)        
+    #    # if now NOT checked, we need to un-connect to the signal
+    #    else:
+    #        QObject.disconnect(self.iface.mapCanvas(), SIGNAL("mapToolSet(QgsMapTool *)"), self.listen_mapToolSet)        
+    #
+    #def listen_mapToolSet(self,tool):
+    #    self.dlg.outputTextEdit.append("mapToolSet - %s" % (tool.action().text() if isinstance(tool,QgsMapTool) else "unidentified tool"))

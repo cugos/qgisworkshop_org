@@ -79,10 +79,6 @@ class foss4g2011_example3_solution(QObject):
         QObject.connect(self.dlg.feedbackStatusCheckBox, SIGNAL("stateChanged(int)"), self.check_feedbackStatus)
         QObject.connect(self.dlg.emitFeedbackStatusBtn, SIGNAL("clicked(bool)"), self.btn_emitFeedbackStatus)
     
-    def feedbackStatus(self):
-        # do some really cool analysis and feedback....or
-        print "I don't do anything useful - Yah!"  
-        
     def btn_emitFeedbackStatus(self, checked):
        self.emit(SIGNAL("feedbackStatus(PyQt_PyObject)"), "Bruce Lee is my hero!")
 

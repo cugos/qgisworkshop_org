@@ -58,25 +58,28 @@ Though slightly more confusing, developers do have the ability to create custom 
             # Save reference to the QGIS interface
             self.iface = iface
 
-\  **2.** \Create a custom function that will define your signal signature. It doesn't even have to do anything useful (though it would be nice if it did)::
-
-        def feedbackStatus(self):
-            # do some really cool analysis and feedback....or
-            print "I don't do anything useful - Yah!"
-
-\  **3.** \Create a slot that will recieve this signal. Notice that it is accepting a parameter\  ``message`` \that wasn't defined in the signal (interesting)::
+\  **2.** \Create a slot that will recieve this signal. Notice that it is accepting a parameter\  ``message`` \that wasn't defined in the signal (interesting)::
 
      def listen_feedbackStatus(self, message):
             self.dlg.outputTextEdit.append("feedbackStatus - %s" % (message if message else ""))
 
-\  **4.** \Now connect your slot to your signal somewhere in your code::
+\  **3.** \Now connect your slot to your signal somewhere in your code::
 
     QObject.connect(self, SIGNAL("feedbackStatus(PyQt_PyObject)"), self.listen_feedbackStatus) 
 
-\  **5.** \Now anywhere in your plugin (because it subclasses QObject) you can emit this signal if you think it is important and pass a message to your slot. The\  ``foss4g2011_example3_solution`` \plugin is doing this on a button click::
+\  **4.** \Now anywhere in your plugin (because it subclasses QObject) you can emit this signal if you think it is important and pass a message to your slot. The\  ``foss4g2011_example3_solution`` \plugin is doing this on a button click::
 
      def btn_emitFeedbackStatus(self, checked):
            self.emit(SIGNAL("feedbackStatus(PyQt_PyObject)"), "Bruce Lee is my hero!")
 
 
+Example #3
+************************
+In the following excersise you can install the Example #3 Starter plugin to use as a base.  This plugin is intended to be a signal/slot tester.  It provides a simple text area for handlers to write into, and a simple tool box on the right side of the plugin that will allow you to listen to a signal, or emit a test signal.
+
+We have provided a few examples of gui widgets (check boxes and buttons) to allow for you to dynamically connect to some singnals or generate some dummy signals.  The goal will be for you to view the code and understand how this is being done (both by looking at the gui in Designer as well as the handlers and signal/slot connections).  Once you have a handle on how this is done we can attempt to connect to some other signals.  In the Example #3 Starter plugin we have provided some new example signals to connect to in commented code.  We have also added some gui elements in designer that are "disabled".  
+
+For those that want to tackle the basics, open designer and find out how to "enable" the check box for the signal you want to listen for (HINT: there are two that are disabled).  Once you have the GUI elements enabled, save the .ui file and run make in the plugin dir.  This will re-compile the .ui file to a .py file.  Open up QGIS and verify that the plugin now has those gui elements enabled.  Now, go back to the main code blocks for the plugin and find the commented code for the signal you enabled in the gui... and attempt to enable it by uncommenting the code.
+
+For those who are looking for adventure, find a signal in the QGIS documentation that you would like to listen for, add a gui element to the plugin (probably a checkbox similar to those already implemented), and finally add in the signal connect with custom handler that writes to the text box.
 
