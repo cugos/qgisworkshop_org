@@ -5,12 +5,12 @@ Exercise
 Output Vector Layer attributes to the TextBrowser
 --------------------------------------------------------
 
-You will edit one function from the existing\  ``foss4g2011_example1`` \plugin. In that function you will write the logic that reads a vector data layer's attributes and displays them to the TextBrowser output.
+You will edit one function from the existing\  ``foss4g2011_example1_starter`` \plugin. In that function you will write the logic that reads a vector data layer's attributes and displays them to the TextBrowser output.
 
 Goal
 *************************
 
-\  **1.** \Open the\  ``foss4g2011_example1`` \plugin with some a vector layer loaded into Qgis
+\  **1.** \Open the\  ``foss4g2011_example1_starter`` \plugin with some a vector layer loaded into Qgis
 
 .. image:: ../_static/ex1_openplugin.png
     :scale: 100%
@@ -22,7 +22,7 @@ Goal
     :scale: 100%
     :align: center
 
-\  **3.** \Using gedit, navigate to\  ``/home/qgis/.qgis/python/plugins/foss4g2011_example1/`` \and open the\  ``foss4g2011_example1.py`` module. Find the function\  ``updateTextBrowser(0`` \. This is the code you will be changing around::
+\  **3.** \Using gedit, navigate to\  ``/home/qgis/.qgis/python/plugins/foss4g2011_example1_starter/`` \and open the\  ``foss4g2011_example1_starter.py`` module. Find the function\  ``updateTextBrowser()`` \. This is the code you will be changing around::
 
     def updateTextBrowser(self):
         # check to make sure we have a feature selected in our selectList -- note that there might be more than one feature
@@ -58,7 +58,7 @@ In the last hour we went through examples using\  ``dataProvider.select()`` \and
 Solution
 ************
 
-There is a solution set plugin for this tool. Open this plugin and use it or browse the source code at\  ``/home/qgis/.qgis/python/plugins/foss4g2011_example1_solutionset/foss4g2011_example1_solutionset.py``\for ideas:
+There is a solution set plugin for this tool. Open this plugin and use it or browse the source code at\  ``/home/qgis/.qgis/python/plugins/foss4g2011_example1_solution/foss4g2011_example1_solution.py``\for ideas:
 
 .. image:: ../_static/ex1_solutionset.png
     :scale: 100%

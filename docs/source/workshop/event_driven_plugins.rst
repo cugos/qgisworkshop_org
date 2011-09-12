@@ -46,12 +46,12 @@ The slot function that connects to a signal has to accept the same arugments the
 Create Custom SIGNALS
 ************************
 
-Though slightly more confusing, developers do have the ability to create custom signals. Below is an example of how to create a custom signal and connect a slot to it. The example below is taken from the workshop example\  ``foss4g2011_example3`` \plugin:
+Though slightly more confusing, developers do have the ability to create custom signals. Below is an example of how to create a custom signal and connect a slot to it. The example below is taken from the workshop example\  ``foss4g2011_example3_solution`` \plugin:
 
 
 \  **1.** \Make sure your plugin class subclasses QObject. It also should call the QObject constructor under\  ``__init__`` \as shown below:: 
 
-    class foss4g2011_example3(QObject):
+    class foss4g2011_example3_solution(QObject):
 
         def __init__(self, iface):
             QObject.__init__(self)
@@ -67,7 +67,7 @@ Though slightly more confusing, developers do have the ability to create custom 
 
     QObject.connect(self, SIGNAL("feedbackStatus(PyQt_PyObject)"), self.listen_feedbackStatus) 
 
-\  **4.** \Now anywhere in your plugin (because it subclasses QObject) you can emit this signal if you think it is important and pass a message to your slot. The\  ``foss4g2011_example3`` \plugin is doing this on a button click::
+\  **4.** \Now anywhere in your plugin (because it subclasses QObject) you can emit this signal if you think it is important and pass a message to your slot. The\  ``foss4g2011_example3_solution`` \plugin is doing this on a button click::
 
      def btn_emitFeedbackStatus(self, checked):
            self.emit(SIGNAL("feedbackStatus(PyQt_PyObject)"), "Bruce Lee is my hero!")

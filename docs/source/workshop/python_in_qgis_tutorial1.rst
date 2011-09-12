@@ -36,7 +36,7 @@ Let's review how we install Python plugins breifly. We'll also add the PyQGIS FO
 
 .. note:: You can also check out the repository with your\  `web browser <http://www.qgisworkshop.org/plugins/plugins.xml>`_ \
 
-\  **5.** \If you go back to the\  ``Plugins`` \tab you can filter for\  ``foss4g2011_workshop_examples`` \in the\  ``repositories`` \drop down next to the filter textbox:
+\  **5.** \If you go back to the\  ``Plugins`` \tab you can filter for\  ``foss4g2011`` \in the\  ``repositories`` \drop down next to the filter textbox:
 
 .. image:: ../_static/filter_foss4g.png
     :scale: 70%
@@ -55,10 +55,13 @@ Let's review how we install Python plugins breifly. We'll also add the PyQGIS FO
     total 28K
     drwxr-xr-x 7 qgis qgis 4.0K 2011-09-02 10:24 .
     drwxr-xr-x 4 qgis qgis 4.0K 2011-07-07 13:41 ..
-    drwxr-xr-x 2 qgis qgis 4.0K 2011-09-02 10:21 foss4g2011_example1
-    drwxr-xr-x 2 qgis qgis 4.0K 2011-09-02 10:21 foss4g2011_example2
-    drwxr-xr-x 2 qgis qgis 4.0K 2011-09-02 10:24 foss4g2011_example3
-    drwxr-xr-x 2 qgis qgis 4.0K 2011-09-02 10:21 foss4g2011_tutorial1
+    drwxr-xr-x 2 qgis qgis 4.0K 2011-09-02 10:21 foss4g2011_example1_starter
+    drwxr-xr-x 2 qgis qgis 4.0K 2011-09-02 10:21 foss4g2011_example1_solution
+    drwxr-xr-x 2 qgis qgis 4.0K 2011-09-02 10:21 foss4g2011_example2_starter
+    drwxr-xr-x 2 qgis qgis 4.0K 2011-09-02 10:21 foss4g2011_example2_solution
+    drwxr-xr-x 2 qgis qgis 4.0K 2011-09-02 10:24 foss4g2011_example3_starter
+    drwxr-xr-x 2 qgis qgis 4.0K 2011-09-02 10:24 foss4g2011_example3_solution
+    drwxr-xr-x 2 qgis qgis 4.0K 2011-09-02 10:21 foss4g2011_tutorial1_solution
     drwxr-xr-x 3 qgis qgis 4.0K 2011-07-07 13:41 pluginbuilder
 
 \  **8.** \To turn any plugin on or off you can manage it by clicking\  ``Plugins > Manage Plugins`` \. The QGIS Plugin Manager dialog will launch with checkboxes next to the plugin you want to turn on or off:
