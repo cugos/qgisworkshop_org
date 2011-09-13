@@ -40,19 +40,22 @@ Hints
 
 In the last hour we went through examples using\  ``dataProvider.select()`` \and\  ``dataProvider.featureAtId()`` \. Use the code below a guide for how to write your function::
 
-    # using the 50m_admin_0_countries.shp from natural earth download for this example
-    cLayer = qgis.utils.iface.mapCanvas().currentLayer()
-    provider = cLayer.dataProvider()
-    selectList = [ 24, 32, 45, 56 ]
-    if selectList:
-        for id in selectList:
-            nIndx = provider.fieldNameIndex('NAME')
-            sFeat = QgsFeature()
-            if provider.featureAtId(id, sFeat, True, [nIndx]):
-                if nIndx != -1:
-                    attMap = sFeat.attributeMap()
-                    # cast QString objects to Python strings
-                    print str( attMap[nIndx].toString() )
+        if self.selectList:
+
+            # ############ EXAMPLE 1 EDITS GO HERE ####################  
+            ''' write code that will output ALL selected feature attributes for a single feature into the Text Browser''' 
+            ''' instead of using the dataProvider.select() function get the actual QgsFeature using dataProvider.featureAtId() '''
+            # get all the field Indexes for the feature
+            fields = self.provider.fields()
+            # get the feature by passing in empty Feature
+            feat = QgsFeature()
+            # going to get first feature since there could potentially be more than one
+            if self.provider.featureAtId(self.selectList[0], feat, True, fields.keys()):
+                attMap = feat.attributeMap()
+                output = "FEATURE ID: %i\n" % feat.id()
+                for index,qgsfield in fields.items():
+                    output += "\t" + str(qgsfield.name()) + " : " + str( (attMap[index]).toString() ) + "\n" 
+                self.dlg.setTextBrowser(output)
 
 
 Solution
