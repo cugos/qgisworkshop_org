@@ -1,5 +1,7 @@
-<html>
-<head>
+{% extends "!layout.html" %}
+
+{%- block extrahead %}
+{{ super() }}
 <script type="text/javascript">
 
   var _gaq = _gaq || [];
@@ -13,6 +15,8 @@
   })();
 
 </script>
-<meta http-equiv="REFRESH" content="0; URL=http://www.qgisworkshop.org/html/workshop/index.html">
-</head>
-</html>
+{% endblock %}
+
+{% block footer %}
+{{ super() }}
+{% endblock %}
